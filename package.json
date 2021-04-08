@@ -1,0 +1,6 @@
+{
+  "name": "openshift-4-ops-training-training",
+  "devDependencies": {
+    "markdownlint-cli": "0.27.1"
+  }
+}
