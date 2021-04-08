@@ -114,17 +114,6 @@ node_modules/.bin/markdownlint content
 ```
 
 
-## How to setup an entire new Training
-
-* create an empty git Repo
-* Copy the contents of this repo to it and replace all CHANGEME
-  * Configure all names, URLs and so on in the buildactions and [values.yaml](./helm-chart/values.yaml)
-* Create a container image Repo and make sure the secrets configured in the Github actions have access to the repo
-* Create two namespaces on your k8s cluster, make sure the secrets configured in the Github actions have access to the k8s Cluster and namespace or project in case of rancher
-  * Test namespace: used to deploy PR Environments
-  * Prod namespace: prod deployment
-
-
 ### Quota on Testnamespace
 
 Add the quota to the test namespace:
