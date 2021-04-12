@@ -7,16 +7,11 @@ sectionnumber: 1.1
 In this lab, we are going to install an OpenShift 4 cluster on AWS.
 
 
-## Task {{% param sectionnumber %}}.1: Installing OpenShift 4 on AWS
-
-In this task we will prepare and carry out the installation.
-
-
-### Customizing the installation
+## Task {{% param sectionnumber %}}.1: Customizing the installation
 
 See the [OpenShift installation documentation](https://docs.openshift.com/container-platform/4.7/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
 
-Edit the file `install-config.yaml`
+Edit the file `install-config.yaml` #FIXME: path to file
 
 ```yaml
 apiVersion: v1
@@ -62,7 +57,7 @@ cp $(date +"%Y-%m-%d")/install-config.yaml ~/backup/install-config.yaml
 ```
 
 
-### Deploying the cluster
+## Task {{% param sectionnumber %}}.2: Deploying the cluster
 
 Now we are ready to create our cluster:
 
@@ -77,19 +72,31 @@ INFO Time elapsed: 36m22s
 ```
 
 
-### Logging in to the cluster by using the CLI
+## Task {{% param sectionnumber %}}.3: Verifying the installation
 
 By setting the environment variable `KUBECONFIG` we can provide credentials to the OpenShift CLI (`oc`):
 
 ```bash
 export KUBECONFIG=/home/ec2-user/ocp4-ops/$(date +"%Y-%m-%d")/auth/kubeconfig
-``` 
+```
 
 We will now check, whether we can log in to the cluster with the `kubeadmin` credentials:
 
+```bash
 $ oc whoami
 system:admin
 $ oc whoami --show-server
 https://api.ops.openshift.ch
 ```
+
+The cluster operators are a good indicator, whether the cluster is healhty or not:
+
+```bash
+$ oc get clusteroperators // "oc get co" for short
+NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE
+authentication                             4.6.19    True        False         False      3d18h
+...
+```
+
+#FIXME: Replace with 4.7 output
 
