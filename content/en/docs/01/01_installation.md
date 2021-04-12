@@ -96,7 +96,6 @@ $ oc get clusteroperators // "oc get co" for short
 NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE
 authentication                             4.6.19    True        False         False      3d18h
 ...
+#FIXME: replace with output of 4.7 cluster
 ```
-
-#FIXME: Replace with 4.7 output
 
