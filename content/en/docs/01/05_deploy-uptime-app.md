@@ -4,7 +4,6 @@ weight: 15
 sectionnumber: 1.5
 ---
 
-
 In this lab you're going to deploy an application on your freshly-installed OpenShift cluster.
 
 The application's availability will be monitored and recorded by an external monitoring system.
