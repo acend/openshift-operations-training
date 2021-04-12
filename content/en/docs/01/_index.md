@@ -1,8 +1,6 @@
 ---
-title: "1. Introduction"
-weight: 1
+title: "1. Installation and configuration"
+weight: 10
 sectionnumber: 1
 ---
-
-## Title 1
 
