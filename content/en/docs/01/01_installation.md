@@ -58,7 +58,7 @@ sshKey: 'ssh-ed25519 AAAA...'
 Backup the file `install-config.yaml`, since it will be consumed during the installation process.
 
 ```bash
-$ cp $(date +"%Y-%m-%d")/install-config.yaml ~/backup/install-config.yaml
+cp $(date +"%Y-%m-%d")/install-config.yaml ~/backup/install-config.yaml
 ```
 
 
@@ -79,10 +79,14 @@ INFO Time elapsed: 36m22s
 
 ### Logging in to the cluster by using the CLI
 
-We will no check, whether we can log in to the cluster by exporting the `kubeadmin` credentials:
+By setting the environment variable `KUBECONFIG` we can provide credentials to the OpenShift CLI (`oc`):
 
 ```bash
-$ export KUBECONFIG=/home/ec2-user/ocp4-ops/$(date +"%Y-%m-%d")/auth/kubeconfig
+export KUBECONFIG=/home/ec2-user/ocp4-ops/$(date +"%Y-%m-%d")/auth/kubeconfig
+``` 
+
+We will now check, whether we can log in to the cluster with the `kubeadmin` credentials:
+
 $ oc whoami
 system:admin
 $ oc whoami --show-server
