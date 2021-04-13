@@ -7,6 +7,13 @@ sectionnumber: 1.1
 In this lab, you are going to install an OpenShift 4 cluster on AWS.
 
 
+## Task {{% param sectionnumber %}}.0: Preparing the environment
+
+* Download public key
+* SSH into your bastion host
+* Create working directory
+
+
 ## Task {{% param sectionnumber %}}.1: Customizing the installation
 
 See the [OpenShift installation documentation](https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
@@ -15,13 +22,15 @@ Edit the file `install-config.yaml` #FIXME: path to file
 
 ```yaml
 apiVersion: v1
-baseDomain: ops.openshift.ch
+baseDomain: ops-training.openshift.ch #FIXME: Hugo var
 compute:
 - architecture: amd64
   hyperthreading: Enabled
   name: worker
-  platform: {}
-  replicas: 3 #FIXME: change to 2
+  platform:
+    aws:
+      type: m5.2xlarge
+  replicas: 3
 controlPlane:
   architecture: amd64
   hyperthreading: Enabled
@@ -30,7 +39,7 @@ controlPlane:
   replicas: 3
 metadata:
   creationTimestamp: null
-  name: user01
+  name: <username>
 networking:
   clusterNetwork:
   - cidr: 10.128.0.0/14
