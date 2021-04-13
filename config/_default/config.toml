@@ -79,7 +79,7 @@ baseDomain = "ops-training.openshift.ch"
 # Enable Lunr.js offline search
 offlineSearch = true
 
-params.replaceContent]
+[params.replaceContent]
 allowedHrefHosts = ['localhost', 'openshift.ch']
 
 [[params.replaceContent.placeholders]]
