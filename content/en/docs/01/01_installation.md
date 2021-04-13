@@ -102,7 +102,7 @@ $ oc whoami --show-server
 https://api.ops.openshift.ch
 ```
 
-The cluster operators are a good indicator, whether the cluster is healhty or not:
+The cluster operators are a good indicator whether the cluster is healhty or not:
 
 ```bash
 $ oc get clusteroperators // "oc get co" for short
