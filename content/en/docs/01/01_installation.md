@@ -9,7 +9,7 @@ In this lab, you are going to install an OpenShift 4 cluster on AWS.
 
 ## Task {{% param sectionnumber %}}.1: Customizing the installation
 
-See the [OpenShift installation documentation](https://docs.openshift.com/container-platform/4.7/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
+See the [OpenShift installation documentation](https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
 
 Edit the file `install-config.yaml` #FIXME: path to file
 
