@@ -55,7 +55,9 @@ platform:
   aws:
     region: eu-north-1
     userTags:
+      customer: acend
       acend-training: ocp4-ops
+      user: <username>
 publish: External
 pullSecret: '{"auths":{...}}'
 sshKey: 'ssh-ed25519 AAAA...'
