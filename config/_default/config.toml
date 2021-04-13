@@ -86,7 +86,6 @@ allowedHrefHosts = ['localhost', 'openshift.ch']
 placeholder = "+username+"
 queryParam = "u"
 defaultValue = "user00"
-href = true
 
 [[params.replaceContent.placeholders]]
 placeholder = "<namespace>"
