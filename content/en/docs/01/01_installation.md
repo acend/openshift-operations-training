@@ -63,7 +63,7 @@ pullSecret: '{"auths":{...}}'
 sshKey: 'ssh-ed25519 AAAA...'
 ```
 
-Backup the file `install-config.yaml`, since it will be consumed during the installation process.
+Backup the file `install-config.yaml`, since it will be consumed during the installation process:
 
 ```bash
 cp $(date +"%Y-%m-%d")/install-config.yaml ~/backup/install-config.yaml
@@ -111,4 +111,3 @@ authentication                             4.6.19    True        False         F
 ...
 #FIXME: replace with output of 4.7 cluster
 ```
-
