@@ -22,11 +22,11 @@ It also defines an eviction threshold which, in some cases, is too low for the k
 
 So change the masters' configuration to this:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/01/kubeletconfig_master.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/kubeletconfig_master.yaml" >}}{{< /highlight >}}
 
 And the worker nodes' configuration to this:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/01/kubeletconfig_worker.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/kubeletconfig_worker.yaml" >}}{{< /highlight >}}
 
 {{% alert title="Note" color="primary" %}}
 These resource files are also available at https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml and https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_worker.yaml, respectively.
@@ -191,7 +191,7 @@ If not, the [documentation](https://docs.openshift.com/container-platform/latest
 
 A good starting point could look as follows:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/01/limitrange.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/limitrange.yaml" >}}{{< /highlight >}}
 
 Add the LimitRange resource to your default project template.
 
@@ -200,7 +200,7 @@ Add the LimitRange resource to your default project template.
 
 Your file should now look like this:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/01/template_project-request-extended.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/template_project-request-extended.yaml" >}}{{< /highlight >}}
 
 
 ## Task {{% param sectionnumber %}}.5: Configure the template
