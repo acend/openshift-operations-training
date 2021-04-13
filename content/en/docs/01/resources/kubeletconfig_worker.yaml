@@ -1,0 +1,17 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: KubeletConfig
+metadata:
+  name: worker
+spec:
+  kubeletConfig:
+    evictionHard:
+      memory.available: 1Gi
+    kubeReserved:
+      cpu: 500m
+      memory: 2Gi
+    systemReserved:
+      cpu: 500m
+      memory: 2Gi
+  machineConfigPoolSelector:
+    matchLabels:
+      'pools.operator.machineconfiguration.openshift.io/worker': ''
