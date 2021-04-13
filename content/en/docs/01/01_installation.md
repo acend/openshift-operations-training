@@ -18,11 +18,11 @@ In this lab, you are going to install an OpenShift 4 cluster on AWS.
 
 See the [OpenShift installation documentation](https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
 
-Edit the file `install-config.yaml` #FIXME: path to file
+Edit the file `install-config.yaml` and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username. #FIXME: path to file
 
 ```yaml
 apiVersion: v1
-baseDomain: ops-training.openshift.ch #FIXME: Hugo var
+baseDomain: openshift.ch #FIXME: Hugo var
 compute:
 - architecture: amd64
   hyperthreading: Enabled
@@ -41,7 +41,7 @@ controlPlane:
   replicas: 3
 metadata:
   creationTimestamp: null
-  name: <username>
+  name: <username>-ops-training
 networking:
   clusterNetwork:
   - cidr: 10.128.0.0/14
