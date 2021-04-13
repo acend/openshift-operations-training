@@ -4,7 +4,7 @@ weight: 11
 sectionnumber: 1.1
 ---
 
-In this lab, we are going to install an OpenShift 4 cluster on AWS.
+In this lab, you are going to install an OpenShift 4 cluster on AWS.
 
 
 ## Task {{% param sectionnumber %}}.1: Customizing the installation
@@ -59,7 +59,7 @@ cp $(date +"%Y-%m-%d")/install-config.yaml ~/backup/install-config.yaml
 
 ## Task {{% param sectionnumber %}}.2: Deploying the cluster
 
-Now we are ready to create our cluster:
+Now you are ready to create your own cluster:
 
 ```bash
 $ ./openshift-install create cluster --dir=$(date +"%Y-%m-%d") --log-level=info
@@ -74,13 +74,13 @@ INFO Time elapsed: 36m22s
 
 ## Task {{% param sectionnumber %}}.3: Verifying the installation
 
-By setting the environment variable `KUBECONFIG` we can provide credentials to the OpenShift CLI (`oc`):
+By setting the environment variable `KUBECONFIG` you can provide credentials to the OpenShift CLI (`oc`):
 
 ```bash
 export KUBECONFIG=/home/ec2-user/ocp4-ops/$(date +"%Y-%m-%d")/auth/kubeconfig
 ```
 
-We will now check, whether we can log in to the cluster with the `kubeadmin` credentials:
+You will now check, whether you can log in to the cluster with the `kubeadmin` credentials:
 
 ```bash
 $ oc whoami
