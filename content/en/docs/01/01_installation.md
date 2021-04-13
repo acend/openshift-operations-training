@@ -93,7 +93,7 @@ By setting the environment variable `KUBECONFIG` you can provide credentials to 
 export KUBECONFIG=$HOME/ocp4-ops/$(date +"%Y-%m-%d")/auth/kubeconfig
 ```
 
-You will now check, whether you can log in to the cluster with the `kubeadmin` credentials:
+You will now check whether you can log in to the cluster with the `kubeadmin` credentials:
 
 ```bash
 $ oc whoami
