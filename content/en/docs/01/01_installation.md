@@ -35,7 +35,9 @@ controlPlane:
   architecture: amd64
   hyperthreading: Enabled
   name: master
-  platform: {}
+  platform:
+    aws:
+      type: m5.xlarge
   replicas: 3
 metadata:
   creationTimestamp: null
