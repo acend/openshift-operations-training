@@ -90,7 +90,7 @@ INFO Time elapsed: 36m22s
 By setting the environment variable `KUBECONFIG` you can provide credentials to the OpenShift CLI (`oc`):
 
 ```bash
-export KUBECONFIG=/home/ec2-user/ocp4-ops/$(date +"%Y-%m-%d")/auth/kubeconfig
+export KUBECONFIG=$HOME/ocp4-ops/$(date +"%Y-%m-%d")/auth/kubeconfig
 ```
 
 You will now check, whether you can log in to the cluster with the `kubeadmin` credentials:
