@@ -64,4 +64,4 @@ Check if the machines were created and that they're in the `Provisioning` state:
 oc get machines -n openshift-machine-api
 ```
 
-It shouldn't now take too long and you will see new infra nodes pop up.
+It shouldn't now take too long and you will see new infra nodes popping up.
