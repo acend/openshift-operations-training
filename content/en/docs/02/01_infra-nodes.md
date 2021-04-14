@@ -20,8 +20,7 @@ They could be compared to deployments: If deployments are responsible for creati
 
 Create a new MachineSet resource for infra nodes using `infra` as their role.
 The easiest way is probably to copy and adapt the existing `worker` MachineSet in the `openshift-machine-api` namespace.
-Refer to the [documentation](https://docs.openshift.com/container-platform/latest/machine_management/creating_machinesets/creating-machineset-aws.html) if you're not sure what to replace.
-
+Refer to the [documentation](https://docs.openshift.com/container-platform/latest/machine_management/creating-infrastructure-machinesets.html#machineset-yaml-aws_creating-infrastructure-machinesets) if you're not sure what to replace.
 
 ### Solution {{% param sectionnumber %}}.1: Create a machine set
 
