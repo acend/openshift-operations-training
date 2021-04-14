@@ -36,7 +36,7 @@ NAME                                          STATUS      ERRORS   WARNINGS   CR
 daily-backup-uptime-app-prod-20210414093050   Completed   0        0          2021-04-14 09:30:50 +0000 UTC   9d        default            <none>
 ```
 
-{{% alert title="Note" color="primary" %}
+{{% alert title="Note" color="primary" %}}
 For get the details  of the schedule and the backups, run the following commands:
 
 ```bash
