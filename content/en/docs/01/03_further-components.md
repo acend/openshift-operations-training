@@ -148,6 +148,8 @@ system:admin
 
 //FIXME: What is Velero?
 
+{{% alert title="Note" color="primary" %}}We already created S3 buckets for you to use as backup locations.{{% /alert %}}
+
 You will install `Velero` with Helm.
 
 //FIXME: Prereq. 
@@ -162,6 +164,18 @@ $ helm install velero vmware-tanzu/velero \
   --namespace training-infra-velero \
   --create-namespace \
   --version v2.16.0 \
-  --set-file credentials.secretContents.cloud=/home/ec2-user/.aws/credentials \
+  --set-file credentials.secretContents.cloud=/home/ec2-user/ocp4-ops/credentials \
   --values ~/ocp4-ops/resources/velero/values.yaml
 ```
+
+After the installation has completed, you can verify the backup location:
+
+```bash
+$ velero -n training-infra-velero get backup-locations
+NAME      PROVIDER   BUCKET/PREFIX                PHASE       LAST VALIDATED                  ACCESS MODE   DEFAULT
+default   aws        user01-ops-training-backup   Available   2021-04-14 08:04:24 +0000 UTC   ReadWrite
+#FIXME: Hugo var
+```
+
+In the next chapter you will learn how to use Velero for scheduled backups of cluster resources.
+
