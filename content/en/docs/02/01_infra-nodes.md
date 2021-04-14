@@ -39,9 +39,9 @@ oc get machinesets -n openshift-machine-api -o yaml <machineset name> machineset
 
 Edit the file using your favorite editor (still `vim` of course):
 
-- Remove all the unnecessary clutter such as the `.metadata.managedFields` part or `creationTimestamp` fields
-- Replace all occurrences of `worker` with `infra` except for everything under `providerSpec`
-- Ensure that `replicas` is set to 3
+* Remove all the unnecessary clutter such as the `.metadata.managedFields` part or `creationTimestamp` fields
+* Replace all occurrences of `worker` with `infra` except for everything under `providerSpec`
+* Ensure that `replicas` is set to 3
 
 When you're finished, your MachineSet resource file should look similar to this:
 
