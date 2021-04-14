@@ -108,8 +108,8 @@ Patch the API server:
 oc patch apiserver cluster \
      --type=merge -p \
      '{"spec":{"servingCerts": {"namedCertificates":
-     [{"names": ["api.user01-ops-training.openshift.ch"], 
-     "servingCertificate": {"name": "cert-api"}}]}}}' 
+     [{"names": ["api.user01-ops-training.openshift.ch"],
+     "servingCertificate": {"name": "cert-api"}}]}}}'
 #FIXME: FQDN Hugo var
 ```
 
@@ -127,13 +127,13 @@ $ vim $KUBECONFIG
 apiVersion: v1
 clusters:
 - cluster:
-    certificate-authority-data: LS0...              		# delete this line
+    certificate-authority-data: LS0...                          # delete this line
     server: https://api.user01-ops-training.openshift.ch:6443   #FIXME: Hugo var
     name: api-user01-ops-training-openshift-ch:6443             #FIXME: Hugo var
 - cluster:
-    certificate-authority-data: LS0...				# delete this line
+    certificate-authority-data: LS0...                          # delete this line
     server: https://api.user01-ops-training.openshift.ch:6443   #FIXME: Hugo var
-  name: user01-ops-training					#FIXME: Hugo var
+  name: user01-ops-training                                     #FIXME: Hugo var
 ```
 
 Check again:
@@ -152,7 +152,7 @@ system:admin
 
 You will install `Velero` with Helm.
 
-//FIXME: Prereq. 
+//FIXME: Prereq.
 In order to install the Helm chart, you must follow these steps:
 
 ```bash

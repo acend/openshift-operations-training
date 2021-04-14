@@ -30,7 +30,7 @@ $ velero -n training-infra-velero get schedule
 NAME                           STATUS    CREATED                         SCHEDULE     BACKUP TTL   LAST BACKUP   SELECTOR
 daily-backup-uptime-app-prod   Enabled   2021-04-14 09:30:50 +0000 UTC   @every 24h   240h0m0s     4m ago        <none>
 #
-# check the backup 
+# check the backup
 $ velero -n training-infra-velero get backup
 NAME                                          STATUS      ERRORS   WARNINGS   CREATED                         EXPIRES   STORAGE LOCATION   SELECTOR
 daily-backup-uptime-app-prod-20210414093050   Completed   0        0          2021-04-14 09:30:50 +0000 UTC   9d        default            <none>
@@ -50,5 +50,4 @@ velero -n training-infra-velero describe backup <backup-name>
 
 
 ## Task {{% param sectionnumber %}}.2 Create etcd backup
-
 
