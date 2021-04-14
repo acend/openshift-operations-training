@@ -1,0 +1,72 @@
+apiVersion: machine.openshift.io/v1beta1
+kind: MachineSet
+metadata:
+  annotations:
+    machine.openshift.io/GPU: "0"
+    machine.openshift.io/memoryMb: "32768"
+    machine.openshift.io/vCPU: "8"
+  labels:
+    machine.openshift.io/cluster-api-cluster: user01-ops-training-75gjz
+  name: user01-ops-training-75gjz-infra-eu-north-1a
+  namespace: openshift-machine-api
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      machine.openshift.io/cluster-api-cluster: user01-ops-training-75gjz
+      machine.openshift.io/cluster-api-machineset: user01-ops-training-75gjz-infra-eu-north-1a
+  template:
+    metadata:
+      labels:
+        machine.openshift.io/cluster-api-cluster: user01-ops-training-75gjz
+        machine.openshift.io/cluster-api-machine-role: infra
+        machine.openshift.io/cluster-api-machine-type: infra
+        machine.openshift.io/cluster-api-machineset: user01-ops-training-75gjz-infra-eu-north-1a
+    spec:
+      metadata: {}
+      providerSpec:
+        value:
+          ami:
+            id: ami-0080eb90a48d9655e
+          apiVersion: awsproviderconfig.openshift.io/v1beta1
+          blockDevices:
+          - ebs:
+              encrypted: true
+              iops: 0
+              kmsKey:
+                arn: ""
+              volumeSize: 120
+              volumeType: gp2
+          credentialsSecret:
+            name: aws-cloud-credentials
+          deviceIndex: 0
+          iamInstanceProfile:
+            id: user01-ops-training-75gjz-worker-profile
+          instanceType: m5.2xlarge
+          kind: AWSMachineProviderConfig
+          metadata:
+            creationTimestamp: null
+          placement:
+            availabilityZone: eu-north-1a
+            region: eu-north-1
+          securityGroups:
+          - filters:
+            - name: tag:Name
+              values:
+              - user01-ops-training-75gjz-worker-sg
+          subnet:
+            filters:
+            - name: tag:Name
+              values:
+              - user01-ops-training-75gjz-private-eu-north-1a
+          tags:
+          - name: kubernetes.io/cluster/user01-ops-training-75gjz
+            value: owned
+          - name: acend-training
+            value: ocp4-ops
+          - name: customer
+            value: acend
+          - name: username
+            value: user01
+          userDataSecret:
+            name: worker-user-data
