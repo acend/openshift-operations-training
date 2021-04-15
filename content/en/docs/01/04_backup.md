@@ -9,15 +9,19 @@ In this lab, you will create scheduled backups for the most important cluster co
 
 ## Task {{% param sectionnumber %}}.1: Create user workload backups
 
-As a cluster admin, you can create scheduled backups of your users resources, to be able to restore them in case of emergency, like an accidental deletion.
+As a cluster admin, you can create scheduled backups of your users' resources. This allows you to restore them in cases like an accidental deletion.
 
-{{% alert title="Note" color="primary" %}}You will be using Velero to create user workload backups.{{% /alert %}}
+{{% alert title="Note" color="primary" %}}
+You will be using Velero to create user workload backups.
+{{% /alert %}}
 
-Setup a daily backup of the resources in namespace `uptime-app-prod` with a lifetime of 10 days by createing the following schedule:
+Setup a daily backup of the resources in namespace `uptime-app-prod` with a lifetime of 10 days by creating the following schedule:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml" >}}{{< /highlight >}}
 
-{{% alert title="Note" color="primary" %}} This resource file is also available at https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml. {{% /alert %}}
+{{% alert title="Note" color="primary" %}}
+This resource file is also available at https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml.
+{{% /alert %}}
 
 ```bash
 oc -n training-infra-velero apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml
@@ -50,7 +54,7 @@ Create a new project to be used for the backup:
 oc new-project training-infra-etcd-backup
 ```
 
-Since `etcd` is running on the masters, we need to make sure, the cronjob pods creating the `etcd` snapshots are running on the master as well, by adding the following annotation:
+Since `etcd` is running on the masters, we need to make sure the cronjob pods creating the `etcd` snapshots are running on the master as well. We can do this by adding the following annotation:
 
 ```bash
 oc patch namespace training-infra-etcd-backup -p \
@@ -59,11 +63,11 @@ oc patch namespace training-infra-etcd-backup -p \
 
 For the cronjob pod to be able to access the `etcd` files, we need to create a service account with additional permissions by attaching a custom `SecurityContextConstraints` (SCC) policy:
 
-Service Account:
+* Service account:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/etcd-backup/sa_etcd-backup.yaml" >}}{{< /highlight >}}
 
-SCC:
+* SCC:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/etcd-backup/scc_privileged-etcd-backup.yaml" >}}{{< /highlight >}}
 
@@ -78,18 +82,22 @@ Now we can create the secret containing the AWS credentials and S3 bucket config
 oc -n training-infra-etcd-backup apply -f ~/ocp4-ops/resources/etcd-backup/secret_etdc-backup-s3-bucket.yaml #FIXM: secret handling
 ```
 
-Finally we can create the `ConfigMap` containing the backup script and the `CronJob`:
+Finally we can create the `ConfigMap` containing the backup script and the `CronJob` resources. Here's what they look like:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/etcd-backup/cm_backup-script.yaml" >}}{{< /highlight >}}
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/etcd-backup/cronjob_etcd-backup.yaml" >}}{{< /highlight >}}
+
+Create them with:
 
 ```bash
 oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/etcd-backup/cm_backup-script.yaml
 oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/etcd-backup/cronjob_etcd-backup.yaml
 ```
 
-{{% alert title="Note" color="primary" %}} In our example of the `CronJob` the backup job is started every six hours. If you do not want to wait that long, change the schedule of the `CronJob` accordingly. {{% /alert %}}
+{{% alert title="Note" color="primary" %}}
+In our example of the `CronJob` the backup job is started every six hours. If you do not want to wait that long, change the schedule of the `CronJob` accordingly.
+{{% /alert %}}
 
 You can verify the backup job by looking at the result or by checking the logs of the pod:
 
@@ -143,4 +151,3 @@ upload: ../host/home/core/assets/snapshot_2021-04-15_073913.db to s3://user01-op
 upload: ../host/home/core/assets/snapshot_2021-04-15_074105.db to s3://user01-ops-training-backup/etcd-backup/snapshot_2021-04-15_074105.db
 upload: ../host/home/core/assets/snapshot_2021-04-15_074306.db to s3://user01-ops-training-backup/etcd-backup/snapshot_2021-04-15_074306.db
 ```
-
