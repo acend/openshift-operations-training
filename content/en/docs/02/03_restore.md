@@ -8,10 +8,10 @@ sectionnumber: 2.3
 
 In the backup lab you created a scheduled backup of all resources in namespace `uptime-app-prod`. Now we are going to test the restore procedure.
 
-Go ahead and delete the namespace `uptime-app-prod`:
+Go ahead and delete the project `uptime-app-prod`:
 
 ```bash
-oc delete ns uptime-app-prod
+oc delete project uptime-app-prod
 ```
 
 Update your backup storage location to read-only mode (this prevents backup objects from being created or deleted in the backup storage location during the restore process):
@@ -31,11 +31,17 @@ Copy above `Restore` resource into a file on your bastion host. Replace the plac
 
 ```bash
 oc -n training-infra-velero get backups
+```
 
 After the restore has completed, your uptime app should be up and running again:
 
 ```bash
-$ oc -n uptime-app-prod get pods
+oc -n uptime-app-prod get pods
+```
+
+Example output:
+
+```
 NAME                          READY   STATUS    RESTARTS   AGE
 uptime-app-56df4df7d8-hnsps   1/1     Running   0          20m
 uptime-app-56df4df7d8-jfkzx   1/1     Running   0          20m
