@@ -23,7 +23,7 @@ oc patch backupstoragelocation default \
    --patch '{"spec":{"accessMode":"ReadOnly"}}'
 ```
 
-Create a `Restore` object from your `Backup`:
+In order to restore a backup, we need to create a `Restore` object. A `Restore` object looks like this:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/restore_uptime-app-prod.yaml" >}}{{< /highlight >}}
 
