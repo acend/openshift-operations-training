@@ -175,6 +175,7 @@ $ velero -n training-infra-velero get backup-locations
 NAME      PROVIDER   BUCKET/PREFIX                PHASE       LAST VALIDATED                  ACCESS MODE   DEFAULT
 default   aws        user01-ops-training-backup   Available   2021-04-14 08:04:24 +0000 UTC   ReadWrite
 #FIXME: Hugo var
+#FIXME: Change to "oc"
 ```
 
 In the next chapter you will learn how to use Velero for scheduled backups of cluster resources.
