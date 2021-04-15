@@ -10,6 +10,7 @@ In this lab, you will install additional components that are commonly used in pr
 ## Task {{% param sectionnumber %}}.1: Install `cert-manager`
 
 //FIXME: What is cert-manager?
+With [`cert-manager`](https://cert-manager.io/) you can automate certificate management.
 
 You will install `cert-manager` with Helm.
 
@@ -156,6 +157,8 @@ system:admin
 ## Task {{% param sectionnumber %}}.4 Install `Velero`
 
 //FIXME: What is Velero?
+[Velero](https://velero.io/) is a tool to back up and restore Kubernetes resources.
+We will use Velero in this training only for data protection of user workload.
 
 {{% alert title="Note" color="primary" %}}We already created S3 buckets for you to use as backup locations.{{% /alert %}}
 
@@ -188,4 +191,8 @@ default   aws        user01-ops-training-backup   Available   2021-04-14 08:04:2
 ```
 
 In the next chapter you will learn how to use Velero for scheduled backups of cluster resources.
+
+
+## Task {{% param sectionnumber %}}.5 Install Cluster Logging
+
 
