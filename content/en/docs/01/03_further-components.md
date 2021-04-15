@@ -114,9 +114,8 @@ Again, check if the certificate is ready, then patch the API server:
 oc patch apiserver cluster \
      --type=merge -p \
      '{"spec":{"servingCerts": {"namedCertificates":
-     [{"names": ["api.user01-ops-training.openshift.ch"],
+     [{"names": ["api.+username+-ops-training.openshift.ch"],
      "servingCertificate": {"name": "cert-api"}}]}}}'
-#FIXME: FQDN Hugo var
 ```
 
 Since the `kubeconfig` file you have been working with so far contains the CA of the self-signed certificate, the newly created certificate cannot be validated against this CA:
@@ -195,3 +194,125 @@ default   Available   10s              156m
 ```
 
 In the next chapter you will learn how to use Velero for scheduled backups of cluster resources.
+
+
+## Task {{% param sectionnumber %}}.5 Install Cluster Logging
+
+You can install [OpenShift Logging](https://docs.openshift.com/container-platform/latest/logging/cluster-logging.html) to aggregate all the logs from your OpenShift cluster, such as node logs, application logs, and infrastructure logs.
+
+To deploy the Cluster Logging stack from the CLI, we need to create the following objects:
+
+* OpenShift Elasticsearch Operator Namespace
+
+{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/ns_openshift-operators-redhat.yaml" >}}{{< /highlight >}}
+
+* Cluster Logging Operator Namespace
+
+{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/ns_openshift-logging.yaml" >}}{{< /highlight >}}
+
+* Elasticsarch `OperatorGroup`
+
+{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/og_openshift-operators-redhat.yaml" >}}{{< /highlight >}}
+
+* Cluster Logging `OperatorGroup`
+
+{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/og_cluster-logging.yaml" >}}{{< /highlight >}}
+
+* Elasticsearch Operator `Subscription`
+
+{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/sub_elasticsearch-operator.yaml" >}}{{< /highlight >}}
+
+* Cluster Logging Operator `Subscription`
+
+{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/sub_cluster-logging.yaml" >}}{{< /highlight >}}
+
+You can also use our provided files:
+
+```bash
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/ns_openshift-operators-redhat.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/ns_openshift-logging.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/og_openshift-operators-redhat.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/og_cluster-logging.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/sub_elasticsearch-operator.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/sub_cluster-logging.yaml
+```
+
+Verify the Elasticsearch Operator installation:
+
+```bash
+oc get csv --all-namespaces
+```
+
+Example output:
+
+```
+NAMESPACE                                               NAME                                            DISPLAY                  VERSION               REPLACES   PHASE
+default                                                 elasticsearch-operator.5.0.0-202007012112.p0    OpenShift Elasticsearch Operator   5.0.0-202007012112.p0               Succeeded
+kube-node-lease                                         elasticsearch-operator.5.0.0-202007012112.p0    OpenShift Elasticsearch Operator   5.0.0-202007012112.p0               Succeeded
+kube-public                                             elasticsearch-operator.5.0.0-202007012112.p0    OpenShift Elasticsearch Operator   5.0.0-202007012112.p0               Succeeded
+kube-system                                             elasticsearch-operator.5.0.0-202007012112.p0    OpenShift Elasticsearch Operator   5.0.0-202007012112.p0               Succeeded
+openshift-apiserver-operator                            elasticsearch-operator.5.0.0-202007012112.p0    OpenShift Elasticsearch Operator   5.0.0-202007012112.p0               Succeeded
+openshift-apiserver                                     elasticsearch-operator.5.0.0-202007012112.p0    OpenShift Elasticsearch Operator   5.0.0-202007012112.p0               Succeeded
+openshift-authentication-operator                       elasticsearch-operator.5.0.0-202007012112.p0    OpenShift Elasticsearch Operator   5.0.0-202007012112.p0               Succeeded
+openshift-authentication                                elasticsearch-operator.5.0.0-202007012112.p0    OpenShift Elasticsearch Operator   5.0.0-202007012112.p0               Succeeded
+...
+```
+
+There should be an OpenShift Elasticsearch Operator in each Namespace. The version number might be different than shown.
+
+Verify the Cluster Logging Operator isntallation:
+
+```bash
+oc get csv -n openshift-logging
+```
+
+Example output:
+
+```
+NAMESPACE                                               NAME                                         DISPLAY                  VERSION               REPLACES   PHASE
+...
+openshift-logging                                       clusterlogging.5.0.0-202007012112.p0         OpenShift Logging          5.0.0-202007012112.p0              Succeeded
+...
+```
+
+There should be a Cluster Logging Operator in the openshift-logging Namespace. The Version number might be different than shown.
+
+Now you can create a OpenShift Logging instance:
+
+{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/og_cluster-logging.yaml" >}}{{< /highlight >}}
+
+Again, you can use the provided file:
+
+```bash
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/clusterlogging_instance.yaml
+```
+
+{{% alert title="Note" color="primary" %}}
+The provided configuration is a basic setup that should support most use cases. For details on how to configure the logging stack, consult the chapter [About the Cluster Logging custom resource](https://docs.openshift.com/container-platform/latest/logging/config/cluster-logging-configuring-cr.html) in the official documentation.
+{{% /alert %}}
+
+Verify the install by listing the pods in the openshift-logging project.
+
+You should see several pods for OpenShift Logging, Elasticsearch, Fluentd, and Kibana.
+
+```bash
+oc get pods -n openshift-logging
+```
+
+Example output:
+
+```
+NAME                                            READY   STATUS    RESTARTS   AGE
+cluster-logging-operator-66f77ffccb-ppzbg       1/1     Running   0          7m
+elasticsearch-cdm-ftuhduuw-1-ffc4b9566-q6bhp    2/2     Running   0          2m40s
+elasticsearch-cdm-ftuhduuw-2-7b4994dbfc-rd2gc   2/2     Running   0          2m36s
+elasticsearch-cdm-ftuhduuw-3-84b5ff7ff8-gqnm2   2/2     Running   0          2m4s
+fluentd-587vb                                   1/1     Running   0          2m26s
+fluentd-7mpb9                                   1/1     Running   0          2m30s
+fluentd-flm6j                                   1/1     Running   0          2m33s
+fluentd-gn4rn                                   1/1     Running   0          2m26s
+fluentd-nlgb6                                   1/1     Running   0          2m30s
+fluentd-snpkt                                   1/1     Running   0          2m28s
+kibana-d6d5668c5-rppqm                          2/2     Running   0          2m39s
+```
+
