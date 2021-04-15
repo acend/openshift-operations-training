@@ -1,0 +1,43 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: cluster-monitoring-config
+  namespace: openshift-monitoring
+data:
+  config.yaml: |+
+    alertmanagerMain:
+      tolerations:
+      - key: "node-role.kubernetes.io/infra"
+        effect: "NoSchedule"
+    prometheusK8s:
+      tolerations:
+      - key: "node-role.kubernetes.io/infra"
+        effect: "NoSchedule"
+    prometheusOperator:
+      tolerations:
+      - key: "node-role.kubernetes.io/infra"
+        effect: "NoSchedule"
+    grafana:
+      tolerations:
+      - key: "node-role.kubernetes.io/infra"
+        effect: "NoSchedule"
+    k8sPrometheusAdapter:
+      tolerations:
+      - key: "node-role.kubernetes.io/infra"
+        effect: "NoSchedule"
+    kubeStateMetrics:
+      tolerations:
+      - key: "node-role.kubernetes.io/infra"
+        effect: "NoSchedule"
+    telemeterClient:
+      tolerations:
+      - key: "node-role.kubernetes.io/infra"
+        effect: "NoSchedule"
+    openshiftStateMetrics:
+      tolerations:
+      - key: "node-role.kubernetes.io/infra"
+        effect: "NoSchedule"
+    thanosQuerier:
+      tolerations:
+      - key: "node-role.kubernetes.io/infra"
+        effect: "NoSchedule"
