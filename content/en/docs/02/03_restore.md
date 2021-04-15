@@ -6,7 +6,7 @@ sectionnumber: 2.3
 
 ## Task {{% param sectionnumber %}}.1: Restoring user workload backups
 
-In the backup lab you created a scheduled backup of all resources in namespace `uptime-app-prod`. Now we will test the restore process.
+In the backup lab you created a scheduled backup of all resources in namespace `uptime-app-prod`. Now we are going to test the restore procedure.
 
 Go ahead and delete the namespace `uptime-app-prod`:
 
