@@ -28,7 +28,7 @@ $ helm install cert-manager jetstack/cert-manager \
   --values ~/ocp4-ops/resources/cert-manager/values.yaml
 ```
 
-To be able to use the Amazon Route 53 for the DNS01 challenge of Let's Encrypt, you will need to create a secret containing the required credentials. We have already created the manifest in the folder `~/ocp4-ops/resources/cert-manager`.
+To be able to use Amazon Route 53 for Let's Encrypt's DNS01 challenge, you will need to create a secret containing the required credentials. You can find these on the bastion host at `~/ocp4-ops/resources/cert-manager`.
 
 ```bash
 oc apply -f ~/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
@@ -65,7 +65,7 @@ Status:
 
 ## Task {{% param sectionnumber %}}.2 Replace the ingress controller certificate
 
-After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.user01-ops-training.openshift.ch`. #FIXME: Hugo var
+After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.+username+-ops-training.openshift.ch`:
 
 ```bash
 oc apply -f ~/ocp4-ops/resources/cert-manager/certificate_wildcard-ingress.yaml
@@ -104,15 +104,7 @@ The default API server certificate is issued by an internal OpenShift Container 
 oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_api.yaml
 ```
 
-Check, if the certificate is ready:
-
-```bash
-$ oc -n openshift-config get cert
-NAME       READY   SECRET     AGE
-cert-api   True    cert-api   3m7s
-```
-
-Patch the API server:
+Again, check if the certificate is ready, then patch the API server:
 
 ```bash
 oc patch apiserver cluster \
@@ -123,27 +115,26 @@ oc patch apiserver cluster \
 #FIXME: FQDN Hugo var
 ```
 
-Since the `kubeconfig` file you have been working with so far (remember `export KUBECONFIG=...` in the installation lab), contains the CA of the self-signed certificate, the newly created certificate cannot be validated against this CA:
+Since the `kubeconfig` file you have been working with so far contains the CA of the self-signed certificate, the newly created certificate cannot be validated against this CA:
 
 ```bash
 $ oc whoami
 Unable to connect to the server: x509: certificate signed by unknown authority
 ```
 
-To continue working with these credentials, you will need to delete the lines containing the CA certificate.
+Open the kubeconfig file with your favourite editor (e.g. `vim $KUBECONFIG`) and remove these marked lines:
 
 ```yaml
-$ vim $KUBECONFIG
 apiVersion: v1
 clusters:
 - cluster:
     certificate-authority-data: LS0...                          # delete this line
-    server: https://api.user01-ops-training.openshift.ch:6443   #FIXME: Hugo var
-    name: api-user01-ops-training-openshift-ch:6443             #FIXME: Hugo var
+    server: https://api.+username+-ops-training.openshift.ch:6443
+    name: api-+username+-ops-training-openshift-ch:6443
 - cluster:
     certificate-authority-data: LS0...                          # delete this line
-    server: https://api.user01-ops-training.openshift.ch:6443   #FIXME: Hugo var
-  name: user01-ops-training                                     #FIXME: Hugo var
+    server: https://api.+username+-ops-training.openshift.ch:6443
+  name: +username+-ops-training
 ```
 
 Check again:
@@ -154,15 +145,17 @@ system:admin
 ```
 
 
-## Task {{% param sectionnumber %}}.4 Install `Velero`
+## Task {{% param sectionnumber %}}.4 Install Velero
 
 //FIXME: What is Velero?
 [Velero](https://velero.io/) is a tool to back up and restore Kubernetes resources.
 We will use Velero in this training only for data protection of user workload.
 
-{{% alert title="Note" color="primary" %}}We already created S3 buckets for you to use as backup locations.{{% /alert %}}
+{{% alert title="Note" color="primary" %}}
+We already created S3 buckets for you to use as backup locations.
+{{% /alert %}}
 
-You will install `Velero` with Helm.
+You will install Velero with Helm.
 
 //FIXME: Prereq.
 In order to install the Helm chart, you must follow these steps:
@@ -191,8 +184,3 @@ default   aws        user01-ops-training-backup   Available   2021-04-14 08:04:2
 ```
 
 In the next chapter you will learn how to use Velero for scheduled backups of cluster resources.
-
-
-## Task {{% param sectionnumber %}}.5 Install Cluster Logging
-
-
