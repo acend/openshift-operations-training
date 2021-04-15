@@ -30,6 +30,8 @@ compute:
   platform:
     aws:
       type: m5.2xlarge
+      zones:
+      - eu-north-1a
   replicas: 3
 controlPlane:
   architecture: amd64
