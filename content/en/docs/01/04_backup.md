@@ -30,7 +30,12 @@ oc -n training-infra-velero apply -f https://raw.githubusercontent.com/acend/ope
 The schedule will create the first backup immediately. Have a look at the status part of the backup:
 
 ```bash
-$ oc -n training-infra-velero describe backup | grep -A 9 Status
+oc -n training-infra-velero describe backup | grep -A 9 Status
+```
+
+The output should look similar to this:
+
+```
 Status:
   Completion Timestamp:  2021-04-14T09:31:11Z
   Expiration:            2021-04-24T09:30:50Z
@@ -101,14 +106,21 @@ In our example of the `CronJob` the backup job is started every six hours. If yo
 
 You can verify the backup job by looking at the result or by checking the logs of the pod:
 
+* Job status:
+
 ```bash
-# job status
-$ oc -n training-infra-etcd-backup get jobs
-NAME                     COMPLETIONS   DURATION   AGE
-etcd-backup-1618472580   1/1           57s        23m
-#
-# pod logs
-$ oc -n training-infra-etcd-backup logs etcd-backup-1618472580-7pgsl
+oc -n training-infra-etcd-backup get jobs
+```
+
+* Check the logs:
+
+```bash
+oc -n training-infra-etcd-backup logs jobs/<job-name>
+```
+
+The logs should not contain any errors and should show the successful upload of the backup to the S3 bucket:
+
+```
 ac3805eda3a0200224fbe10d8eabbd429bcd6fb12ddd7a575b83bc6f68fb49b7
 etcdctl version: 3.4.9
 API version: 3.4
@@ -151,3 +163,4 @@ upload: ../host/home/core/assets/snapshot_2021-04-15_073913.db to s3://user01-op
 upload: ../host/home/core/assets/snapshot_2021-04-15_074105.db to s3://user01-ops-training-backup/etcd-backup/snapshot_2021-04-15_074105.db
 upload: ../host/home/core/assets/snapshot_2021-04-15_074306.db to s3://user01-ops-training-backup/etcd-backup/snapshot_2021-04-15_074306.db
 ```
+
