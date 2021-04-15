@@ -27,16 +27,10 @@ Create a `Restore` object from your `Backup`:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/restore_uptime-app-prod.yaml" >}}{{< /highlight >}}
 
-{{% alert title="Note" color="primary" %}}
-You need to replace the placeholder `<backup-name>` with the name of the backup you want to restore.
-
-To list your available backups:
+Copy above `Restore` resource into a file on your bastion host. Replace the placeholder `<backup-name>` with the name of the backup you want to restore. To list your available backups:
 
 ```bash
 oc -n training-infra-velero get backups
-```
-
-{{% /alert %}}
 
 After the restore has completed, your uptime app should be up and running again:
 
@@ -56,4 +50,3 @@ oc patch backupstoragelocation default \
    --type merge \
    --patch '{"spec":{"accessMode":"ReadWrite"}}'
 ```
-
