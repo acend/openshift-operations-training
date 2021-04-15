@@ -23,7 +23,10 @@ spec:
         machine.openshift.io/cluster-api-machine-type: infra
         machine.openshift.io/cluster-api-machineset: user01-ops-training-75gjz-infra-eu-north-1a
     spec:
-      metadata: {}
+      metadata:
+        creationTimestamp: null
+        labels:
+          node-role.kubernetes.io/infra: ""
       providerSpec:
         value:
           ami:
