@@ -57,5 +57,3 @@ oc patch backupstoragelocation default \
    --patch '{"spec":{"accessMode":"ReadWrite"}}'
 ```
 
-
-## Task {{% param sectionnumber %}}.2: Restoring etcd backup
