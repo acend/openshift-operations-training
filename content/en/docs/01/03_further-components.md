@@ -16,12 +16,16 @@ You will install `cert-manager` with Helm.
 
 In order to install the Helm chart, you must follow these steps:
 
-```bash
-## Add the Jetstack Helm repository
-$ helm repo add jetstack https://charts.jetstack.io
+* Add the Jetstack Helm repository:
 
-## Install the cert-manager Helm chart
-$ helm install cert-manager jetstack/cert-manager \
+```bash
+helm repo add jetstack https://charts.jetstack.io
+```
+
+* Install the cert-manager Helm chart:
+
+```bash
+helm install cert-manager jetstack/cert-manager \
   --namespace training-infra-cert-manager \
   --create-namespace \
   --version v1.3.0 \
