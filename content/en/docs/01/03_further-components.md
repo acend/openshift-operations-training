@@ -42,8 +42,12 @@ oc apply -f ~/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producio
 Verify that the `ClusterIssuer` is ready to issue certificates:
 
 ```bash
-$ oc describe clusterissuer letsencrypt-production
-...
+oc describe clusterissuer letsencrypt-production
+```
+
+Which should give you an output similar to this:
+
+```
 Status:
   Acme:
     Last Registered Email:  hello@openshift.ch
@@ -66,10 +70,15 @@ After your `ClusterIssuer` is ready, you can request a wildcard certificate to b
 oc apply -f ~/ocp4-ops/resources/cert-manager/certificate_wildcard-ingress.yaml
 ```
 
-It will take around 90 seconds for the certificate to be ready.
+It will take around 90 seconds for the certificate to be ready. Check with:
 
 ```bash
-$ oc -n openshift-ingress get certificate
+oc -n openshift-ingress get certificate
+```
+
+You're looking for the column `READY` to be `True`:
+
+```
 NAME                    READY   SECRET                  AGE
 cert-wildcard-ingress   True    cert-wildcard-ingress   6m2s
 ```
