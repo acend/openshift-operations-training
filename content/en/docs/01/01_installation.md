@@ -18,7 +18,7 @@ In this lab, you are going to install an OpenShift 4 cluster on AWS.
 
 See the [OpenShift installation documentation](https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
 
-Edit the file `install-config.yaml` and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username. #FIXME: path to file
+Edit the file `install-config.yaml` and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username: #FIXME: path to file
 
 ```yaml
 apiVersion: v1
@@ -63,7 +63,7 @@ pullSecret: '{"auths":{...}}'
 sshKey: 'ssh-ed25519 AAAA...'
 ```
 
-Backup the file `install-config.yaml`, since it will be consumed during the installation process.
+Backup the file `install-config.yaml`, since it will be consumed during the installation process:
 
 ```bash
 cp $(date +"%Y-%m-%d")/install-config.yaml ~/backup/install-config.yaml
@@ -90,10 +90,10 @@ INFO Time elapsed: 36m22s
 By setting the environment variable `KUBECONFIG` you can provide credentials to the OpenShift CLI (`oc`):
 
 ```bash
-export KUBECONFIG=/home/ec2-user/ocp4-ops/$(date +"%Y-%m-%d")/auth/kubeconfig
+export KUBECONFIG=$HOME/ocp4-ops/$(date +"%Y-%m-%d")/auth/kubeconfig
 ```
 
-You will now check, whether you can log in to the cluster with the `kubeadmin` credentials:
+You will now check whether you can log in to the cluster with the `kubeadmin` credentials:
 
 ```bash
 $ oc whoami
@@ -102,7 +102,7 @@ $ oc whoami --show-server
 https://api.ops.openshift.ch
 ```
 
-The cluster operators are a good indicator, whether the cluster is healhty or not:
+The cluster operators are a good indicator whether the cluster is healhty or not:
 
 ```bash
 $ oc get clusteroperators // "oc get co" for short
@@ -111,4 +111,3 @@ authentication                             4.6.19    True        False         F
 ...
 #FIXME: replace with output of 4.7 cluster
 ```
-
