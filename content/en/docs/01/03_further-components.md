@@ -279,7 +279,7 @@ There should be a Cluster Logging Operator in the openshift-logging Namespace. T
 
 Now you can create a OpenShift Logging instance:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/logging/og_cluster-logging.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/logging/clusterlogging_instance.yaml" >}}{{< /highlight >}}
 
 Again, you can use the provided file:
 
