@@ -160,12 +160,16 @@ You will install Velero with Helm.
 //FIXME: Prereq.
 In order to install the Helm chart, you must follow these steps:
 
-```bash
-## Add the VMware Tanzu Helm repository
-$ helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
+* Add the VMware Tanzu Helm repository:
 
-## Install the Velero Helm chart
-$ helm install velero vmware-tanzu/velero \
+```bash
+helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
+```
+
+* Install the Velero Helm chart
+
+```bash
+helm install velero vmware-tanzu/velero \
   --namespace training-infra-velero \
   --create-namespace \
   --version v2.16.0 \
@@ -176,11 +180,14 @@ $ helm install velero vmware-tanzu/velero \
 After the installation has completed, you can verify the backup location:
 
 ```bash
-$ velero -n training-infra-velero get backup-locations
-NAME      PROVIDER   BUCKET/PREFIX                PHASE       LAST VALIDATED                  ACCESS MODE   DEFAULT
-default   aws        user01-ops-training-backup   Available   2021-04-14 08:04:24 +0000 UTC   ReadWrite
-#FIXME: Hugo var
-#FIXME: Change to "oc"
+oc -n training-infra-velero get backupstoragelocations
+```
+
+The status of `PHASE` should be `Available`:
+
+```
+NAME      PHASE       LAST VALIDATED   AGE
+default   Available   10s              156m
 ```
 
 In the next chapter you will learn how to use Velero for scheduled backups of cluster resources.
