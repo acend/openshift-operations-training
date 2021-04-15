@@ -204,27 +204,27 @@ To deploy the Cluster Logging stack from the CLI, we need to create the followin
 
 * OpenShift Elasticsearch Operator Namespace
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/ns_openshift-operators-redhat.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/logging/ns_openshift-operators-redhat.yaml" >}}{{< /highlight >}}
 
 * Cluster Logging Operator Namespace
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/ns_openshift-logging.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/logging/ns_openshift-logging.yaml" >}}{{< /highlight >}}
 
 * Elasticsarch `OperatorGroup`
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/og_openshift-operators-redhat.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/logging/og_openshift-operators-redhat.yaml" >}}{{< /highlight >}}
 
 * Cluster Logging `OperatorGroup`
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/og_cluster-logging.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/logging/og_cluster-logging.yaml" >}}{{< /highlight >}}
 
 * Elasticsearch Operator `Subscription`
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/sub_elasticsearch-operator.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/logging/sub_elasticsearch-operator.yaml" >}}{{< /highlight >}}
 
 * Cluster Logging Operator `Subscription`
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/sub_cluster-logging.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/logging/sub_cluster-logging.yaml" >}}{{< /highlight >}}
 
 You can also use our provided files:
 
@@ -279,7 +279,7 @@ There should be a Cluster Logging Operator in the openshift-logging Namespace. T
 
 Now you can create a OpenShift Logging instance:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/logging/og_cluster-logging.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/logging/og_cluster-logging.yaml" >}}{{< /highlight >}}
 
 Again, you can use the provided file:
 
