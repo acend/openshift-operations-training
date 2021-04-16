@@ -87,7 +87,7 @@ tolerations:
                           type: integer
 ```
 
-This means the toleration definition will have look like this:
+This means the toleration definition will have to look like this:
 
 ```yaml
 spec:
