@@ -32,7 +32,7 @@ Changing the number of nodes can be either done via CLI or in the web console.
 * Choose to edit Machine count
 * Reduce the number of machines to 2 and click Save
 
-If you now switch to the Nodes or Machines overview in the menu on the left, you can see that OpenShift already began the deprovisioning process.
+If you now switch to the Nodes or Machines overview in the menu on the left, you can see that OpenShift already started the deprovisioning process.
 
 
 ### Change the number of nodes on the command line
