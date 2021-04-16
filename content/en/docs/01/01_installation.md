@@ -154,3 +154,4 @@ operator-lifecycle-manager-packageserver   4.7.6     True        False         F
 service-ca                                 4.7.6     True        False         False      3d2h
 storage                                    4.7.6     True        False         False      107m
 ```
+
