@@ -14,10 +14,14 @@ The update process continuously rolls out new releases of all cluster operators 
 
 After all relevant cluster operators are updated successfully, the machine config operator updates the configuration of the master and worker nodes and - if a newer version is available - replaces the nodes' operating system image (Red Hat Enterprise Linux CoreOS).
 
+
+## Task {{% param sectionnumber %}}.1: Updating the cluster
+
 The cluster update can be performed from the web console or the CLI.
+Choose the one you prefer to do or will most likely perform in the future.
 
 
-## Task {{% param sectionnumber %}}.1a: Updating the cluster from the web console
+### Updating from the web console
 
 Navigate to **Administration**, then **Cluster Settings** to get started. You will see the available update paths in the graph:
 
@@ -50,7 +54,7 @@ Finally, the update is completed:
 ![Update done](update-done.png)
 
 
-## Task {{% param sectionnumber %}}.1b: Updating the cluster from the CLI
+### Updating the cluster from the CLI
 
 Before starting the update, ensure that your cluster is available:
 
@@ -216,4 +220,3 @@ spec:
 ```
 
 {{% /alert %}}
-
