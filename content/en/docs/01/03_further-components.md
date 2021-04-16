@@ -7,12 +7,12 @@ sectionnumber: 1.3
 In this lab, you will install additional components that are commonly used in production.
 
 
-## Task {{% param sectionnumber %}}.1: Install `cert-manager`
+## Task {{% param sectionnumber %}}.1: Install cert-manager
 
-//FIXME: What is cert-manager?
-With [`cert-manager`](https://cert-manager.io/) you can automate certificate management.
+cert-manager massively simplifies certificate management for Kubernetes. It provides easy to use tools to issue, manage and automatically renew certificates and supports the ACME protocol. This allows us to easily and automatically get certificates signed by Let's Encrypt for our cluster.
 
-You will install `cert-manager` with Helm.
+You will install cert-manager with Helm.
+
 
 In order to install the Helm chart, you must follow these steps:
 
@@ -150,7 +150,6 @@ system:admin
 
 ## Task {{% param sectionnumber %}}.4 Install Velero
 
-//FIXME: What is Velero?
 [Velero](https://velero.io/) is a tool to back up and restore Kubernetes resources.
 We will use Velero in this training only for data protection of user workload.
 
@@ -160,7 +159,6 @@ We already created S3 buckets for you to use as backup locations.
 
 You will install Velero with Helm.
 
-//FIXME: Prereq.
 In order to install the Helm chart, you must follow these steps:
 
 * Add the VMware Tanzu Helm repository:
@@ -169,7 +167,7 @@ In order to install the Helm chart, you must follow these steps:
 helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
 ```
 
-* Install the Velero Helm chart
+* Install the Velero Helm chart:
 
 ```bash
 helm install velero vmware-tanzu/velero \
@@ -196,9 +194,9 @@ default   Available   10s              156m
 In the next chapter you will learn how to use Velero for scheduled backups of cluster resources.
 
 
-## Task {{% param sectionnumber %}}.5 Install Cluster Logging
+## Task {{% param sectionnumber %}}.5 Install cluster logging
 
-You can install [OpenShift Logging](https://docs.openshift.com/container-platform/latest/logging/cluster-logging.html) to aggregate all the logs from your OpenShift cluster, such as node logs, application logs, and infrastructure logs.
+You can install [OpenShift Logging](https://docs.openshift.com/container-platform/latest/logging/cluster-logging.html) to aggregate all the logs from your OpenShift cluster, such as node logs, application logs and infrastructure logs.
 
 To deploy the Cluster Logging stack from the CLI, we need to create the following objects:
 
@@ -258,7 +256,7 @@ openshift-authentication                                elasticsearch-operator.5
 ...
 ```
 
-There should be an OpenShift Elasticsearch Operator in each Namespace. The version number might be different than shown.
+There should be an OpenShift Elasticsearch Operator in each namespace. The version number might be different than shown.
 
 Verify the Cluster Logging Operator isntallation:
 
@@ -277,7 +275,7 @@ openshift-logging                                       clusterlogging.5.0.0-202
 
 There should be a Cluster Logging Operator in the openshift-logging Namespace. The Version number might be different than shown.
 
-Now you can create a OpenShift Logging instance:
+Now you can create an OpenShift Logging instance:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/logging/clusterlogging_instance.yaml" >}}{{< /highlight >}}
 
@@ -315,4 +313,3 @@ fluentd-nlgb6                                   1/1     Running   0          2m3
 fluentd-snpkt                                   1/1     Running   0          2m28s
 kibana-d6d5668c5-rppqm                          2/2     Running   0          2m39s
 ```
-
