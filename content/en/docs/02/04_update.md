@@ -84,7 +84,7 @@ VERSION IMAGE
 
 {{% alert title="Warning" color="primary" %}}
 You can only update to one of the available target versions. Do not force the update to an unsupported version, since it could render your cluster useless.
-{{% /alert }}
+{{% /alert %}}
 
 Start the update process:
 
