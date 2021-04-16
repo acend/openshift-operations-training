@@ -4,7 +4,7 @@ weight: 22
 sectionnumber: 2.2
 ---
 
-Now that we have fresh infra nodes up and running, let's see to it that they have to do something.
+Now that we have fresh infra nodes up and running, let's see to it that they have something to do.
 The usual suspects to run on infrastructure nodes are:
 
 * routers
