@@ -28,11 +28,17 @@ This is where taints and tolerations come into play.
 When node selectors and labels represent an allowlist of nodes, taints and tolerations can be used to disallow pods from being deployed to specific nodes.
 This is the exact situation we are in right now.
 Our new infrastructure nodes have the infra and the worker label, but we want to make sure that only infra components can be deployed on them.
+Which means we are going to use a combination of the two variants:
+
+* Use node selectors to move the infra components onto the infra nodes
+* Use taints to prevent other pods from being deployed onto the infra nodes
 
 
 ## Task {{% param sectionnumber %}}.1: Taints
 
 The first step we need to take is taint the new infra nodes.
+Nodes that have taints on them effectively tell the scheduler to only deploy pods onto them if they comply with the corresponding toleration.
+
 A taint consists of a key, value, and effect and is expressed as `key=value:effect`; the value is optional.
 As an effect we can choose from `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 
@@ -52,7 +58,7 @@ Before we continue with moving all the different infra components onto the infra
 
 The [OpenShift documentation](https://docs.openshift.com/container-platform/latest/machine_management/creating-infrastructure-machinesets.html#infrastructure-moving-router_creating-infrastructure-machinesets) explains how to move the router and other infra pods. However, it uses node selectors and labels to do so.
 
-In order to find out how to define a toleration for the Ingress Controller, we need to have a look at its CustomResourceDefinition:
+In order to find out how to define a toleration for the Ingress Controller, a possible way is to have a look at its CustomResourceDefinition:
 
 ```bash
 oc get crd ingresscontrollers.operator.openshift.io -o yaml
@@ -91,16 +97,40 @@ spec:
       key: node-role.kubernetes.io/infra
 ```
 
-You can now either use above definition and it to the `default` `ingresscontroller` resource with:
+Additionally, we need to define a node selector.
+Again looking at the CRD's definition, the node selector by itself looks like this:
+
+```yaml
+spec:
+  nodePlacement:
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/infra: ""
+```
+
+So what we effectively want is the combination of the two:
+
+```yaml
+spec:
+  nodePlacement:
+    nodeSelector:
+      matchLabels:
+        node-role.kubernetes.io/infra: ""
+    tolerations:
+    - effect: NoSchedule
+      key: node-role.kubernetes.io/infra
+```
+
+You can now either use above definition and add it to the `default` `ingresscontroller` resource with:
 
 ```bash
-oc edit ingresscontroller -n openshift-ingress-operator default
+oc edit ingresscontroller/default -n openshift-ingress-operator
 ```
 
 Or use the following patch command:
 
 ```bash
-oc patch ingresscontroller -n openshift-ingress-operator default --type merge -p '{"spec": {"nodePlacement": {"tolerations": [{"effect": "NoSchedule", "key": "node-role.kubernetes.io/infra"}]}}}'
+oc patch ingresscontroller/default -n openshift-ingress-operator --type=merge -p '{"spec":{"nodePlacement": {"nodeSelector": {"matchLabels": {"node-role.kubernetes.io/infra": ""}},"tolerations": [{"effect":"NoSchedule","key": "node-role.kubernetes.io/infra"}]}}}'
 ```
 
 You can now observe the Ingress Controller Operator do its work and immediately start redeploying the router pods onto the infra nodes:
@@ -116,10 +146,12 @@ oc get pods -n openshift-ingress -o wide -w
 
 ## Task {{% param sectionnumber %}}.3: Registry
 
-Repeating the same procedure as we did with the router but with the `configs.imageregistry.operator.openshift.io` CRD, we end up with the same toleration definition:
+Repeating the same procedure as we did with the router but with the `configs.imageregistry.operator.openshift.io` CRD, we end up with a similar-looking definition:
 
 ```yaml
 spec:
+  nodeSelector:
+    node-role.kubernetes.io/infra: ""
   tolerations:
   - effect: NoSchedule
     key: node-role.kubernetes.io/infra
@@ -128,13 +160,13 @@ spec:
 And the corresponding patch command:
 
 ```bash
-oc patch configs.imageregistry.operator.openshift.io cluster --type merge -p '{"spec": {"tolerations": [{"effect": "NoSchedule", "key": "node-role.kubernetes.io/infra"}]}}'
+oc patch configs.imageregistry.operator.openshift.io/cluster --type=merge -p '{"spec": {"nodeSelector": {"node-role.kubernetes.io/infra": ""}, "tolerations": [{"effect": "NoSchedule", "key": "node-role.kubernetes.io/infra"}]}}'
 ```
 
 Watch the pods how they're being redeployed one by one:
 
 ```bash
-oc get pods -o wide -n openshift-image-registry -w
+oc get pods -n openshift-image-registry -o wide -w
 ```
 
 
@@ -156,7 +188,7 @@ oc create -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/ma
 As soon as the ConfigMap is created, the monitoring operator begins redeploying the pods:
 
 ```bash
-oc get pods -o wide -n openshift-monitoring -w
+oc get pods -n openshift-monitoring -o wide -w
 ```
 
 This could take a while.
@@ -166,7 +198,7 @@ In the meantime, we can move on to moving the last infrastructure component.
 ## Task {{% param sectionnumber %}}.5: Logging
 
 The logging stack is similar to the monitoring stack in that it consists of a number of different components.
-All of these can be placed onto the infra nodes by defining the tolerations in the `clusterloggings.logging.openshift.io` custom resource.
+Most of these can be placed onto the infra nodes by defining the toleration and node selector in the `clusterloggings.logging.openshift.io` custom resource.
 Taking into account all the other configuration we already did, the new ClusterLogging definition looks like this:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/clusterlogging_instance.yaml" >}}{{< /highlight >}}

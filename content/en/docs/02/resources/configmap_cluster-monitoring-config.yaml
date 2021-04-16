@@ -6,38 +6,50 @@ metadata:
 data:
   config.yaml: |+
     alertmanagerMain:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
       tolerations:
       - key: "node-role.kubernetes.io/infra"
-        effect: "NoSchedule"
+        effect: NoSchedule
     prometheusK8s:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
       tolerations:
-      - key: "node-role.kubernetes.io/infra"
-        effect: "NoSchedule"
-    prometheusOperator:
-      tolerations:
-      - key: "node-role.kubernetes.io/infra"
-        effect: "NoSchedule"
+      - key: node-role.kubernetes.io/infra
+        effect: NoSchedule
     grafana:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
       tolerations:
       - key: "node-role.kubernetes.io/infra"
-        effect: "NoSchedule"
+        effect: NoSchedule
     k8sPrometheusAdapter:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
       tolerations:
       - key: "node-role.kubernetes.io/infra"
-        effect: "NoSchedule"
+        effect: NoSchedule
     kubeStateMetrics:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
       tolerations:
       - key: "node-role.kubernetes.io/infra"
-        effect: "NoSchedule"
+        effect: NoSchedule
     telemeterClient:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
       tolerations:
       - key: "node-role.kubernetes.io/infra"
-        effect: "NoSchedule"
+        effect: NoSchedule
     openshiftStateMetrics:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
       tolerations:
       - key: "node-role.kubernetes.io/infra"
-        effect: "NoSchedule"
+        effect: NoSchedule
     thanosQuerier:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
       tolerations:
       - key: "node-role.kubernetes.io/infra"
-        effect: "NoSchedule"
+        effect: NoSchedule
