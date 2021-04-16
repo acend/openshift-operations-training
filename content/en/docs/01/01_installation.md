@@ -77,7 +77,12 @@ cp $(date +"%Y-%m-%d")/install-config.yaml ~/backup/install-config.yaml
 Now you are ready to create your own cluster:
 
 ```bash
-$ ./openshift-install create cluster --dir=$(date +"%Y-%m-%d") --log-level=info
+./openshift-install create cluster --dir=$(date +"%Y-%m-%d") --log-level=info
+```
+
+Example output:
+
+```
 ...
 INFO Install complete!
 INFO To access the cluster as the system:admin user when using 'oc', run 'export KUBECONFIG=/home/myuser/install_dir/auth/kubeconfig'
@@ -98,18 +103,54 @@ export KUBECONFIG=$HOME/ocp4-ops/$(date +"%Y-%m-%d")/auth/kubeconfig
 You will now check whether you can log in to the cluster with the `kubeadmin` credentials:
 
 ```bash
-$ oc whoami
-system:admin
-$ oc whoami --show-server
-https://api.ops.openshift.ch
+oc whoami --show-server
+```
+
+The output should look like this:
+
+```
+https://api.+username+-ops-training.openshift.ch:6443
 ```
 
 The cluster operators are a good indicator whether the cluster is healhty or not:
 
 ```bash
-$ oc get clusteroperators // "oc get co" for short
+oc get clusteroperators
+```
+
+Example output:
+
+```
 NAME                                       VERSION   AVAILABLE   PROGRESSING   DEGRADED   SINCE
-authentication                             4.6.19    True        False         False      3d18h
-...
-#FIXME: replace with output of 4.7 cluster
+authentication                             4.7.6     True        False         False      105m
+baremetal                                  4.7.6     True        False         False      3d2h
+cloud-credential                           4.7.6     True        False         False      3d3h
+cluster-autoscaler                         4.7.6     True        False         False      3d2h
+config-operator                            4.7.6     True        False         False      3d2h
+console                                    4.7.6     True        False         False      113m
+csi-snapshot-controller                    4.7.6     True        False         False      107m
+dns                                        4.7.6     True        False         False      111m
+etcd                                       4.7.6     True        False         False      3d2h
+image-registry                             4.7.6     True        False         False      98m
+ingress                                    4.7.6     True        False         False      3d2h
+insights                                   4.7.6     True        False         False      3d2h
+kube-apiserver                             4.7.6     True        False         False      3d2h
+kube-controller-manager                    4.7.6     True        False         False      3d2h
+kube-scheduler                             4.7.6     True        False         False      3d2h
+kube-storage-version-migrator              4.7.6     True        False         False      106m
+machine-api                                4.7.6     True        False         False      3d2h
+machine-approver                           4.7.6     True        False         False      3d2h
+machine-config                             4.7.6     True        False         False      103m
+marketplace                                4.7.6     True        False         False      107m
+monitoring                                 4.7.6     True        False         False      3h47m
+network                                    4.7.6     True        False         False      3d2h
+node-tuning                                4.7.6     True        False         False      146m
+openshift-apiserver                        4.7.6     True        False         False      105m
+openshift-controller-manager               4.7.6     True        False         False      3d2h
+openshift-samples                          4.7.6     True        False         False      146m
+operator-lifecycle-manager                 4.7.6     True        False         False      3d2h
+operator-lifecycle-manager-catalog         4.7.6     True        False         False      3d2h
+operator-lifecycle-manager-packageserver   4.7.6     True        False         False      108m
+service-ca                                 4.7.6     True        False         False      3d2h
+storage                                    4.7.6     True        False         False      107m
 ```

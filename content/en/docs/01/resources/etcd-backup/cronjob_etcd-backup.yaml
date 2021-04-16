@@ -1,0 +1,51 @@
+apiVersion: batch/v1beta1
+kind: CronJob
+metadata:
+  name: etcd-backup
+spec:
+  schedule: "5 0,6,12,18 * * *"
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          nodeSelector:
+            node-role.kubernetes.io/master: ''
+          hostNetwork: true
+          restartPolicy: OnFailure
+          serviceAccountName: etcd-backup
+          containers:
+          - name: etcd-backup
+            image: 'docker.io/amazon/aws-cli:latest'
+            imagePullPolicy: Always
+            resources:
+              limits:
+                cpu: 500m
+                memory: 512Mi
+              requests:
+                cpu: 10m
+                memory: 32Mi
+            command:
+              - /usr/local/bin/scripts/backup
+            envFrom:
+              - secretRef:
+                  name: etcd-backup-s3-bucket
+            securityContext:
+              privileged: true
+              runAsUser: 0
+            volumeMounts:
+              - name: host
+                mountPath: /host
+              - name: backup-script
+                mountPath: /usr/local/bin/scripts
+          volumes:
+            - name: host
+              hostPath:
+                path: /
+                type: Directory
+            - name: backup-script
+              configMap:
+                name: backup-script
+                defaultMode: 493
+          dnsPolicy: ClusterFirst
+          tolerations:
+            - operator: Exists
