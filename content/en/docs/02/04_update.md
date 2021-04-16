@@ -14,7 +14,7 @@ The update process continuously rolls out new releases of the ClusterOperators a
 
 After all relevant ClusterOperators are updated successfully, the Machine Config Operator updates the configuration of the master and worker nodes and - if a newer version is available - replaces the Red Hat Enterprise Linux CoreOS (RHCOS) image of the nodes.
 
-The cluster update can be performed from the web console or the CLI. 
+The cluster update can be performed from the web console or the CLI.
 
 
 ## Task {{% param sectionnumber %}}.1a: Updating the cluster from the web console
@@ -173,7 +173,7 @@ storage                                    4.7.5     True        False         F
 ```
 
 {{% alert title="Note" color="primary" %}}
-In the example output above you can see that the ClusterOperator `openshift-apiserver` is already reporting the new version, but is currently in a degraded state. This is expected behaviour during the update process, so don't panic! 
+In the example output above you can see that the ClusterOperator `openshift-apiserver` is already reporting the new version, but is currently in a degraded state. This is expected behaviour during the update process, so don't panic!
 {{% /alert %}}
 
 After the ClusterOperators are rolled out, the master and worker nodes are updated. The Machine Config Operator sequentially marks the nodes as unschedulable, applies the new configuration, drains the node and restarts the Kubelet service.
@@ -198,5 +198,4 @@ ip-10-0-184-171.eu-north-1.compute.internal   Ready                      master 
 ip-10-0-195-93.eu-north-1.compute.internal    Ready                      worker         3d     v1.20.0+bafe72f
 ip-10-0-212-27.eu-north-1.compute.internal    Ready                      master         3d1h   v1.20.0+bafe72f
 ```
-
 
