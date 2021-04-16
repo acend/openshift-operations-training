@@ -8,7 +8,7 @@ We initially installed this cluster using only worker nodes.
 We then successfully created infra nodes and moved all infrastructure components onto them.
 Now, essentially the only real workload that's running on the 3 worker nodes is our uptime application.
 
-Without yet going into detail on how and where you can find dashboards and metrics for capacity monitoring, it's safe to say that one small Python app doesn't need 3 worker nodes with 8 CPU cores and 32 GB of memory.
+Without going into detail yet on how and where you can find dashboards and metrics for capacity monitoring, it's safe to say that one small Python app doesn't need 3 worker nodes with 8 CPU cores and 32 GB of memory.
 So what we are going to do next is reduce the number of worker nodes to 2 and reduce their size.
 
 We admit that in real life, this would probably be the other way round.
