@@ -198,3 +198,22 @@ ip-10-0-184-171.eu-north-1.compute.internal   Ready                      master 
 ip-10-0-195-93.eu-north-1.compute.internal    Ready                      worker         3d     v1.20.0+bafe72f
 ip-10-0-212-27.eu-north-1.compute.internal    Ready                      master         3d1h   v1.20.0+bafe72f
 ```
+
+{{% alert title="Note" color="primary" %}}
+By default, only one machine is allowed to be unavailable during the update process. For a larger cluster, this can take a long time for the configuration change to be reflected. We can alter this behaviour by changing the `maxUnavailable` value in the `MachineConfigPool` of the worker nodes.
+
+Edit the `MachineConfigPool` of the worker:
+
+```bash
+oc edit machineconfigpool worker
+```
+
+And set `maxUnavailable` to the desired value:
+
+```yaml
+spec:
+  maxUnavailable: <node_count>
+```
+
+{{% /alert %}}
+
