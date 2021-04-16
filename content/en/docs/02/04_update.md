@@ -4,22 +4,22 @@ weight: 24
 sectionnumber: 2.4
 ---
 
-In this lab we will update our OpenShift 4 cluster to a newer minor version.
+In this lab we will update our OpenShift 4 cluster to the latest stable errata release.
 
-Updating an OpenShift 4 cluster is a fully automated process that is managed by several ClusterOperators. If the cluster has Internet access, updates are provided over-the-air, otherwise you need to synchronize the new images to an internal registry prior to starting the update or use a pull-through registry.
+Updating an OpenShift 4 cluster is a fully automated process that is managed by several cluster operators. If the cluster has Internet access, updates are provided over-the-air, otherwise you need to synchronize the new images to an internal registry prior to starting the update or use a pull-through registry.
 
 Check ["Updating a restricted network cluster"](https://docs.openshift.com/container-platform/latest/updating/updating-restricted-network-cluster.html) for details on updating a cluster in a disconnected environment.
 
-The update process continuously rolls out new releases of the ClusterOperators and verifies their readiness before continuing. If a ClusterOperator is stuck in a non ready state, the update does not proceed and manual intervention might be necessary.
+The update process continuously rolls out new releases of all cluster operators and verifies their readiness before continuing. If a cluster operator is stuck in a non-ready state, the update does not proceed and manual intervention might become necessary.
 
-After all relevant ClusterOperators are updated successfully, the Machine Config Operator updates the configuration of the master and worker nodes and - if a newer version is available - replaces the Red Hat Enterprise Linux CoreOS (RHCOS) image of the nodes.
+After all relevant cluster operators are updated successfully, the machine config operator updates the configuration of the master and worker nodes and - if a newer version is available - replaces the nodes' operating system image (Red Hat Enterprise Linux CoreOS).
 
 The cluster update can be performed from the web console or the CLI.
 
 
 ## Task {{% param sectionnumber %}}.1a: Updating the cluster from the web console
 
-Navigate to "Administration" -> "Cluster Settings" to get started. You will see the available update paths in the graph:
+Navigate to **Administration**, then **Cluster Settings** to get started. You will see the available update paths in the graph:
 
 ![Update overview](update-start.png)
 
@@ -27,21 +27,21 @@ To read the release notes of the new version, click on the target version and fo
 
 ![Release notes](update-release-notes.png)
 
-The update process from the web console is pretty straight forward. To start the update, all you have to do is press two buttons.
+The update process from the web console is pretty straightforward. To start the update, all you have to do is press two buttons.
 
 Click the update button and confirm the update to the target version by again clicking on the update button:
 
 ![Start update](update-available.png)
 
-The update process will start updating the ClusterOperators:
+The update process will start updating the cluster operators:
 
 ![Update started](update-update-status-01.png)
 
-You can see the details of the ClusterOperators in the second tab:
+You can see more details in the second tab:
 
 ![ClusterOperators status](update-co-status.png)
 
-Worker Nodes may continue to update after the update of Master Nodes and ClusterOperators are complete:
+Worker nodes may continue to update after the update of the masters and cluster operators is complete:
 
 ![Worker still updating](update-worker.png)
 
@@ -86,7 +86,7 @@ VERSION IMAGE
 You can only update to one of the available target versions. Do not force the update to an unsupported version, since it could render your cluster useless.
 {{% /alert %}}
 
-Start the update process:
+Starting the update process depends on what we want to do. We have two options:
 
 * To update to the latest version:
 
@@ -173,10 +173,10 @@ storage                                    4.7.5     True        False         F
 ```
 
 {{% alert title="Note" color="primary" %}}
-In the example output above you can see that the ClusterOperator `openshift-apiserver` is already reporting the new version, but is currently in a degraded state. This is expected behaviour during the update process, so don't panic!
+In the example output above you can see that the `openshift-apiserver` ClusterOperator is already reporting the new version, but is currently in a degraded state. This is expected behaviour during the update process, so no need to worry.
 {{% /alert %}}
 
-After the ClusterOperators are rolled out, the master and worker nodes are updated. The Machine Config Operator sequentially marks the nodes as unschedulable, applies the new configuration, drains the node and restarts the Kubelet service.
+After all cluster operators are rolled out, the master and worker nodes are updated. The machine config operator sequentially cordons the nodes, applies the new configuration and restarts the Kubelet service.
 
 You can check the status of the nodes to see the process:
 
@@ -198,4 +198,3 @@ ip-10-0-184-171.eu-north-1.compute.internal   Ready                      master 
 ip-10-0-195-93.eu-north-1.compute.internal    Ready                      worker         3d     v1.20.0+bafe72f
 ip-10-0-212-27.eu-north-1.compute.internal    Ready                      master         3d1h   v1.20.0+bafe72f
 ```
-
