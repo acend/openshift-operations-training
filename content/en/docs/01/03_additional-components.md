@@ -1,5 +1,5 @@
 ---
-title: "1.3 Further components"
+title: "1.3 Additional components"
 weight: 13
 sectionnumber: 1.3
 ---
