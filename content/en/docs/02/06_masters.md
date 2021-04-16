@@ -11,6 +11,7 @@ In this lab we will learn how to replace a failed master node. As long as we do 
 
 Since the master nodes are hosting the `etcd` it is not as straight forward as replacing a worker node backed by a MachineSet.
 
+
 ### Task {{% param sectionnumber %}}.1.1: Replacing the machine
 
 First, create a copy of the master machine you want to replace:
@@ -27,9 +28,9 @@ Edit the file to reflect the following changes:
   * `metadata.generations`
   * `metadata.uid`
   * `metadata.managedFields`
-  * `metadata.resourceVersion` 
+  * `metadata.resourceVersion`
   * `spec.providerID`
-  * * all of `status`
+  * all of `status`
 * Change `metadata.name` to a unique name, e.g. if the name was `<clustername>-<id>-master-0` use `<clsutername>-<id>-master00`.
 * Change `metadata.selfLink` to the new machine name from the previous step.
 
@@ -56,7 +57,7 @@ oc -n openshift-machine-api get machines -o wide
 Example output:
 
 ```
-NAME                                                 PHASE	TYPE         REGION	  ZONE          AGE    NODE                                          PROVIDERID                               STATE
+NAME                                                 PHASE      TYPE         REGION       ZONE          AGE    NODE                                          PROVIDERID                               STATE
 user01-ops-training-75gjz-infra-eu-north-1a-9mzd9    Running    m5.2xlarge   eu-north-1   eu-north-1a   46h    ip-10-0-130-69.eu-north-1.compute.internal    aws:///eu-north-1a/i-0a7b134c9b0d07d4d   running
 user01-ops-training-75gjz-infra-eu-north-1a-h88ln    Running    m5.2xlarge   eu-north-1   eu-north-1a   46h    ip-10-0-154-3.eu-north-1.compute.internal     aws:///eu-north-1a/i-0b98e80b4cd46d367   running
 user01-ops-training-75gjz-infra-eu-north-1a-smgzs    Running    m5.2xlarge   eu-north-1   eu-north-1a   46h    ip-10-0-154-185.eu-north-1.compute.internal   aws:///eu-north-1a/i-0750413e1557c439f   running
@@ -158,7 +159,7 @@ View the member list and take note of the ID and name of the `etcd` member you w
 
 {{% alert title="Note" color="secondary" %}}
 To identify the member you need to remove, compare the list with the existing pod names.
-In the example, the list shows a member with the name `ip-10-0-212-27.eu-north-1.compute.internal` which does not correspond with any of the master node names. 
+In the example, the list shows a member with the name `ip-10-0-212-27.eu-north-1.compute.internal` which does not correspond with any of the master node names.
 {{% /alert %}}
 
 ```bash
