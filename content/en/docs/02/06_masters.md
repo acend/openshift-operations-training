@@ -4,12 +4,12 @@ weight: 26
 sectionnumber: 2.6
 ---
 
-In this lab we will learn how to replace a failed master node. As long as we do not lose the majority of out master nodes, we can simply replace the failed master node(s). If we lose our quorum, we need to restore the state of `etcd` from a previously created snapshot, which will not be covered in this lab.
+In this lab we will learn how to replace a failed master node. As long as we do not lose the majority of our masters, we can simply replace those that failed. If we lose the majority (e.g. 2 out of 3), we need to restore the state of `etcd` from a previously created snapshot, which will not be covered in this lab.
 
 
 ## Task {{% param sectionnumber %}}.1: Replacing a master node
 
-Since the master nodes are hosting the `etcd` it is not as straight forward as replacing a worker node backed by a MachineSet.
+Since the masters are hosting `etcd`, the key-value store that holds all the cluster's information and state, it is not as straightforward as replacing a worker node backed by a machine set.
 
 
 ### Task {{% param sectionnumber %}}.1.1: Replacing the machine
@@ -211,7 +211,7 @@ oc patch etcd cluster \
 
 {{% /alert %}}
 
-All that is left to do, is clean up the old secrets that are not used anymore.
+All that is left to do is clean up the old secrets that are not used anymore.
 
 List the secrets of the old peer that can be safely deleted:
 
@@ -235,4 +235,3 @@ oc -n openshift-etcd delete secrets \
   etcd-serving-<removed-peer-name> \
   etcd-serving-metrics-<removed-peer-name>
 ```
-
