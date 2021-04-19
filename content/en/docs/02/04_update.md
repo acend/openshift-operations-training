@@ -43,7 +43,7 @@ The update process will start updating the cluster operators:
 
 You can see more details in the second tab:
 
-![ClusterOperators status](../update-co-status.png)
+![ClusterOperators status](../update-co-status-01.png)
 
 Worker nodes may continue to update after the update of the masters and cluster operators is complete:
 
