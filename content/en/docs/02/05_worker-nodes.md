@@ -27,7 +27,7 @@ Changing the number of nodes can be either done via CLI or in the web console.
 * In the menu on the left, choose Compute and then MachineSets
 * Click the 3-dot button on the right next to the worker machineset:
 
-![machineset](machineset.png)
+![machineset](../machineset.png)
 
 * Choose to edit Machine count
 * Reduce the number of machines to 2 and click Save

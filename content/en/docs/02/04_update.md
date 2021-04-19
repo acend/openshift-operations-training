@@ -25,33 +25,33 @@ Choose the one you prefer to do or will most likely perform in the future.
 
 Navigate to **Administration**, then **Cluster Settings** to get started. You will see the available update paths in the graph:
 
-![Update overview](update-start.png)
+![Update overview](../update-start.png)
 
 To read the release notes of the new version, click on the target version and follow the link:
 
-![Release notes](update-release-notes.png)
+![Release notes](../update-release-notes.png)
 
 The update process from the web console is pretty straightforward. To start the update, all you have to do is press two buttons.
 
 Click the update button and confirm the update to the target version by again clicking on the update button:
 
-![Start update](update-available.png)
+![Start update](../update-available.png)
 
 The update process will start updating the cluster operators:
 
-![Update started](update-update-status-01.png)
+![Update started](../update-update-status-01.png)
 
 You can see more details in the second tab:
 
-![ClusterOperators status](update-co-status.png)
+![ClusterOperators status](../update-co-status-01.png)
 
 Worker nodes may continue to update after the update of the masters and cluster operators is complete:
 
-![Worker still updating](update-worker.png)
+![Worker still updating](../update-worker.png)
 
 Finally, the update is completed:
 
-![Update done](update-done.png)
+![Update done](../update-done.png)
 
 
 ### Updating the cluster from the CLI
