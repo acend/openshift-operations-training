@@ -1,0 +1,25 @@
+apiVersion: monitoring.coreos.com/v1
+kind: PrometheusRule
+metadata:
+  labels:
+    prometheus: k8s
+    role: alert-rules
+  name: monitoring-stack-alerts
+spec:
+  groups:
+  - name: general.rules
+    rules:
+    - alert: TargetDown
+      annotations:
+        message: '{{ $labels.job }} targets in {{ $labels.namespace }} namespace are down.'
+      expr: |2
+        (
+          count(up == 0) BY (job, namespace, service)
+        /
+          count(up) BY (job, namespace, service)
+        )
+        * 100
+        > 10
+      for: 10m
+      labels:
+        severity: warning
