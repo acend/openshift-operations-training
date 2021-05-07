@@ -4,7 +4,7 @@ weight: 33
 sectionnumber: 3.3
 ---
 
-## Task {{% param sectionnumber %}}.0: Enable the user-workload monitoring stack
+## Task {{% param sectionnumber %}}.1: Enable the user-workload monitoring stack
 
 As mentioned in a lab before, it is not supported to alter the OpenShift provided `openshift-monitoring` stack. If you want to add additional monitoring targets or add custom Prometheus rules, you need to enable the user-workload monitoring stack.
 
@@ -46,7 +46,7 @@ thanos-ruler-user-workload-1          3/3     Running   0          65s
 **Optional:** You may also want to enable storage and persistence for your user workload monitoring stack, which is done in the same way as you learned in the previous lab.
 
 
-## Task {{% param sectionnumber %}}.1: Add a custom Prometheus rule
+## Task {{% param sectionnumber %}}.2: Add a custom Prometheus rule
 
 With a configured user-workload monitoring stack you can add your own custom Prometheus rules. To do so, create a PrometheusRule custom resource.
 
@@ -71,7 +71,7 @@ oc -n openshift-user-workload-monitoring get route thanos-ruler -ojsonpath='{"ht
 ```
 
 
-## Task {{% param sectionnumber %}}.2: Granting users to add monitoring resources
+## Task {{% param sectionnumber %}}.3: Granting users to add monitoring resources
 
 By default just cluster administrators will have access to the user-workload monitoring stack and can create Prometheus custom resources like PrometheusRules. You can grant platform users access to the stack by giving them one of the cluster roles below.
 

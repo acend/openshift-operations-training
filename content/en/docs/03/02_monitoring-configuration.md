@@ -4,7 +4,7 @@ weight: 32
 sectionnumber: 3.2
 ---
 
-## Task {{% param sectionnumber %}}.0: Enable alerting
+## Task {{% param sectionnumber %}}.1: Enable alerting
 
 Let's take a look at an example of how you can send alerts to a receiver of your choice. You can do so by editing the settings directly in the web console at **Administration** -> **Cluster Settings** -> **Global Configuration** -> **Alertmanager** or by creating the alertmanager-main secret.
 
@@ -23,7 +23,7 @@ Lets take a look at the main components that can be configured applying a custom
 * `inhibit_rules`: You can group alerts together to suppress certain alerts to prevent notification flooding. E.g. when an etcd member is unavailable (**severity: critical**) you do not care if the etcd has a high number of failed leader proposals (**severity: warning**).
 
 
-## Task {{% param sectionnumber %}}.1: Enable persistence and define metrics retention
+## Task {{% param sectionnumber %}}.2: Enable persistence and define metrics retention
 
 By default, the monitoring stack loses all scraped metrics on restarts because it does not persist its data. Let's make our Prometheus time series database persistent and increase the metric retetnion to 2d.
 

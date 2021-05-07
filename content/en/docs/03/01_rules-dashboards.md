@@ -4,7 +4,7 @@ weight: 31
 sectionnumber: 3.1
 ---
 
-## Task {{% param sectionnumber %}}.0: Check-out the OpenShift provided dashboards
+## Task {{% param sectionnumber %}}.1: Check-out the OpenShift provided dashboards
 
 OpenShift provides a set of default dashboards for cluster adminstrators and OpenShift users.
 
@@ -25,7 +25,7 @@ Switch to the **Developer** console and select the **uptime-app-prod** project. 
 ![cluster dashboard](../user-dashboard.png)
 
 
-## Task {{% param sectionnumber %}}.1: Check-out the OpenShift provided alerting rules
+## Task {{% param sectionnumber %}}.2: Check-out the OpenShift provided alerting rules
 
 OpenShift provides an extensive set of alerts, based on the [kubernetes-mixin](https://github.com/kubernetes-monitoring/kubernetes-mixin) project. Check out the configured alerts by navigating to your Prometheus web user interface and take a look a the predefined alerting rules.
 
@@ -40,7 +40,7 @@ Active alerts (state pending or firing) will also displayed in the administrator
 As you can see, these alerts are as generic as possible to fit most platforms. Keep in mind, that these alerts cannot be altered and adding more rules in `openshift-monitoring` is not supported. In a later lab you will learn, how to add rules by enabling monitoring for user-defined projects.
 
 
-## Task {{% param sectionnumber %}}.2: Create silences
+## Task {{% param sectionnumber %}}.3: Create silences
 
 Sometimes you have to silence an alert because someone is already working on it or the issue is scheduled to be fixed in a future maintenance window.
 
