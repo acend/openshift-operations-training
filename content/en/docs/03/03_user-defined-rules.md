@@ -53,10 +53,12 @@ thanos-ruler-user-workload-1          3/3     Running   0          65s
 
 With the user-workload monitoring stack now running, you can add your own custom Prometheus rules. To do so, create a PrometheusRule custom resource with the following content:
 
+{{< highlight yaml >}}{{< readfile file="content/en/docs/03/resources/custom-prometheus-rule.yaml" >}}{{< /highlight >}}
+
+Either create a file with above content or apply it directly:
+
 ```bash
-cat <<EOF | oc -n uptime-app-prod apply -f -
-{{< readfile file="content/en/docs/03/resources/custom-prometheus-rule.yaml" >}}
-EOF
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/custom-prometheus-rule.yaml
 ```
 
 Let's take a look at the main components that can be configured applying a custom PrometheusRule:
