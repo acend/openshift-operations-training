@@ -73,7 +73,7 @@ This is only rendered when `enabledModule` in `config.toml` **does not** contain
 Build the image:
 
 ```bash
-docker build <--build-arg ACEND_HUGO_ENV=...> -t acend/openshift-4-ops-training .
+docker build <--build-arg TRAINING_HUGO_ENV=...> -t acend/openshift-4-ops-training .
 ```
 
 Run it locally:
