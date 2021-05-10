@@ -1,6 +1,22 @@
 {
-  "name": "openshift-4-ops-training-training",
+  "name": "openshift-4-ops-training",
+  "version": "0.0.9",
+  "description": "OpenShift 4 Ops Training",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/acend/openshift-4-ops-training.git"
+  },
+  "author": "acend gmbh",
+  "scripts": {
+    "mdlint": "markdownlint --config .markdownlint.json content *.md",
+    "prepare": "husky install"
+  },
+  "bugs": {
+    "url": "https://github.com/acend/openshift-4-ops-training/issues"
+  },
+  "homepage": "https://github.com/acend/openshift-4-ops-training#readme",
   "devDependencies": {
+    "husky": "6.0.0",
     "markdownlint-cli": "0.27.1"
   }
 }
