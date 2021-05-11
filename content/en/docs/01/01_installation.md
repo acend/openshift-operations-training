@@ -7,14 +7,14 @@ sectionnumber: 1.1
 In this lab, you are going to install an OpenShift 4 cluster on AWS.
 
 
-## Task {{% param sectionnumber %}}.0: Preparing the environment
+## Task {{% param sectionnumber %}}.1: Preparing the environment
 
 * Download public key
 * SSH into your bastion host
 * Create working directory
 
 
-## Task {{% param sectionnumber %}}.1: Customizing the installation
+## Task {{% param sectionnumber %}}.2: Customizing the installation
 
 See the [OpenShift installation documentation](https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
 
@@ -72,7 +72,7 @@ cp $(date +"%Y-%m-%d")/install-config.yaml ~/backup/install-config.yaml
 ```
 
 
-## Task {{% param sectionnumber %}}.2: Deploying the cluster
+## Task {{% param sectionnumber %}}.3: Deploying the cluster
 
 Now you are ready to create your own cluster:
 
@@ -92,7 +92,7 @@ INFO Time elapsed: 36m22s
 ```
 
 
-## Task {{% param sectionnumber %}}.3: Verifying the installation
+## Task {{% param sectionnumber %}}.4: Verifying the installation
 
 By setting the environment variable `KUBECONFIG` you can provide credentials to the OpenShift CLI (`oc`):
 
@@ -154,4 +154,3 @@ operator-lifecycle-manager-packageserver   4.7.6     True        False         F
 service-ca                                 4.7.6     True        False         False      3d2h
 storage                                    4.7.6     True        False         False      107m
 ```
-
