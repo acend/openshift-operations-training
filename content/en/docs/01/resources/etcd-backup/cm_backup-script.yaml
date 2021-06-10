@@ -10,4 +10,4 @@ data:
     set -u
 
     chroot /host /usr/local/bin/cluster-backup.sh /home/core/assets
-    aws s3 sync /host/home/core/assets/ "s3://${AWS_S3_BUCKET}/etcd-backup"
+    aws s3 sync /host/home/core/assets/ "s3://${AWS_S3_BUCKET}/etcd-backup" --endpoint-url ${AWS_ENDPOINT_URL}
