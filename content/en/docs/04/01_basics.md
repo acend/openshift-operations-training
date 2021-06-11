@@ -233,6 +233,26 @@ The `--tail`, `--since` and `--until` parameters cannot be used to with `--path`
 {{% /alert %}}
 
 
+## SSH
+
+You might be wondering why all these new subcommands were introduced with OpenShift 4.
+Why not simply ssh into a node you want to analyze?
+
+The reason is the introduction of CoreOS as the default underlying operating system of OpenShift 4.
+CoreOS changes the way we interact with an operating system because it follows the core principles of containers:
+
+* immutability
+* statelessness
+
+This means that it is discouraged to ssh into a node because this might introduce manual, undocumented changes to the operating system that could lead to unexpected behaviour.
+Always apply configuration changes via `MachineConfig` objects.
+
+However, there are cases where ssh represents the only viable means of analyzing a malfunctioning node.
+Imagine the OpenShift API is down or the node's kubelet is not responding.
+`oc` will not work in these cases.
+So it still is a good idea to configure ssh keys in those installation configuration files.
+
+
 ## Troubleshooting references
 
 The OpenShift documentation has multiple troubleshooting documentation pages such as [this one](https://docs.openshift.com/container-platform/latest/support/troubleshooting/troubleshooting-installations.html) which are worth checking out.
