@@ -193,6 +193,46 @@ To exit the debug pod, either simply type `exit` or press ctrl+d until you're ba
 For more information on `crictl`, check out [this debugging how-to](https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/) or [its documentation](https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md).
 
 
+## Task {{% param sectionnumber %}}.4: Node logs
+
+You might be tempted now to use the `oc debug node` feature to use it for all kinds of debugging tasks.
+However, there is one very useful `oc adm` subcommand that comes in especially handy when you want to look at a node's logs.
+
+`oc adm node-logs` allows you to retrieve node logs.
+By default, the command queries the systemd journal.
+Using `--path`, you can override this behaviour and use it to show logs within the node's `/var/logs` directory.
+
+Let's use this to query all masters' (`--role master`) kubelet (`--unit`) logs:
+
+```bash
+oc adm node-logs --role master --unit kubelet --tail 10
+```
+
+{{% alert title="Note" color="primary" %}}
+As with the `journalctl` command you can use `--tail`, `--since` and `--until` to limit the amount of logs or to focus on a certain period of time.
+{{% /alert %}}
+
+Of course above command can be used for all the other systemd units that are running on a node.
+
+As already mentioned, the `--path` parameter can be used to show logs in the `/var/logs` directory.
+The following command lists all available log directories:
+
+```bash
+oc adm node-logs --role master --path /
+```
+
+This way, we can find a specific log file and finally show its content, e.g. the audit log's:
+
+```bash
+oc adm node-logs --role master --path /audit/audit.log
+```
+
+{{% alert title="Note" color="primary" %}}
+You might have to interrupt the `node-logs` command using `--path` with ctrl+c depending on the number of logs.
+The `--tail`, `--since` and `--until` parameters cannot be used to with `--path`.
+{{% /alert %}}
+
+
 ## Troubleshooting references
 
 The OpenShift documentation has multiple troubleshooting documentation pages such as [this one](https://docs.openshift.com/container-platform/latest/support/troubleshooting/troubleshooting-installations.html) which are worth checking out.
