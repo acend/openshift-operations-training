@@ -196,7 +196,7 @@ For more information on `crictl`, check out [this debugging how-to](https://kube
 ## Task {{% param sectionnumber %}}.4: Node logs
 
 You might be tempted now to use the `oc debug node` feature to use it for all kinds of debugging tasks.
-However, there is one very useful `oc adm` subcommand that comes in especially handy when you want to look at a node's logs.
+However, there is one particularly useful `oc adm` subcommand that comes in especially handy when you want to look at a node's logs.
 
 `oc adm node-logs` allows you to retrieve node logs.
 By default, the command queries the systemd journal.
