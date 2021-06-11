@@ -233,6 +233,28 @@ The `--tail`, `--since` and `--until` parameters cannot be used to with `--path`
 {{% /alert %}}
 
 
+## Task {{% param sectionnumber %}}.5: Node resource usage
+
+Belonging to the same category of particularly useful commands is `oc adm top`.
+It can be used to display usage statistics of images, imagestreams, nodes and pods.
+
+Want to know which image uses the most space on your nodes?
+`oc adm top images` is your friend.
+It works very similarly for `ImageStreams` objects.
+
+What gives you a nice overview of resource usage on your nodes (without using Prometheus) is `oc adm top node`:
+
+```bash
+oc adm top node --selector node-role.kubernetes.io/worker
+```
+
+Finally, let's check the uptime app's resource consumption:
+
+```bash
+oc adm top pods --namespace uptime-app-prod
+```
+
+
 ## SSH
 
 You might be wondering why all these new subcommands were introduced with OpenShift 4.
