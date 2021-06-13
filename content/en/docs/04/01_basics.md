@@ -193,6 +193,88 @@ To exit the debug pod, either simply type `exit` or press ctrl+d until you're ba
 For more information on `crictl`, check out [this debugging how-to](https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/) or [its documentation](https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md).
 
 
+## Task {{% param sectionnumber %}}.4: Node logs
+
+You might be tempted now to use the `oc debug node` feature to use it for all kinds of debugging tasks.
+However, there is one particularly useful `oc adm` subcommand that comes in especially handy when you want to look at a node's logs.
+
+`oc adm node-logs` allows you to retrieve node logs.
+By default, the command queries the systemd journal.
+Using `--path`, you can override this behaviour and use it to show logs within the node's `/var/logs` directory.
+
+Let's use this to query all masters' (`--role master`) kubelet (`--unit`) logs:
+
+```bash
+oc adm node-logs --role master --unit kubelet --tail 10
+```
+
+{{% alert title="Note" color="primary" %}}
+As with the `journalctl` command you can use `--tail`, `--since` and `--until` to limit the amount of logs or to focus on a certain period of time.
+{{% /alert %}}
+
+Of course above command can be used for all the other systemd units that are running on a node.
+
+As already mentioned, the `--path` parameter can be used to show logs in the `/var/logs` directory.
+The following command lists all available log directories:
+
+```bash
+oc adm node-logs --role master --path /
+```
+
+This way, we can find a specific log file and finally show its content, e.g. the audit log's:
+
+```bash
+oc adm node-logs --role master --path /audit/audit.log
+```
+
+{{% alert title="Note" color="primary" %}}
+You might have to interrupt the `node-logs` command using `--path` with ctrl+c depending on the number of logs.
+The `--tail`, `--since` and `--until` parameters cannot be used to with `--path`.
+{{% /alert %}}
+
+
+## Task {{% param sectionnumber %}}.5: Node resource usage
+
+Belonging to the same category of particularly useful commands is `oc adm top`.
+It can be used to display usage statistics of images, imagestreams, nodes and pods.
+
+Want to know which image uses the most space on your nodes?
+`oc adm top images` is your friend.
+It works very similarly for `ImageStreams` objects.
+
+What gives you a nice overview of resource usage on your nodes (without using Prometheus) is `oc adm top node`:
+
+```bash
+oc adm top node --selector node-role.kubernetes.io/worker
+```
+
+Finally, let's check the uptime app's resource consumption:
+
+```bash
+oc adm top pods --namespace uptime-app-prod
+```
+
+
+## SSH
+
+You might be wondering why all these new subcommands were introduced with OpenShift 4.
+Why not simply ssh into a node you want to analyze?
+
+The reason is the introduction of CoreOS as the default underlying operating system of OpenShift 4.
+CoreOS changes the way we interact with an operating system because it follows the core principles of containers:
+
+* immutability
+* statelessness
+
+This means that it is discouraged to ssh into a node because this might introduce manual, undocumented changes to the operating system that could lead to unexpected behaviour.
+Always apply configuration changes via `MachineConfig` objects.
+
+However, there are cases where ssh represents the only viable means of analyzing a malfunctioning node.
+Imagine the OpenShift API is down or the node's kubelet is not responding.
+`oc` will not work in these cases.
+So it still is a good idea to configure ssh keys in those installation configuration files.
+
+
 ## Troubleshooting references
 
 The OpenShift documentation has multiple troubleshooting documentation pages such as [this one](https://docs.openshift.com/container-platform/latest/support/troubleshooting/troubleshooting-installations.html) which are worth checking out.
