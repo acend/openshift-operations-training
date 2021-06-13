@@ -51,6 +51,12 @@ oc adm taint nodes --selector node-role.kubernetes.io/infra node-role.kubernetes
 The effect of the command above is that new pods that do not match the taint are not scheduled onto the infra nodes.
 Just what we wanted.
 
+{{% alert title="Note" color="primary" %}}
+Instead of manually tainting the infra nodes, the taints could be added to the infra `MachineSet` object.
+The [OpenShift documentation](https://docs.openshift.com/container-platform/latest/nodes/scheduling/nodes-scheduler-taints-tolerations.html#nodes-scheduler-taints-tolerations-adding-machineset_nodes-scheduler-taints-tolerations) explains how to do that.
+This would be the more elegant solution because it automatically taints infra nodes when new ones are added or existing ones replaced.
+{{% /alert %}}
+
 Before we continue with moving all the different infra components onto the infra nodes, if you want to know more about taints and tolerations, have a look at [OpenShift's documentation](https://docs.openshift.com/container-platform/latest/nodes/scheduling/nodes-scheduler-taints-tolerations.html).
 
 
