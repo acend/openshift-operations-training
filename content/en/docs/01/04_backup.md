@@ -84,7 +84,7 @@ oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acen
 Now we can create the secret containing the AWS credentials and S3 bucket configuration:
 
 ```bash
-oc -n training-infra-etcd-backup apply -f ~/ocp4-ops/resources/etcd-backup/secret_etdc-backup-s3-bucket.yaml #FIXM: secret handling
+oc -n training-infra-etcd-backup apply -f /home/ec2-user/ocp4-ops/resources/etcd-backup/secret_etdc-backup-s3-bucket.yaml
 ```
 
 Finally we can create the `ConfigMap` containing the backup script and the `CronJob` resources. Here's what they look like:

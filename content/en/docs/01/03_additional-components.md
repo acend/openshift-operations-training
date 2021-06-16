@@ -69,7 +69,7 @@ Status:
 
 ## Task {{% param sectionnumber %}}.2 Replace the ingress controller certificate
 
-After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.+username+-ops-training.openshift.ch`:
+After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.+username+-ops-training.openshift.ch`. Before you can apply the file you need to change the parameters `commonName` and `dnsNames` to match your cluster name.
 
 ```bash
 oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_wildcard-ingress.yaml
@@ -102,7 +102,7 @@ After the Ingress Controller has finished rolling out, the console URL should no
 
 ## Task {{% param sectionnumber %}}.3 Replace the API certificate
 
-The default API server certificate is issued by an internal OpenShift Container Platform cluster CA. Clients outside of the cluster will not be able to verify the API server’s certificate by default. This certificate can be replaced by one that is issued by a CA that clients trust.
+The default API server certificate is issued by an internal OpenShift Container Platform cluster CA. Clients outside of the cluster will not be able to verify the API server’s certificate by default. This certificate can be replaced by one that is issued by a CA that clients trust. Before you can apply the file you need to change the parameters `commonName` and `dnsNames` to match your cluster name.
 
 ```bash
 oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_api.yaml
