@@ -18,52 +18,13 @@ In this lab, you are going to install an OpenShift 4 cluster on AWS.
 
 See the [OpenShift installation documentation](https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
 
-Edit the file `install-config.yaml` and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username: #FIXME: path to file
+Create a file called `install-config.yaml` in your working directory on the bastion host, add the following parameters and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username. Additonally, add the SSH key of the `ec2-user` and the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat container registry.
 
-```yaml
-apiVersion: v1
-baseDomain: openshift.ch #FIXME: Hugo var
-compute:
-- architecture: amd64
-  hyperthreading: Enabled
-  name: worker
-  platform:
-    aws:
-      type: m5.2xlarge
-      zones:
-      - eu-north-1a
-  replicas: 3
-controlPlane:
-  architecture: amd64
-  hyperthreading: Enabled
-  name: master
-  platform:
-    aws:
-      type: m5.xlarge
-  replicas: 3
-metadata:
-  creationTimestamp: null
-  name: <username>-ops-training
-networking:
-  clusterNetwork:
-  - cidr: 10.128.0.0/14
-    hostPrefix: 23
-  machineNetwork:
-  - cidr: 10.0.0.0/16
-  networkType: OpenShiftSDN
-  serviceNetwork:
-  - 172.30.0.0/16
-platform:
-  aws:
-    region: eu-north-1
-    userTags:
-      customer: acend
-      acend-training: ocp4-ops
-      user: <username>
-publish: External
-pullSecret: '{"auths":{...}}'
-sshKey: 'ssh-ed25519 AAAA...'
-```
+{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/install-config.yaml" >}}{{< /highlight >}}
+
+{{% alert title="Note" color="primary" %}}
+This file is also available at https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/install-config.yaml.
+{{% /alert %}}
 
 Backup the file `install-config.yaml`, since it will be consumed during the installation process:
 
