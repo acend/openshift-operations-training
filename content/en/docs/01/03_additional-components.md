@@ -29,19 +29,19 @@ helm install cert-manager jetstack/cert-manager \
   --namespace training-infra-cert-manager \
   --create-namespace \
   --version v1.3.0 \
-  --values ~/ocp4-ops/resources/cert-manager/values.yaml
+  --values /home/ec2-user/ocp4-ops/resources/cert-manager/values.yaml
 ```
 
-To be able to use Amazon Route 53 for Let's Encrypt's DNS01 challenge, you will need to create a secret containing the required credentials. You can find these on the bastion host at `~/ocp4-ops/resources/cert-manager`.
+To be able to use Amazon Route 53 for Let's Encrypt's DNS01 challenge, you will need to create a secret containing the required credentials. You can find these on the bastion host at `/home/ec2-user/ocp4-ops/resources/cert-manager`.
 
 ```bash
-oc apply -f ~/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
+oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
 ```
 
 Now you can create the first `ClusterIssuer`:
 
 ```bash
-oc apply -f ~/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producion.yaml
+oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producion.yaml
 ```
 
 Verify that the `ClusterIssuer` is ready to issue certificates:
@@ -72,7 +72,7 @@ Status:
 After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.+username+-ops-training.openshift.ch`:
 
 ```bash
-oc apply -f ~/ocp4-ops/resources/cert-manager/certificate_wildcard-ingress.yaml
+oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_wildcard-ingress.yaml
 ```
 
 It will take around 90 seconds for the certificate to be ready. Check with:
@@ -174,8 +174,8 @@ helm install velero vmware-tanzu/velero \
   --namespace training-infra-velero \
   --create-namespace \
   --version v2.16.0 \
-  --set-file credentials.secretContents.cloud=/home/ec2-user/ocp4-ops/credentials \
-  --values ~/ocp4-ops/resources/velero/values.yaml
+  --set-file credentials.secretContents.cloud=/home/ec2-user/ocp4-ops/resources/velero/credentials \
+  --values /home/ec2-user/ocp4-ops/resources/velero/values.yaml
 ```
 
 After the installation has completed, you can verify the backup location:
