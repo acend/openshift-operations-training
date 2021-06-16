@@ -20,7 +20,7 @@ See the [OpenShift installation documentation](https://docs.openshift.com/contai
 
 Create a file called `install-config.yaml` in your working directory on the bastion host, add the following parameters and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username. Additonally, add the SSH key of the `ec2-user` and the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat container registry.
 
-{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/install-config.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/install-config.yaml" >}}{{< /highlight >}}
 
 {{% alert title="Note" color="primary" %}}
 This file is also available at https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/install-config.yaml.
