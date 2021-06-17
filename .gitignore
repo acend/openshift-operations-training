@@ -8,5 +8,4 @@ node_modules
 builds
 public
 .env
-resources
 .idea/
