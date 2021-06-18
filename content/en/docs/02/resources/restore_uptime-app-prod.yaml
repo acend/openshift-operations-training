@@ -14,4 +14,3 @@ spec:
   hooks: {}
   includedNamespaces:
   - '*'
-  scheduleName: daily-backup-uptime-app-prod
