@@ -227,12 +227,12 @@ To deploy the Cluster Logging stack from the CLI, we need to create the followin
 You can also use our provided files:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/ns_openshift-operators-redhat.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/ns_openshift-logging.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/og_openshift-operators-redhat.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/og_cluster-logging.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/sub_elasticsearch-operator.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/sub_cluster-logging.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/ns_openshift-operators-redhat.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/ns_openshift-logging.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/og_openshift-operators-redhat.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/og_cluster-logging.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/sub_elasticsearch-operator.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/sub_cluster-logging.yaml
 ```
 
 Verify the Elasticsearch Operator installation:
