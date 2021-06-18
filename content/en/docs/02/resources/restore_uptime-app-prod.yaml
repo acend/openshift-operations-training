@@ -2,6 +2,7 @@ apiVersion: velero.io/v1
 kind: Restore
 metadata:
   name: restore-uptime-app-prod
+  namespace: training-infra-velero
 spec:
   backupName: "<backup-name>"
   excludedResources:
