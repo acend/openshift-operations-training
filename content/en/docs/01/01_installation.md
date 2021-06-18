@@ -38,7 +38,7 @@ cp $(date +"%Y-%m-%d")/install-config.yaml ~/backup/install-config.yaml
 Now you are ready to create your own cluster:
 
 ```bash
-./openshift-install create cluster --dir=$(date +"%Y-%m-%d") --log-level=info
+openshift-install create cluster --dir=$(date +"%Y-%m-%d") --log-level=info
 ```
 
 Example output:
