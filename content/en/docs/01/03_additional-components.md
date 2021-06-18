@@ -167,13 +167,14 @@ In order to install the Helm chart, you must follow these steps:
 helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
 ```
 
+* Modify the paramter `configuration.backupStorageLocation.bucket` in the file `values.yaml` to reflect your username +username+.
+
 * Install the Velero Helm chart:
 
 ```bash
 helm install velero vmware-tanzu/velero \
   --namespace training-infra-velero \
   --create-namespace \
-  --version v2.16.0 \
   --set-file credentials.secretContents.cloud=/home/ec2-user/ocp4-ops/resources/velero/credentials \
   --values /home/ec2-user/ocp4-ops/resources/velero/values.yaml
 ```
