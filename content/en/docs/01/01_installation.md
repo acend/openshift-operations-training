@@ -18,7 +18,7 @@ In this lab, you are going to install an OpenShift 4 cluster on AWS.
 
 See the [OpenShift installation documentation](https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
 
-It is best practices to create a timestamped directory for each cluster installation, for example:
+It is best practice to create a timestamped directory for each cluster installation, for example:
 
 ```bash
 cd /home/ec2-user/ocp4-ops
