@@ -25,7 +25,8 @@ cd /home/ec2-user/ocp4-ops
 mkdir $(date +"%Y-%m-%d")
 ```
 
-Create a file called `install-config.yaml` in the previously created directory on the bastion host, add the following parameters and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username +username+. Additonally, add an SSH key (create a new key pair if needed) and the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat container registry.
+Create a file called `install-config.yaml` in the previously created directory on the bastion host, add the following content and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username +username+.
+Additonally, add an SSH key (use an existing keypair or create a new one if needed) and the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat container registry.
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/install-config.yaml" >}}{{< /highlight >}}
 
