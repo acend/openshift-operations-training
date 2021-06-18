@@ -25,7 +25,7 @@ cd /home/ec2-user/ocp4-ops
 mkdir $(date +"%Y-%m-%d")
 ```
 
-Create a file called `install-config.yaml` in the previously created directory on the bastion host, add the following parameters and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username. Additonally, add an SSH key (create a new key pair if needed) and the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat container registry.
+Create a file called `install-config.yaml` in the previously created directory on the bastion host, add the following parameters and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username +username+. Additonally, add an SSH key (create a new key pair if needed) and the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat container registry.
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/install-config.yaml" >}}{{< /highlight >}}
 
@@ -48,6 +48,10 @@ Now you are ready to create your own cluster:
 ```bash
 openshift-install create cluster --dir=$(date +"%Y-%m-%d") --log-level=info
 ```
+
+{{% alert title="Note" color="primary" %}}
+The installation usually takes about 30 minutes to completed.
+{{% /alert %}}
 
 Example output:
 
