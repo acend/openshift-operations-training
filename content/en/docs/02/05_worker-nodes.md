@@ -110,12 +110,17 @@ After the change, nothing happens.
 OpenShift only applies this change to new nodes.
 We'll have to delete every machine with the old instance type one by one so they get replaced by new ones.
 
-Delete one of the worker machines and wait until it is up again.
-Then, repeat the same step for the other machine.
+Delete one of the worker machines and wait until it is up again:
 
 ```bash
 oc -n openshift-machine-api delete machine <machine>
 ```
+
+```bash
+oc -n openshift-machine-api get machines
+```
+
+Then, repeat the same step for the other worker machine.
 
 {{% alert title="Note" color="primary" %}}
 It might make perfect sense to first scale up the nodes before you begin the renewal process.
