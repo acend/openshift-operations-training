@@ -35,6 +35,6 @@ To deploy these resources, you can simply execute the following command:
 oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/uptime-app.yaml -n uptime-app-prod
 ```
 
-The deployed application should now be available at <https://uptime-app-uptime-app-prod.trainings-cluster.puzzle.ch/>.
+The deployed application should now be available at <https://uptime-app-uptime-app-prod.apps.+username+-ops-training.openshift.ch>.
 
 With 3 replicas and the [Pod anti-affinity](https://docs.openshift.com/container-platform/latest/nodes/scheduling/nodes-scheduler-pod-affinity.html#nodes-scheduler-pod-affinity-example-antiaffinity_nodes-scheduler-pod-affinity), which will make sure all 3 Pods are never deployed on the same underlying node, we have a good setup for the training to continue.
