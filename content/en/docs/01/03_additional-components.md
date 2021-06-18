@@ -283,7 +283,7 @@ Now you can create an OpenShift Logging instance:
 Again, you can use the provided file:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/clusterlogging_instance.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/clusterlogging_instance.yaml
 ```
 
 {{% alert title="Note" color="primary" %}}
