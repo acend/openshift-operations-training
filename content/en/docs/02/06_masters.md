@@ -69,90 +69,15 @@ user01-ops-training-75gjz-worker-eu-north-1b-zddgj   Running    m5.2xlarge   eu-
 user01-ops-training-75gjz-worker-eu-north-1c-6mqls   Running    m5.2xlarge   eu-north-1   eu-north-1c   3d3h   ip-10-0-195-93.eu-north-1.compute.internal    aws:///eu-north-1c/i-0d7f8ed2c8b9c0932   running
 ```
 
-After the failed master machine is deleted, create the new machine using the file definition you created before:
 
-```bash
-oc -n openshift-machine-api apply -f machine_<failed-master-machine>.yaml
-```
+### Task {{% param sectionnumber %}}.1.2: Deleting the `etcd` member
 
-Verify the machine was created successfully:
-
-```bash
-oc -n openshift-machine-api get machines -o wide
-```
-
-
-### Task {{% param sectionnumber %}}.1.2: Replacing the `etcd` member
-
-Now that the master node is up and running again, we need to replace the `etcd` member, since it still has the configuration of the old master node.
-
-You can see the `etcd` pod on the master you just created is crashlooping:
-
-```bash
-oc -n openshift-etcd get pods -l etcd
-```
-
-Example output:
-
-```
-NAME                                               READY   STATUS             RESTARTS   AGE
-etcd-ip-10-0-155-28.eu-north-1.compute.internal    3/3     Running            0          6m56s
-etcd-ip-10-0-184-171.eu-north-1.compute.internal   3/3     Running            0          13m
-etcd-ip-10-0-216-196.eu-north-1.compute.internal   2/3     CrashLoopBackOff   5          4m16s
-```
-
-By looking at the logs, we can see that the `etcd` cluster is still trying to communicate with the old peer:
-
-```bash
-oc -n openshift-etcd logs <crashlooping-etcd-pod> -c etcd
-```
-
-Example output:
-
-```
-ce90578971689b5, started, ip-10-0-155-28.eu-north-1.compute.internal, https://10.0.155.28:2380, https://10.0.155.28:2379, false
-2c53f4526118a2eb, started, ip-10-0-184-171.eu-north-1.compute.internal, https://10.0.184.171:2380, https://10.0.184.171:2379, false
-43997d8a75197361, started, ip-10-0-212-27.eu-north-1.compute.internal, https://10.0.212.27:2380, https://10.0.212.27:2379, false
-#### attempt 0
-      target=nil, err=peer "https://10.0.216.196:2380" not found in member list, check operator logs for possible scaling problems
-#### sleeping...
-#### attempt 1
-      target=nil, err=peer "https://10.0.216.196:2380" not found in member list, check operator logs for possible scaling problems
-#### sleeping...
-#### attempt 2
-      target=nil, err=peer "https://10.0.216.196:2380" not found in member list, check operator logs for possible scaling problems
-#### sleeping...
-#### attempt 3
-      target=nil, err=peer "https://10.0.216.196:2380" not found in member list, check operator logs for possible scaling problems
-#### sleeping...
-#### attempt 4
-      target=nil, err=peer "https://10.0.216.196:2380" not found in member list, check operator logs for possible scaling problems
-#### sleeping...
-#### attempt 5
-      target=nil, err=peer "https://10.0.216.196:2380" not found in member list, check operator logs for possible scaling problems
-#### sleeping...
-#### attempt 6
-      target=nil, err=peer "https://10.0.216.196:2380" not found in member list, check operator logs for possible scaling problems
-#### sleeping...
-#### attempt 7
-      target=nil, err=peer "https://10.0.216.196:2380" not found in member list, check operator logs for possible scaling problems
-#### sleeping...
-#### attempt 8
-      target=nil, err=peer "https://10.0.216.196:2380" not found in member list, check operator logs for possible scaling problems
-#### sleeping...
-#### attempt 9
-      target=nil, err=peer "https://10.0.216.196:2380" not found in member list, check operator logs for possible scaling problems
-#### sleeping...
-Couldn't get targetMember. Returning error.
-peer "https://10.0.216.196:2380" not found in member list, check operator logs for possible scaling problems
-```
-
-To fix this, we need to replace the old peer.
+Now that the master node has been fully removed, we need to also remove the `etcd` member, since it still has the configuration of the old master node.
 
 Connect to an `etcd` pod that is not running on the master you just removed:
 
 ```bash
-oc -n openshift-etcd exec -it <NOT-crashlooping-etcd-pod> -c etcdctl -- /bin/bash
+oc -n openshift-etcd rsh <etcd-pod> -c etcdctl
 ```
 
 View the member list and take note of the ID and name of the `etcd` member you want to remove:
@@ -190,7 +115,24 @@ Verify the member was removed:
 etcdctl member list -w table
 ```
 
-You can disconnect from the pod at this point.
+This is it! You can now disconnect from the etcd pod at this point.
+
+
+### Task {{% param sectionnumber %}}.1.3: Recreate the master node
+
+The cluster is again in a properly running state, of course however with only two instead of three masters and etcd members.
+
+Recreate the master machine using the file definition you created before:
+
+```bash
+oc -n openshift-machine-api apply -f machine_<failed-master-machine>.yaml
+```
+
+Verify the machine was created successfully:
+
+```bash
+oc -n openshift-machine-api get machines -o wide
+```
 
 The `etcd` operator should automatically scale up a new member and add it to the cluster.
 
