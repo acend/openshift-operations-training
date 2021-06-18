@@ -17,7 +17,7 @@ Since the masters are hosting `etcd`, the key-value store that holds all the clu
 First, create a copy of the master machine you want to replace:
 
 ```bash
-oc -n openshift-machine-api get machine <failed-master-machine> -oyaml > machine_<failed-master-machine>.yaml
+oc -n openshift-machine-api get machine <failed-master-machine> -o yaml > machine_<failed-master-machine>.yaml
 ```
 
 Edit the file to reflect the following changes:
