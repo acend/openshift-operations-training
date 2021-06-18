@@ -35,7 +35,7 @@ helm install cert-manager jetstack/cert-manager \
 To be able to use Amazon Route 53 for Let's Encrypt's DNS01 challenge, you will need to create a secret containing the required credentials. You can find these on the bastion host at `/home/ec2-user/ocp4-ops/resources/cert-manager`.
 
 ```bash
-oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
+oc -n training-infra-cert-manager apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
 ```
 
 Now you can create the first `ClusterIssuer`:
