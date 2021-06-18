@@ -34,7 +34,7 @@ oc get machinesets -n openshift-machine-api
 Using this information, export the existing worker MachineSet resource into a file:
 
 ```bash
-oc get machinesets -n openshift-machine-api -o yaml <machineset name> machineset_infra.yaml
+oc get machinesets -n openshift-machine-api -o yaml <machineset name> > machineset_infra.yaml
 ```
 
 Edit the file using your favorite editor (still `vim` of course):

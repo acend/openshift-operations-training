@@ -102,6 +102,7 @@ oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acen
 
 {{% alert title="Note" color="primary" %}}
 In our example of the `CronJob` the backup job is started every six hours. If you do not want to wait that long, change the schedule of the `CronJob` accordingly.
+Or you can trigger the job manually with `oc create job --from=cronjob/etcd-backup -n training-infra-etcd-backup etcd-test-job`
 {{% /alert %}}
 
 You can verify the backup job by looking at the result or by checking the logs of the pod:
