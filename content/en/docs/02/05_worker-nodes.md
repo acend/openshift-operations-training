@@ -113,6 +113,10 @@ We'll have to delete every machine with the old instance type one by one so they
 Delete one of the worker machines and wait until it is up again.
 Then, repeat the same step for the other machine.
 
+```bash
+oc -n openshift-machine-api delete machine <machine>
+```
+
 {{% alert title="Note" color="primary" %}}
 It might make perfect sense to first scale up the nodes before you begin the renewal process.
 This helps to ensure high availability on the cluster.
