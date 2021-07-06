@@ -18,7 +18,15 @@ In this lab, you are going to install an OpenShift 4 cluster on AWS.
 
 See the [OpenShift installation documentation](https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
 
-Create a file called `install-config.yaml` in your working directory on the bastion host, add the following parameters and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username. Additonally, add the SSH key of the `ec2-user` and the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat container registry.
+It is best practice to create a timestamped directory for each cluster installation, for example:
+
+```bash
+cd /home/ec2-user/ocp4-ops
+mkdir $(date +"%Y-%m-%d")
+```
+
+Create a file called `install-config.yaml` in the previously created directory on the bastion host, add the following content and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username +username+.
+Additonally, add an SSH key (use an existing keypair or create a new one if needed) and the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat container registry.
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/install-config.yaml" >}}{{< /highlight >}}
 
@@ -29,7 +37,8 @@ This file is also available at https://raw.githubusercontent.com/acend/openshift
 Backup the file `install-config.yaml`, since it will be consumed during the installation process:
 
 ```bash
-cp $(date +"%Y-%m-%d")/install-config.yaml ~/backup/install-config.yaml
+mkdir backup
+cp $(date +"%Y-%m-%d")/install-config.yaml backup/install-config.yaml
 ```
 
 
@@ -40,6 +49,10 @@ Now you are ready to create your own cluster:
 ```bash
 openshift-install create cluster --dir=$(date +"%Y-%m-%d") --log-level=info
 ```
+
+{{% alert title="Note" color="primary" %}}
+The installation usually takes about 30 minutes to completed.
+{{% /alert %}}
 
 Example output:
 
