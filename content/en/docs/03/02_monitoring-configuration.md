@@ -65,7 +65,7 @@ Add the following config:
       ...
 ```
 
-After adding the above configuration to the configmap the cluster-monitoring operator will create the requested persistent volumes:
+After adding the above configuration to the ConfigMap, the Cluster Monitoring Operator will create the requested persistent volumes:
 
 ```bash
 oc -n openshift-monitoring get pvc
