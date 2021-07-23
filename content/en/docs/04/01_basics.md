@@ -255,7 +255,7 @@ oc adm top pods --namespace uptime-app-prod
 ```
 
 
-## SSH
+## Task {{% param sectionnumber %}}.6: SSH
 
 You might be wondering why all these new subcommands were introduced with OpenShift 4.
 Why not simply ssh into a node you want to analyze?
@@ -273,6 +273,20 @@ However, there are cases where ssh represents the only viable means of analyzing
 Imagine the OpenShift API is down or the node's kubelet is not responding.
 `oc` will not work in these cases.
 So it still is a good idea to configure ssh keys in those installation configuration files.
+
+In order to connect to any node, first find out the node's hostname.
+Fortunately, and this should always be the case, AWS uses the fully-qualified hostnames as node names.
+Get a hostname:
+
+```bash
+oc get nodes
+```
+
+The only remaining piece left to know about is that you always have to use username `core` when connecting to a CoreOS OpenShift node:
+
+```bash
+ssh core@<node name>
+```
 
 
 ## Troubleshooting references
