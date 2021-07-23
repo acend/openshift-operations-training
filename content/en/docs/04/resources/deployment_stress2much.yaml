@@ -1,0 +1,21 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: stress2much
+  name: stress2much
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: stress2much
+  template:
+    metadata:
+      labels:
+        app: stress2much
+    spec:
+      containers:
+      - name: stress
+        image: quay.io/acend/stress
+        command: ["stress"]
+        args: ["--vm", "1", "--vm-bytes", "8G", "--vm-hang", "1"]
