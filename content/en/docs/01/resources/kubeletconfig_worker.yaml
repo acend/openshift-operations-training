@@ -5,13 +5,13 @@ metadata:
 spec:
   kubeletConfig:
     evictionHard:
-      memory.available: 1Gi
+      memory.available: 500Mi
     kubeReserved:
-      cpu: 500m
-      memory: 2Gi
+      cpu: 250m
+      memory: 1Gi
     systemReserved:
-      cpu: 500m
-      memory: 2Gi
+      cpu: 250m
+      memory: 1Gi
   machineConfigPoolSelector:
     matchLabels:
       'pools.operator.machineconfiguration.openshift.io/worker': ''
