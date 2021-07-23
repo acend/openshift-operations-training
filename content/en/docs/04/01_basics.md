@@ -193,6 +193,31 @@ To exit the debug pod, either simply type `exit` or press ctrl+d until you're ba
 For more information on `crictl`, check out [this debugging how-to](https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/) or [its documentation](https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md).
 
 
+## Task {{% param sectionnumber %}}.4: SSH
+
+It is not encouraged to use SSH to connect to an OpenShift node, use above methods whenever possible.
+There are however cases where it is not possible to, e.g., use `oc debug node`.
+The kubelet on the affected node might not be running or even the API not accessible anymore.
+
+This is where the SSH key comes into play which was defined in the installation configuration file.
+Defining one or multiple SSH keys there, the ignition process automatically places these keys in the `authorized_keys` file on all nodes.
+This public key and a private key are part of a keypair that was generated beforehand on your bastion host.
+
+Connect to any node by first finding out what hostname to use.
+Fortunately, and this should always be the case, AWS uses the fully-qualified hostnames as node names.
+Get a hostname:
+
+```bash
+oc get nodes
+```
+
+The only remaining piece left to know about is that you always have to use username `core` when connecting to a CoreOS OpenShift node:
+
+```bash
+ssh core@<node name>
+```
+
+
 ## Troubleshooting references
 
 The OpenShift documentation has multiple troubleshooting documentation pages such as [this one](https://docs.openshift.com/container-platform/latest/support/troubleshooting/troubleshooting-installations.html) which are worth checking out.
