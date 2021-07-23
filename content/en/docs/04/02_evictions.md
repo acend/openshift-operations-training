@@ -47,7 +47,7 @@ Why does the pod periodically stop running and show the status `Evicted`?
 Try to find an answer to these questions.
 
 
-### Solution {{% param sectionnumber %}}.1: Analysis
+### Solution {{% param sectionnumber %}}.2: Analysis
 
 There are at least two ways to find that out.
 Describing an evicted pod shows its events where you'll find the reason:
@@ -145,7 +145,7 @@ oc delete pods --field-selector=status.phase=Evicted --namespace <namespace>
 ## Reasons
 
 So we now know that the pod got evicted because it simply used too much memory.
-However, in contrast to an out-of-memory event caused by overstepping the defined memory limit on the container or pod, this event happened because _the worker node itself_ had no memory left.
+In contrast to an out-of-memory event caused by overstepping the defined memory limit on the container or pod though, this event happened because the worker node itself had no memory left.
 
 It's easy to see why the pod used too much memory:
 
