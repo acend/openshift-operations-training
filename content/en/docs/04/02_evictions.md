@@ -179,7 +179,7 @@ Notice how OpenShift automatically creates a corresponding Project resource when
 Now it's clear why the pod used too much memory and why it wasn't stopped from doing so earlier.
 The last remaining question is, why was it evicted?
 
-Remember the kubelet arguments you configured after installing the cluster in [lab 1.2](../01/02_configuration.md)?
+Remember the kubelet arguments you configured after installing the cluster in [lab 1.2](../../01/02_configuration/)?
 We never looked at them in greater detail, so let's do that now:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/kubeletconfig_worker.yaml" >}}{{< /highlight >}}
