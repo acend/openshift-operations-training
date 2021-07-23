@@ -193,7 +193,7 @@ To exit the debug pod, either simply type `exit` or press ctrl+d until you're ba
 For more information on `crictl`, check out [this debugging how-to](https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/) or [its documentation](https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md).
 
 
-## Task {{% param sectionnumber %}}.5: Node logs
+## Task {{% param sectionnumber %}}.4: Node logs
 
 You might be tempted now to use the `oc debug node` feature to use it for all kinds of debugging tasks.
 However, there is one particularly useful `oc adm` subcommand that comes in especially handy when you want to look at a node's logs.
@@ -233,7 +233,7 @@ The `--tail`, `--since` and `--until` parameters cannot be used to with `--path`
 {{% /alert %}}
 
 
-## Task {{% param sectionnumber %}}.6: Node resource usage
+## Task {{% param sectionnumber %}}.5: Node resource usage
 
 Belonging to the same category of particularly useful commands is `oc adm top`.
 It can be used to display usage statistics of images, imagestreams, nodes and pods.
@@ -255,7 +255,7 @@ oc adm top pods --namespace uptime-app-prod
 ```
 
 
-## Task {{% param sectionnumber %}}.7: SSH
+## Task {{% param sectionnumber %}}.6: SSH
 
 You might be wondering why all these new subcommands were introduced with OpenShift 4.
 Why not simply ssh into a node you want to analyze?
