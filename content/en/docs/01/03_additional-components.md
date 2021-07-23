@@ -29,19 +29,19 @@ helm install cert-manager jetstack/cert-manager \
   --namespace training-infra-cert-manager \
   --create-namespace \
   --version v1.3.0 \
-  --values ~/ocp4-ops/resources/cert-manager/values.yaml
+  --values /home/ec2-user/ocp4-ops/resources/cert-manager/values.yaml
 ```
 
-To be able to use Amazon Route 53 for Let's Encrypt's DNS01 challenge, you will need to create a secret containing the required credentials. You can find these on the bastion host at `~/ocp4-ops/resources/cert-manager`.
+To be able to use Amazon Route 53 for Let's Encrypt's DNS01 challenge, you will need to create a secret containing the required credentials. You can find these on the bastion host at `/home/ec2-user/ocp4-ops/resources/cert-manager`.
 
 ```bash
-oc apply -f ~/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
+oc -n training-infra-cert-manager apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
 ```
 
 Now you can create the first `ClusterIssuer`:
 
 ```bash
-oc apply -f ~/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producion.yaml
+oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producion.yaml
 ```
 
 Verify that the `ClusterIssuer` is ready to issue certificates:
@@ -69,10 +69,10 @@ Status:
 
 ## Task {{% param sectionnumber %}}.2 Replace the ingress controller certificate
 
-After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.+username+-ops-training.openshift.ch`:
+After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.+username+-ops-training.openshift.ch`. Before you can apply the file you need to change the parameters `commonName` and `dnsNames` to match your cluster name.
 
 ```bash
-oc apply -f ~/ocp4-ops/resources/cert-manager/certificate_wildcard-ingress.yaml
+oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_wildcard-ingress.yaml
 ```
 
 It will take around 90 seconds for the certificate to be ready. Check with:
@@ -102,7 +102,7 @@ After the Ingress Controller has finished rolling out, the console URL should no
 
 ## Task {{% param sectionnumber %}}.3 Replace the API certificate
 
-The default API server certificate is issued by an internal OpenShift Container Platform cluster CA. Clients outside of the cluster will not be able to verify the API server’s certificate by default. This certificate can be replaced by one that is issued by a CA that clients trust.
+The default API server certificate is issued by an internal OpenShift Container Platform cluster CA. Clients outside of the cluster will not be able to verify the API server’s certificate by default. This certificate can be replaced by one that is issued by a CA that clients trust. Before you can apply the file you need to change the parameters `commonName` and `dnsNames` to match your cluster name.
 
 ```bash
 oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_api.yaml
@@ -167,15 +167,16 @@ In order to install the Helm chart, you must follow these steps:
 helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
 ```
 
+* Modify the paramter `configuration.backupStorageLocation.bucket` in the file `values.yaml` to reflect your username +username+.
+
 * Install the Velero Helm chart:
 
 ```bash
 helm install velero vmware-tanzu/velero \
   --namespace training-infra-velero \
   --create-namespace \
-  --version v2.16.0 \
-  --set-file credentials.secretContents.cloud=/home/ec2-user/ocp4-ops/credentials \
-  --values ~/ocp4-ops/resources/velero/values.yaml
+  --set-file credentials.secretContents.cloud=/home/ec2-user/ocp4-ops/resources/velero/credentials \
+  --values /home/ec2-user/ocp4-ops/resources/velero/values.yaml
 ```
 
 After the installation has completed, you can verify the backup location:
@@ -227,12 +228,12 @@ To deploy the Cluster Logging stack from the CLI, we need to create the followin
 You can also use our provided files:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/ns_openshift-operators-redhat.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/ns_openshift-logging.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/og_openshift-operators-redhat.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/og_cluster-logging.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/sub_elasticsearch-operator.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/sub_cluster-logging.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/ns_openshift-operators-redhat.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/ns_openshift-logging.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/og_openshift-operators-redhat.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/og_cluster-logging.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/sub_elasticsearch-operator.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/sub_cluster-logging.yaml
 ```
 
 Verify the Elasticsearch Operator installation:
@@ -282,7 +283,7 @@ Now you can create an OpenShift Logging instance:
 Again, you can use the provided file:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/logging/clusterlogging_instance.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/logging/clusterlogging_instance.yaml
 ```
 
 {{% alert title="Note" color="primary" %}}
