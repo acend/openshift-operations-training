@@ -191,3 +191,12 @@ There's only three arguments defined, but those three were what saved our worker
 
 There's also the `evictionSoft` argument which only starts to evict pods if node resources were over a certain threshold for a defined period of time.
 However, the `evictionHard` argument should always be present as a last resort in case too many resources are consumed too fast.
+
+
+## Conclusion
+
+A properly configured cluster is well-defended against any kinds of resource overuse.
+If however you run into any sort of evictions, you now know where to optimize parameters.
+
+Additionally, proper capacity management is always part of operating an OpenShift cluster.
+So make sure to set one up and add new nodes when needed, or even configure node autoscaling if possible.
