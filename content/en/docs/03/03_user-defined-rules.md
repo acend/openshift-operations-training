@@ -72,7 +72,7 @@ Let's take a look at the main components that can be configured applying a custo
 Verify the rule by accessing the Thanos ruler web interface.
 
 ```bash
-oc -n openshift-user-workload-monitoring get route thanos-ruler -ojsonpath='{"https://"}{.spec.host}{"/alerts"}{"\n"}'
+oc -n openshift-user-workload-monitoring get route thanos-ruler -o go-template='https://{{ .spec.host }}/alerts{{ "\n" }}'
 ```
 
 
