@@ -1,0 +1,52 @@
+portalScope: cluster
+
+portal:
+  frontend:
+    replicas: 2
+    resources:
+      limits:
+        cpu: 200m
+        memory: 400Mi
+      requests:
+        cpu: 200m
+        memory: 400Mi
+    service:
+      type: ClusterIP
+  server:
+    graphqlServer:
+      resources:
+        limits:
+          cpu: 200m
+          memory: 400Mi
+        requests:
+          cpu: 200m
+          memory: 400Mi
+    authServer:
+      env:
+        ADMIN_USERNAME: "litmusadmin"
+        ADMIN_PASSWORD: "iN3y&EYM@wqZicMx"
+      resources:
+        limits:
+          cpu: 200m
+          memory: 250Mi
+        requests:
+          cpu: 200m
+          memory: 250Mi
+    service:
+      type: ClusterIP
+
+mongo:
+  resources:
+    limits:
+      cpu: 200m
+      memory: 400Mi
+    requests:
+      cpu: 200m
+      memory: 400Mi
+  persistence:
+    size: 5Gi
+    accessMode: ReadWriteOnce
+
+openshift:
+  route:
+    enabled: true
