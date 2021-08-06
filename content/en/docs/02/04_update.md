@@ -86,7 +86,7 @@ VERSION IMAGE
 4.7.6   quay.io/openshift-release-dev/ocp-release@sha256:2721145d62b8dbff8808cd7b12a8b24a81a8edad8f1078010f58c673f76bb419
 ```
 
-{{% alert title="Warning" color="primary" %}}
+{{% alert title="Warning" color="secondary" %}}
 You can only update to one of the available target versions. Do not force the update to an unsupported version, since it could render your cluster useless.
 {{% /alert %}}
 
