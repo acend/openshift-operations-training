@@ -82,7 +82,7 @@ oc -n openshift-etcd rsh <etcd-pod> -c etcdctl
 
 View the member list and take note of the ID and name of the `etcd` member you want to remove:
 
-{{% alert title="Note" color="secondary" %}}
+{{% alert title="Note" color="primary" %}}
 To identify the member you need to remove, compare the list with the existing pod names.
 In the example, the list shows a member with the name `ip-10-0-212-27.eu-north-1.compute.internal` which does not correspond with any of the master node names.
 {{% /alert %}}
@@ -142,7 +142,7 @@ Verify that three `etcd` pods are up and running:
 oc -n openshift-etcd get pods -l etcd
 ```
 
-{{% alert title="Note" color="secondary" %}}
+{{% alert title="Note" color="primary" %}}
 If only two pods are running, you can force a redeployment:
 
 ```bash
