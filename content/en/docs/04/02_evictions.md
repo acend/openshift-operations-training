@@ -12,7 +12,7 @@ This second troubleshooting lab will go into detail on what evictions are, how t
 First, let's get set up.
 Create a new namespace using the following command:
 
-{{% alert title="Warning" color="primary" %}}
+{{% alert title="Warning" color="secondary" %}}
 It is essential that you use this command or else this lab won't work!
 {{% /alert %}}
 
