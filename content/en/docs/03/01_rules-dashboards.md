@@ -32,7 +32,7 @@ OpenShift provides an extensive set of alerts, based on the [kubernetes-mixin](h
 Run the following command the get the URL to your Prometheus instance:
 
 ```bash
-oc -n openshift-monitoring get route prometheus-k8s -ojsonpath='{"https://"}{.spec.host}{"/alerts"}{"\n"}'
+oc -n openshift-monitoring get route prometheus-k8s -o go-template='https://{{ .spec.host }}/alerts{{ "\n" }}'
 ```
 
 Active alerts (state `Pending` or `Firing`) will also be displayed in the administrator web console at **Monitoring** -> **Alerting**.
