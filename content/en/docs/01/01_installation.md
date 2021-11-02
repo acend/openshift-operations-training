@@ -86,7 +86,7 @@ The output should look like this:
 https://api.+username+-ops-training.openshift.ch:6443
 ```
 
-The cluster operators are a good indicator whether the cluster is healhty or not:
+The cluster operators are a good indicator whether the cluster is healthy or not:
 
 ```bash
 oc get clusteroperators

@@ -56,7 +56,7 @@ Generate the default template according to the [documentation](https://docs.open
 
 {{% alert title="Note" color="primary" %}}
 You might want to change the filename the template is written to to something more meaningful than what is used in the documentation (`template.yaml`).
-A good practice is to use a naming convention succh as `<resource type>_<resource name>.yaml`.
+A good practice is to use a naming convention such as `<resource type>_<resource name>.yaml`.
 This allows you to quickly find the resource definition you're looking for based on the filename in case it is part of larger collection.
 {{% /alert %}}
 
