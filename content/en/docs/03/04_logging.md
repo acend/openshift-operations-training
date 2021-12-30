@@ -6,6 +6,7 @@ sectionnumber: 3.4
 
 In this lab we will install and configure the logging stack.
 
+
 ## Task {{% param sectionnumber %}}.1 Install cluster logging
 
 You can install [OpenShift Logging](https://docs.openshift.com/container-platform/latest/logging/cluster-logging.html) to aggregate all the logs from your OpenShift cluster, such as node logs, application logs and infrastructure logs.
@@ -160,7 +161,7 @@ To get to Kibana you can either click the Application Launcher ![Launcher](../ap
 The log store of the logging stack (Elasticsearch) stores the logs in three index categories: Application, Infrastructure and - if enabled - Audit.  
 The first time you log in to Kibana, you need to create index patterns for your user:
 
-* Create the infra index pattern: 
+* Create the infra index pattern:
   * Define the infra index pattern ![Kibana Infra Index Pattern](../kibana-define-pattern01.png)
   * Select `@timestamp` as the filed name ![Kibana Infra Index Pattern](../kibana-define-pattern02.png)
 * Repeat these steps for the remaining indices (audit, apps).
