@@ -8,7 +8,7 @@ sectionnumber: 3.2
 
 Let's take a look at an example of how you can send alerts to a receiver of your choice. You can do so by editing the settings directly in the web console at **Administration** -> **Cluster Settings** -> **Global Configuration** -> **Alertmanager** or by creating the alertmanager-main secret, which could look something like this:
 
-{{< highlight bash >}}{{< readfile file="content/en/docs/03/resources/alertmanager-main.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="content/en/docs/03/resources/alertmanager-main.yaml" >}}{{< /highlight >}}
 
 Let's take a look at the main components that can be configured when applying a custom Alertmanager configuration:
 
