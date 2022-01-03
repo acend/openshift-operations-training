@@ -56,8 +56,8 @@ Generate the default template according to the [documentation](https://docs.open
 
 {{% alert title="Note" color="primary" %}}
 You might want to change the filename the template is written to to something more meaningful than what is used in the documentation (`template.yaml`).
-A good practice is to use a naming convention succh as `<resource type>_<resource name>.yaml`.
-This allows you to quickly find the resource definition you're looking for based on the filename in case it is part of larger collection.
+A good practice is to use a naming convention such as `<resource type>_<resource name>.yaml`.
+This allows you to quickly find the resource definition you're looking for based on the filename in case it is part of a larger collection.
 {{% /alert %}}
 
 
@@ -230,7 +230,7 @@ Or use our provided solution:
 oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/template_project-request-extended.yaml
 ```
 
-You then need to label the `default` Namespace in order for our network policies to work (they refer to a namespace labelled `network.openshift.io/policy-group=ingress`:
+You then need to label the `default` Namespace in order for our network policies to work (they refer to a namespace labelled `network.openshift.io/policy-group=ingress`):
 
 ```bash
 oc label namespace default 'network.openshift.io/policy-group=ingress'
