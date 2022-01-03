@@ -248,15 +248,28 @@ oc patch project.config.openshift.io cluster --type=merge --patch '{"spec": {"pr
 You probably already noticed the quite unwieldy console URL <https://console-openshift-console.apps.+username+-{{% param baseDomain %}}>.
 It's among a number of other route hostnames that are created by OpenShift this way by default.
 
-Because the console URL is the one we probably will use the most, change the `console` route's hostname in the `openshift-console` namespace to <https://console.apps.+username+-{{% param baseDomain %}}>.
-Feel free to change any of the other route hostnames created by OpenShift.
-You can change all of them to your liking except the one for the OAuth server.
+Because the console URL is the one we probably will use the most, we are going to simplify it.
+Find the appropriate instructions in OpenShift's documentation and adapt the route name.
 
 
 ### Solution {{% param sectionnumber %}}.6: Console URL
 
-Change the route's hostname e.g. by using the following patch command:
+The [proper way](https://docs.openshift.com/container-platform/latest/web_console/customizing-the-web-console.html#customizing-the-console-route_customizing-web-console) is to edit the ingress config resource:
 
 ```bash
-oc patch route console -n openshift-console --patch '{"spec": {"ingress": {"host": "console.apps.+username+-{{% param baseDomain %}}"}}}'
+oc edit ingress.config.openshift.io cluster
+```
+
+Add the `componentRoutes` part as follows:
+
+```yaml
+apiVersion: config.openshift.io/v1
+kind: Ingress
+metadata:
+  name: cluster
+spec:
+  componentRoutes:
+    - name: console
+      namespace: openshift-console
+      hostname: console.apps.+username+-{{% param baseDomain %}}
 ```
