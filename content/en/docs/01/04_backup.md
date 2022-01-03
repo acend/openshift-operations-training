@@ -59,7 +59,7 @@ Create a new project to be used for the backup:
 oc new-project training-infra-etcd-backup
 ```
 
-Since `etcd` is running on the masters, we need to make sure the cronjob pods creating the `etcd` snapshots are running on the master as well. We can do this by adding the following annotation:
+Since `etcd` is running on the masters, we need to make sure the cronjob pods creating the `etcd` snapshots are running on a master as well. We can do this by adding the following annotation:
 
 ```bash
 oc patch namespace training-infra-etcd-backup -p \
