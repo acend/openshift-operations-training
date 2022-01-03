@@ -172,4 +172,3 @@ The following screenshot shows the logs of the infra index for the pods in the n
 ![Kibana example](../kibana-example.png)
 
 Try to see the same logs on your cluster by exploring the features of Kibana.
-
