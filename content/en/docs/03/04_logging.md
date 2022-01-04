@@ -37,7 +37,7 @@ To deploy the cluster logging stack from the CLI, we need to create the followin
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/03/resources/logging/sub_cluster-logging.yaml" >}}{{< /highlight >}}
 
-You can also use our provided files:
+Now either copy and paste above resource definitions and then apply them to your cluster or directly use our provided files:
 
 ```bash
 oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/logging/ns_openshift-operators-redhat.yaml
