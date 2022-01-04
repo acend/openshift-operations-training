@@ -164,7 +164,7 @@ The first time you log in to Kibana, you need to create index patterns for your 
 * Create the infra index pattern:
   * Define the infra index pattern ![Kibana Infra Index Pattern](../kibana-define-pattern01.png)
   * Select `@timestamp` as the filed name ![Kibana Infra Index Pattern](../kibana-define-pattern02.png)
-* Repeat these steps for the remaining indices (audit, apps).
+* Repeat these steps for the remaining indices (audit, apps)
 * Go to **Discover** to see the logs
 
 The following screenshot shows the logs of the infra index for the pods in the namespace `openshift-kube-apiserver` for the last 12 hours:
