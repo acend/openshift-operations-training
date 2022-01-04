@@ -136,7 +136,7 @@ For the purpose of this lab you will configure the logging stack to store the au
 We can make use of the cluster log forwarding feature of the OpenShift Logging stack, which allows us to route logs to different log stores by defining forwarding pipelines.
 
 {{% alert title="Note" color="primary" %}}
-Because we do not have an external log store to forward our logs to, we will make use of the cluster internal Elasticsearch instance. Check the documentation on [Forwarding logs to third party systems](https://docs.openshift.com/container-platform/latest/logging/cluster-logging-external.html) to learn about the supported third party log stores.
+Because we do not have an external log store to forward our logs to, we will make use of the cluster-internal Elasticsearch instance. Check the documentation on [Forwarding logs to third party systems](https://docs.openshift.com/container-platform/latest/logging/cluster-logging-external.html) to learn more about the supported third-party log stores.
 {{% /alert %}}
 
 To forward the audit logs to the internal Elasticsearch instance, we need to define a `ClusterLogForwarder` CR object:
