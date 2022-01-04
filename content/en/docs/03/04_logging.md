@@ -158,7 +158,7 @@ To get to Kibana you can either click the Application Launcher ![Launcher](../ap
 
 ![Show in Kibana](../kibana-link.png)
 
-The log store of the logging stack (Elasticsearch) stores the logs in three index categories: Application, Infrastructure and - if enabled - Audit.  
+The log store of the logging stack (Elasticsearch) stores the logs in three index categories: Application, Infrastructure and, if enabled, Audit.  
 The first time you log in to Kibana, you need to create index patterns for your user:
 
 * Create the infra index pattern:
