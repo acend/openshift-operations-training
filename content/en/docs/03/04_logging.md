@@ -11,7 +11,7 @@ In this lab we will install and configure the logging stack.
 
 You can install [OpenShift Logging](https://docs.openshift.com/container-platform/latest/logging/cluster-logging.html) to aggregate all the logs from your OpenShift cluster, such as node logs, application logs and infrastructure logs.
 
-To deploy the cluster logging stack from the CLI, we need to create the following objects:
+To deploy the cluster logging stack from the CLI, we need to create the following objects. Have a look at them first:
 
 * OpenShift Elasticsearch Operator Namespace
 
