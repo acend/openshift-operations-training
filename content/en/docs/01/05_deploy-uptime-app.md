@@ -13,6 +13,7 @@ Your main goal for the rest of this training is to keep this application up and 
 At any time you can view the availability of your cluster console and the uptime app on [this](https://grafana-ops.training.acend.ch/d/7KmbRHXGz/ocp4monitoring?orgId=1&refresh=5s&var-userdropdown=+username+) dashboard. Credentials to login will be provided by your teachers.
 {{% /alert %}}
 
+
 ## Uptime app
 
 The application you're going to install is a simple Python app. It's going to be scaled to 3 replicas in order to achieve high availability.
