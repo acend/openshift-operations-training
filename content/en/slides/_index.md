@@ -9,13 +9,13 @@ menu:
 
 {{< blocks/section color="light">}}
 
-{{% blocks/feature icon="fa-chalkboard-teacher" url="https://changeme" title="Slide 1" %}}
+{{% blocks/feature icon="fa-chalkboard-teacher" url="https://drive.google.com/uc?export=download&id=1zAolXdD7XZWM7hZ8dJWE1Q-YktRFPFEU" title="OpenShift Installation" %}}
 {{% /blocks/feature %}}
 
-{{% blocks/feature icon="fa-chalkboard-teacher" url="https://changeme" title="Slide 12" %}}
+{{% blocks/feature icon="fa-chalkboard-teacher" url="https://drive.google.com/uc?export=download&id=1mv8H553hr6oJkgmLWnrS2FRz0jP8vmgW" title="OpenShift Architecture" %}}
 {{% /blocks/feature %}}
 
-{{% blocks/feature icon="fa-chalkboard-teacher" url="https://changeme" title="Slide 3" %}}
+{{% blocks/feature icon="fa-chalkboard-teacher" url="https://drive.google.com/uc?export=download&id=1FlB6FnrIyhLp_MKrN3BzMDk_LkLkZ5ZK" title="Kubernetes and OpenShift" %}}
 {{% /blocks/feature %}}
 
 {{< /blocks/section >}}
