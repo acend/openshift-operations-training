@@ -66,7 +66,7 @@ This is done using machine sets which we just used to resize the number of worke
 In order to find out what exactly we have to change, let's have a closer look at the MachineSet resource.
 Here's an excerpt of the more relevant fields:
 
-```
+```yaml
 apiVersion: machine.openshift.io/v1beta1
 kind: MachineSet
 metadata:

@@ -27,9 +27,9 @@ Switch to the **Developer** console and select the **uptime-app-prod** project. 
 
 ## Task {{% param sectionnumber %}}.2: Provided alerting rules
 
-OpenShift provides an extensive set of alerts, based on the [kubernetes-mixin](https://github.com/kubernetes-monitoring/kubernetes-mixin) project. Check out the configured alerts by navigating to your Prometheus web user interface and take a look a the predefined alerting rules.
+OpenShift provides an extensive set of alerts, based on the [kubernetes-mixin](https://github.com/kubernetes-monitoring/kubernetes-mixin) project. Check out the configured alerts by navigating to your Prometheus web user interface and take a look at the predefined alerting rules.
 
-Run the following command the get the URL to your Prometheus instance:
+Run the following command to get the URL to your Prometheus instance:
 
 ```bash
 oc -n openshift-monitoring get route prometheus-k8s -o go-template='https://{{ .spec.host }}/alerts{{ "\n" }}'
