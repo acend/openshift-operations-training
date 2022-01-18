@@ -6,17 +6,32 @@ sectionnumber: 3.2
 
 ## Task {{% param sectionnumber %}}.1: Enable alerting
 
-Let's take a look at an example of how you can send alerts to a receiver of your choice. You can do so by editing the settings directly in the web console at **Administration** -> **Cluster Settings** -> **Global Configuration** -> **Alertmanager** or by creating the alertmanager-main secret, which could look something like this:
+Let's take a look at an example of how you can send alerts to a receiver of your choice.
+Configuring a new receiver can either be done using the web console or by directly configuring the appropriate secret.
+Before going into detail on where this configuration lies, let's have a look at an example:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/03/resources/alertmanager-main.yaml" >}}{{< /highlight >}}
 
-Let's take a look at the main components that can be configured when applying a custom Alertmanager configuration:
+The main components that can be configured when applying a custom Alertmanager configuration comprise:
 
 * `receivers`: With a receiver, one or more notification types such as mails, webhooks or messaging platforms like Slack or PagerDuty can be defined.
 * `routes`: With routing blocks, a tree of routes and child routes can be defined. Each routing block has a matcher which can match one or several labels of an alert. Per block, one receiver can be specified, or if empty, the default receiver is taken.
 * `Watchdog`: There is a default Watchdog alert that is periodically firing to make sure that the complete alerting pipeline is functional. It is best practice to implement a Deadman's switch on the receiving side to get notified when sending alerts should fail.
 * `inhibit_rules`: You can group alerts so if one alert of this group was triggered, others will not. This is to prevent notification flooding. As an example, imagine an etcd member is unavailable (**severity: critical**). As a consequence, this would also trigger a high number of failed leader proposals (**severity: warning**). When fixing the unavailable etcd member, both alerts will be resolved, so you only care about one of them.
 
+You are now going to configure Alertmanager so that alerts created by Prometheus are sent to your alerts channel on Slack.
+In order to do this, navigate to **Administration**, **Cluster Settings**, **Global Configuration**, **Alertmanager** on the web console.
+Here you can see the pre-configured **Receivers**.
+Click on **Configure** next to the **Default** receiver.
+Now fill in the **Slack API URL** and **Channel** information provided to you by your trainer and click **Save**.
+
+{{% alert title="Note" color="primary" %}}
+By clicking on **Show advanced configuration**, you have the option of customizing the messages' appearance in Slack.
+Feel free to do so if you'd like.
+{{% /alert %}}
+
+Switch to Slack and check if alerts are showing up in your alerts channel.
+This might take some minutes so don't hesitate to continue the labs and check back later.
 
 ## Task {{% param sectionnumber %}}.2: Persistence and metrics retention
 
