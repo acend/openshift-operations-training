@@ -30,8 +30,18 @@ By clicking on **Show advanced configuration**, you have the option of customizi
 Feel free to do so if you'd like.
 {{% /alert %}}
 
-Switch to Slack and check if alerts are showing up in your alerts channel.
-This might take some minutes so don't hesitate to continue the labs and check back later.
+Switch to Slack and check if notifications are showing up in your alerts channel.
+This might take some minutes so don't hesitate to continue the lab and check back later.
+
+Configuring Alertmanager receivers via web console has its advantages because it takes out most of its difficulty.
+However, the time will come when you want to configure receivers automatically or with more advanced settings not exposed on the web console.
+In order to do so, you adapt the `alertmanager-main` secret in the `openshift-monitoring` namespace.
+Have a look at how Alertmanager is now configured:
+
+```bash
+oc -n openshift-monitoring extract secrets/alertmanager-main
+```
+
 
 ## Task {{% param sectionnumber %}}.2: Persistence and metrics retention
 
