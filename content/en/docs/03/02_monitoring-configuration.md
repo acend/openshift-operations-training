@@ -36,7 +36,7 @@ This might take some minutes so don't hesitate to continue the lab and check bac
 Configuring Alertmanager receivers via web console has its advantages because it takes out most of its difficulty.
 However, the time will come when you want to configure receivers automatically or with more advanced settings not exposed on the web console.
 In order to do so, you adapt the `alertmanager-main` secret in the `openshift-monitoring` namespace.
-Have a look at how Alertmanager is now configured:
+Have a look at how Alertmanager is currently configured:
 
 ```bash
 oc -n openshift-monitoring extract secrets/alertmanager-main
