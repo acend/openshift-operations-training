@@ -33,6 +33,11 @@ Copy above `Restore` resource into a file on your bastion host. Replace the plac
 oc -n training-infra-velero get backups
 ```
 
+Start the restore by creating the `Restore` object:
+```bash
+oc -n training-infra-velero apply -f <restore-file>
+```
+
 After the restore has completed, your uptime app should be up and running again:
 
 ```bash
@@ -45,7 +50,6 @@ Example output:
 NAME                          READY   STATUS    RESTARTS   AGE
 uptime-app-56df4df7d8-hnsps   1/1     Running   0          20m
 uptime-app-56df4df7d8-jfkzx   1/1     Running   0          20m
-uptime-app-56df4df7d8-mx6bt   1/1     Running   0          20m
 ```
 
 When ready, revert your backup storage location to read-write mode:
