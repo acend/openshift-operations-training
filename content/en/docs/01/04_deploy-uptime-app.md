@@ -33,16 +33,16 @@ Next, you're going to create the following resources:
 * Service
 * Route
 
-To deploy the deployment and service, you can simply apply the following resource file:
+To deploy these resources, you can simply execute the following command:
 
 ```bash
 oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/uptime-app.yaml -n uptime-app-prod
 ```
 
-You can now create the route based on the service:
+What's left is to adapt the hostname:
 
 ```bash
-oc expose service uptime-app -n uptime-app-prod
+oc patch route uptime-app --patch '{"spec": {"host": "uptime-app-uptime-app-prod.apps.+username+-ops-training.openshift.ch"}}' -n uptime-app-prod
 ```
 
 The deployed application should now be available at <https://uptime-app-uptime-app-prod.apps.+username+-ops-training.openshift.ch>.

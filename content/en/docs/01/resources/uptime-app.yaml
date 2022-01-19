@@ -64,3 +64,18 @@ spec:
     name: http
   selector:
     app: uptime-app
+---
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: uptime-app
+spec:
+  port:
+    targetPort: http
+  tls:
+    insecureEdgeTerminationPolicy: Redirect
+    termination: edge
+  to:
+    kind: Service
+    name: uptime-app
+    weight: 100

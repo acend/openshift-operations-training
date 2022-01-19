@@ -12,7 +12,6 @@ metadata:
     machine.openshift.io/zone: eu-north-1c
   name: user01-ops-training-75gjz-master-02
   namespace: openshift-machine-api
-  selfLink: /apis/machine.openshift.io/v1beta1/namespaces/openshift-machine-api/machines/user01-ops-training-75gjz-master-02
 spec:
   metadata: {}
   providerSpec:
