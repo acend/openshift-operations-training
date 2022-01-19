@@ -33,7 +33,7 @@ Feel free to do so if you'd like.
 Switch to Slack and check if notifications are showing up in your alerts channel.
 This might take some minutes so don't hesitate to continue the lab and check back later.
 
-Configuring Alertmanager receivers via web console has its advantages because it takes out most of its difficulty.
+Configuring Alertmanager receivers via web console is easier than writing the configuration manually.
 However, the time will come when you want to configure receivers automatically or with more advanced settings not exposed on the web console.
 In order to do so, you adapt the `alertmanager-main` secret in the `openshift-monitoring` namespace.
 Have a look at how Alertmanager is currently configured:
