@@ -77,7 +77,7 @@ Now that the master node has been fully removed, we need to also remove the `etc
 Connect to an `etcd` pod that is not running on the master you just removed:
 
 ```bash
-oc -n openshift-etcd rsh <etcd-pod> -c etcdctl
+oc -n openshift-etcd rsh -c etcdctl <etcd-pod>
 ```
 
 View the member list and take note of the ID and name of the `etcd` member you want to remove:
