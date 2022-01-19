@@ -1,7 +1,7 @@
 ---
-title: "1.4 Backup"
-weight: 14
-sectionnumber: 1.4
+title: "1.5 Backup"
+weight: 15
+sectionnumber: 1.5
 ---
 
 In this lab, you will create scheduled backups for the most important cluster components.

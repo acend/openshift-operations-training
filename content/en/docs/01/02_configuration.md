@@ -260,7 +260,7 @@ The [proper way](https://docs.openshift.com/container-platform/latest/web_consol
 oc edit ingress.config.openshift.io cluster
 ```
 
-Add the `componentRoutes` part as follows:
+Append the `componentRoutes` part as follows:
 
 ```yaml
 apiVersion: config.openshift.io/v1

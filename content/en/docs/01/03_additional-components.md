@@ -125,7 +125,7 @@ $ oc whoami
 Unable to connect to the server: x509: certificate signed by unknown authority
 ```
 
-Open the kubeconfig file with your favourite editor (e.g. `vim $KUBECONFIG`) and remove these marked lines:
+Open the kubeconfig file with your favourite editor (e.g. `vim $KUBECONFIG`) and remove all `certificate-authority-data` lines under `clusters`:
 
 ```yaml
 apiVersion: v1
@@ -134,10 +134,6 @@ clusters:
     certificate-authority-data: LS0...                          # delete this line
     server: https://api.+username+-ops-training.openshift.ch:6443
     name: api-+username+-ops-training-openshift-ch:6443
-- cluster:
-    certificate-authority-data: LS0...                          # delete this line
-    server: https://api.+username+-ops-training.openshift.ch:6443
-  name: +username+-ops-training
 ```
 
 Check again:
