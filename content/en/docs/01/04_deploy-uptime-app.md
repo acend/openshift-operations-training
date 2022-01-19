@@ -36,7 +36,7 @@ Next, you're going to create the following resources:
 To deploy the deployment and service, you can simply apply the following resource file:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/uptime-app.yaml -n uptime-app-prod
+oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/uptime-app.yaml -n uptime-app-prod
 ```
 
 You can now create the route based on the service:
