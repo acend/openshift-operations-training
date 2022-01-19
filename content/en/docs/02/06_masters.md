@@ -32,7 +32,6 @@ Edit the file to reflect the following changes:
   * `spec.providerID`
   * all of `status`
 * Change `metadata.name` to a unique name, e.g. if the name was `<clustername>-<id>-master-0` use `<clsutername>-<id>-master00`.
-* Change `metadata.selfLink` to the new machine name from the previous step.
 
 The Machine resource should look similar to this:
 
