@@ -260,7 +260,7 @@ The [proper way](https://docs.openshift.com/container-platform/latest/web_consol
 oc edit ingress.config.openshift.io cluster
 ```
 
-Append the `componentRoutes` part as follows:
+Append the `componentRoutes` part so your resource looks similar to the example below:
 
 ```yaml
 apiVersion: config.openshift.io/v1
@@ -272,4 +272,5 @@ spec:
     - name: console
       namespace: openshift-console
       hostname: console.apps.+username+-{{% param baseDomain %}}
+  domain: apps.+username+-{{% param baseDomain %}}
 ```
