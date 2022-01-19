@@ -197,28 +197,4 @@ As soon as the ConfigMap is created, the monitoring operator begins redeploying 
 oc get pods -n openshift-monitoring -o wide -w
 ```
 
-This could take a while.
-In the meantime, we can move on to moving the last infrastructure component.
-
-
-## Task {{% param sectionnumber %}}.5: Logging
-
-The logging stack is similar to the monitoring stack in that it consists of a number of different components.
-Most of these can be placed onto the infra nodes by defining the toleration and node selector in the `clusterloggings.logging.openshift.io` custom resource.
-Taking into account all the other configuration we already did, the new ClusterLogging definition looks like this:
-
-{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/clusterlogging_instance.yaml" >}}{{< /highlight >}}
-
-Apply the updated config with:
-
-```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/clusterlogging_instance.yaml
-```
-
-To watch the pods being redeployed:
-
-```bash
-oc get pods -o wide -n openshift-logging -w
-```
-
-This concludes moving all the infrastructure components to the infra nodes.
+This concludes moving all the current infrastructure components to the infra nodes.

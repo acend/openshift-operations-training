@@ -90,6 +90,10 @@ There should be a Cluster Logging Operator in the openshift-logging Namespace. T
 
 Now you can create an OpenShift Logging instance:
 
+{{% alert title="Note" color="primary" %}}
+Note the already baked-in tolerations:
+{{% /alert %}}
+
 {{< highlight yaml >}}{{< readfile file="content/en/docs/03/resources/logging/clusterlogging_instance.yaml" >}}{{< /highlight >}}
 
 Again, you can use the provided file:

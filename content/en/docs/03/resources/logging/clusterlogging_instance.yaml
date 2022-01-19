@@ -7,18 +7,11 @@ spec:
   managementState: "Managed"  
   logStore:
     type: "elasticsearch"  
-    retentionPolicy: 
-      application:
-        maxAge: 1d
-      infra:
-        maxAge: 7d
-      audit:
-        maxAge: 7d
     elasticsearch:
       nodeCount: 3 
       storage:
         storageClassName: "gp2"
-        size: 200G
+        size: 50G
       resources: 
         requests:
           memory: "8Gi"
@@ -29,11 +22,27 @@ spec:
           requests:
              memory: 256Mi
       redundancyPolicy: "SingleRedundancy"
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/infra
+    retentionPolicy: 
+      application:
+        maxAge: 1d
+      infra:
+        maxAge: 1d
+      audit:
+        maxAge: 1d
   visualization:
     type: "kibana"  
     kibana:
       replicas: 1
+      tolerations:
+      - effect: NoSchedule
+        key: node-role.kubernetes.io/infra
   collection:
     logs:
-      type: "fluentd"  
+      type: fluentd"
       fluentd: {}
+        tolerations:
+        - effect: NoSchedule
+          key: node-role.kubernetes.io/infra
