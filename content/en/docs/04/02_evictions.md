@@ -138,7 +138,7 @@ stress2much-945db9-zwmzk   0/1     Evicted   0          7m34s
 In order to delete all the evicted pods at once, execute the following command:
 
 ```bash
-oc delete pods --field-selector=status.phase=Evicted --namespace <namespace>
+oc delete pods --field-selector=status.phase=Failed --namespace <namespace>
 ```
 
 
