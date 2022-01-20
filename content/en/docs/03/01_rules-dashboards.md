@@ -16,7 +16,7 @@ Navigate to **Monitoring** -> **Dashboard** on the web console and select **etcd
 
 ![cluster dashboard](../cluster-dashboard.png)
 
-If you are more comfortable using Grafana you can display those dashboards in the OpenShift-provided Grafana. 
+If you are more comfortable using Grafana you can display those dashboards in the OpenShift-provided Grafana.
 
 Run the following command to get the URL to your Prometheus instance:
 
