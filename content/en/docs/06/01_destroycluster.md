@@ -1,7 +1,7 @@
 ---
-title: "5.1 Destroy the cluster"
-weight: 51
-sectionnumber: 5.1
+title: "6.1 Destroy the cluster"
+weight: 61
+sectionnumber: 6.1
 ---
 
 Usually our work centers around keeping everything up and running, building and engineering stuff and so on.
