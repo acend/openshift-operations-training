@@ -76,6 +76,8 @@ github_branch = "main"
 enabledModule = "base"
 baseDomain = "ops-training.openshift.ch"
 
+modeSwitcher = "true"
+
 # Enable Lunr.js offline search
 offlineSearch = true
 
