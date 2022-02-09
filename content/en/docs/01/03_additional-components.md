@@ -34,6 +34,8 @@ helm install cert-manager jetstack/cert-manager \
 
 To be able to use Amazon Route 53 for Let's Encrypt's DNS01 challenge, you will need to create a secret containing the required credentials. You can find these on the bastion host at `/home/ec2-user/ocp4-ops/resources/cert-manager`.
 
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
 ```bash
 oc -n training-infra-cert-manager apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
 ```
@@ -43,6 +45,8 @@ Now you can create the first `ClusterIssuer`:
 ```bash
 oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producion.yaml
 ```
+
+{{% /details %}}
 
 Verify that the `ClusterIssuer` is ready to issue certificates:
 
@@ -71,9 +75,15 @@ Status:
 
 After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.+username+-ops-training.openshift.ch`. Before you can apply the file you need to change the parameters `commonName` and `dnsNames` to match your cluster name.
 
+You can find the file in the directory cert-manager directory mentioned above.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
 ```bash
 oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_wildcard-ingress.yaml
 ```
+
+{{% /details %}}
 
 It will take around 90 seconds for the certificate to be ready. Check with:
 
@@ -88,7 +98,9 @@ NAME                    READY   SECRET                  AGE
 cert-wildcard-ingress   True    cert-wildcard-ingress   6m2s
 ```
 
-Update the Ingress Controller configuration to use the certificate:
+Update the Ingress Controller configuration to use the certificate.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc patch ingresscontroller.operator default \
@@ -97,6 +109,8 @@ oc patch ingresscontroller.operator default \
    -n openshift-ingress-operator
 ```
 
+{{% /details }}
+
 After the Ingress Controller has finished rolling out, the console URL should now present a valid certificate.
 
 
@@ -104,11 +118,19 @@ After the Ingress Controller has finished rolling out, the console URL should no
 
 The default API server certificate is issued by an internal OpenShift Container Platform cluster CA. Clients outside of the cluster will not be able to verify the API server’s certificate by default. This certificate can be replaced by one that is issued by a CA that clients trust. Before you can apply the file you need to change the parameters `commonName` and `dnsNames` to match your cluster name.
 
+You can find the file in the directory cert-manager directory mentioned above.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
 ```bash
 oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_api.yaml
 ```
 
-Again, check if the certificate is ready, then patch the API server:
+{{% /details }}
+
+Again, check if the certificate is ready, then patch the API server.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc patch apiserver cluster \
@@ -118,6 +140,8 @@ oc patch apiserver cluster \
      "servingCertificate": {"name": "cert-api"}}]}}}'
 ```
 
+{{% /details }}
+
 Since the `kubeconfig` file you have been working with so far contains the CA of the self-signed certificate, the newly created certificate cannot be validated against this CA:
 
 ```bash
@@ -125,7 +149,9 @@ $ oc whoami
 Unable to connect to the server: x509: certificate signed by unknown authority
 ```
 
-Open the kubeconfig file with your favourite editor (e.g. `vim $KUBECONFIG`) and remove all `certificate-authority-data` lines under `clusters`:
+Open the kubeconfig file with your favourite editor (e.g. `vim $KUBECONFIG`) and remove all `certificate-authority-data` lines under `clusters`.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```yaml
 apiVersion: v1
@@ -135,6 +161,8 @@ clusters:
     server: https://api.+username+-ops-training.openshift.ch:6443
     name: api-+username+-ops-training-openshift-ch:6443
 ```
+
+{{% /details }}
 
 Check again:
 
