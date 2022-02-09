@@ -18,7 +18,7 @@ The best way to add infra nodes to the cluster is via machine sets.
 Machine sets are usually only supported on clusters installed with the IPI installation method.
 They could be compared to deployments: If deployments are responsible for creating replica sets and ultimately pods, machine sets create machines to then add them as nodes to the cluster.
 
-The probably easiest way to create a machine set for infra nodes is to copy and adapt the existing `worker` MachineSet in the `openshift-machine-api` namespace.
+Probably the easiest way to create a machine set for infra nodes is to copy and adapt the existing `worker` MachineSet in the `openshift-machine-api` namespace.
 
 First of all, get the yaml definition of the existing worker MachineSet resource inside the `openshift-machine-api` namespace.
 
