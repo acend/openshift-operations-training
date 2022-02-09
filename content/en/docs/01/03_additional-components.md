@@ -109,7 +109,7 @@ oc patch ingresscontroller.operator default \
    -n openshift-ingress-operator
 ```
 
-{{% /details }}
+{{% /details %}}
 
 After the Ingress Controller has finished rolling out, the console URL should now present a valid certificate.
 
