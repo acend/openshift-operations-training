@@ -42,13 +42,17 @@ Nodes that have taints on them effectively tell the scheduler to only deploy pod
 A taint consists of a key, value, and effect and is expressed as `key=value:effect`; the value is optional.
 As an effect we can choose from `NoSchedule`, `PreferNoSchedule` or `NoExecute`.
 
-Let's taint our infra nodes:
+First of all, taint your infra nodes with key `node-role.kubernetes.io/infra` and effect `NoSchedule`.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc adm taint nodes --selector node-role.kubernetes.io/infra node-role.kubernetes.io/infra:NoSchedule
 ```
 
-The effect of the command above is that new pods that do not match the taint are not scheduled onto the infra nodes.
+{{% /details %}}
+
+This action's effect is that new pods are not scheduled onto infra nodes if they do not match the taint.
 Just what we wanted.
 
 {{% alert title="Note" color="primary" %}}
@@ -62,7 +66,8 @@ Before we continue with moving all the different infra components onto the infra
 
 ## Task {{% param sectionnumber %}}.2: Router
 
-The [OpenShift documentation](https://docs.openshift.com/container-platform/latest/machine_management/creating-infrastructure-machinesets.html#infrastructure-moving-router_creating-infrastructure-machinesets) explains how to move the router and other infra pods. However, it uses node selectors and labels to do so.
+The [OpenShift documentation](https://docs.openshift.com/container-platform/latest/machine_management/creating-infrastructure-machinesets.html#infrastructure-moving-router_creating-infrastructure-machinesets) explains how to move the router and other infra pods.
+However, it uses node selectors and labels to do so.
 
 In order to find out how to define a toleration for the Ingress Controller, a possible way is to have a look at its CustomResourceDefinition:
 
@@ -114,7 +119,9 @@ spec:
         node-role.kubernetes.io/infra: ""
 ```
 
-So what we effectively want is the combination of the two:
+So what we effectively want is the combination of the two.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```yaml
 spec:
@@ -127,7 +134,13 @@ spec:
       key: node-role.kubernetes.io/infra
 ```
 
-You can now either use above definition and add it to the `default` `ingresscontroller` resource with:
+{{% /details %}}
+
+Add the node selector and toleration to the `default` `ingresscontroller` resource.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
+You could either directly edit the resource:
 
 ```bash
 oc edit ingresscontroller/default -n openshift-ingress-operator
@@ -138,6 +151,8 @@ Or use the following patch command:
 ```bash
 oc patch ingresscontroller/default -n openshift-ingress-operator --type=merge -p '{"spec":{"nodePlacement": {"nodeSelector": {"matchLabels": {"node-role.kubernetes.io/infra": ""}},"tolerations": [{"effect":"NoSchedule","key": "node-role.kubernetes.io/infra"}]}}}'
 ```
+
+{{% /details %}}
 
 You can now observe the Ingress Controller Operator do its work and immediately start redeploying the router pods onto the infra nodes:
 
@@ -163,11 +178,16 @@ spec:
     key: node-role.kubernetes.io/infra
 ```
 
-And the corresponding patch command:
+Add it to the `configs.imageregistry.operator.openshift.io` custom resource `cluster`.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+Again, either edit the resource directly or use the following command:
 
 ```bash
 oc patch configs.imageregistry.operator.openshift.io/cluster --type=merge -p '{"spec": {"nodeSelector": {"node-role.kubernetes.io/infra": ""}, "tolerations": [{"effect": "NoSchedule", "key": "node-role.kubernetes.io/infra"}]}}'
 ```
+
+{{% /details %}}
 
 Watch the pods how they're being redeployed one by one:
 
@@ -181,15 +201,23 @@ oc get pods -n openshift-image-registry -o wide -w
 Moving the monitoring stack involves moving a number of different pods to the infra nodes.
 Placement of these pods is defined in a ConfigMap and is documented [here](https://docs.openshift.com/container-platform/latest/monitoring/configuring-the-monitoring-stack.html#assigning-tolerations-to-monitoring-components_configuring-the-monitoring-stack).
 
-Gathering all the relevant information, we end up with a ConfigMap as follows:
+Gather all the relevant information and create an appropriate ConfigMap.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/configmap_cluster-monitoring-config.yaml" >}}{{< /highlight >}}
 
-Create it with:
+{{% /details %}}
+
+Apply it to the cluster.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc create -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/configmap_cluster-monitoring-config.yaml
 ```
+
+{{% /details %}}
 
 As soon as the ConfigMap is created, the monitoring operator begins redeploying the pods:
 
