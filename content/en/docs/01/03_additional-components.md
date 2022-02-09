@@ -126,7 +126,7 @@ You can find the file in the directory cert-manager directory mentioned above.
 oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_api.yaml
 ```
 
-{{% /details }}
+{{% /details %}}
 
 Again, check if the certificate is ready, then patch the API server.
 
@@ -140,7 +140,7 @@ oc patch apiserver cluster \
      "servingCertificate": {"name": "cert-api"}}]}}}'
 ```
 
-{{% /details }}
+{{% /details %}}
 
 Since the `kubeconfig` file you have been working with so far contains the CA of the self-signed certificate, the newly created certificate cannot be validated against this CA:
 
@@ -162,7 +162,7 @@ clusters:
     name: api-+username+-ops-training-openshift-ch:6443
 ```
 
-{{% /details }}
+{{% /details %}}
 
 Check again:
 
