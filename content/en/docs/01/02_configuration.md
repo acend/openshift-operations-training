@@ -90,7 +90,6 @@ Except of course for certain use cases, but thanks to the flexibility of network
 
 Add the necessary network policies to the default project template. A sane default is already provided by Red Hat in its [documentation](https://docs.openshift.com/container-platform/latest/networking/network_policy/multitenant-network-policy.html). For your convenience, we also provide them as a file at <https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/networkpolicies.yaml>.
 
- 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 Your file should now look like this:
