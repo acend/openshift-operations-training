@@ -3,13 +3,11 @@ kind: KubeletConfig
 metadata:
   name: master
 spec:
+  autoSizingReserved: true
   kubeletConfig:
     evictionHard:
       memory.available: 500Mi
     kubeReserved:
-      cpu: 250m
-      memory: 1Gi
-    systemReserved:
       cpu: 250m
       memory: 1Gi
   machineConfigPoolSelector:

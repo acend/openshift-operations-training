@@ -32,9 +32,7 @@ And the worker nodes' configuration to this:
 These resource files are also available at https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml and https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_worker.yaml, respectively.
 {{% /alert %}}
 
-
-### Solution {{% param sectionnumber %}}.1: Configure kubelet arguments
-
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 There are multiple possible ways to apply these configuration resources to the cluster.
 We are going to use one of the quickest methods and apply via URL:
 
@@ -42,6 +40,8 @@ We are going to use one of the quickest methods and apply via URL:
 oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml
 oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_worker.yaml
 ```
+
+{{% /details %}}
 
 To learn more about kubelet configuration, check the [Kubernetes](https://kubernetes.io/docs/tasks/administer-cluster/kubelet-config-file/) and [OpenShift documentation](https://docs.openshift.com/container-platform/latest/nodes/nodes/nodes-nodes-managing.html).
 
@@ -61,7 +61,7 @@ This allows you to quickly find the resource definition you're looking for based
 {{% /alert %}}
 
 
-### Solution {{% param sectionnumber %}}.2: Generate the default project template
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 Simply execute the command from the documentation with a slight change to the filename (according to the tip above):
 
@@ -79,6 +79,8 @@ metadata:
 objects:
 ```
 
+{{% /details %}}
+
 
 ## Task {{% param sectionnumber %}}.3: Network policies
 
@@ -88,8 +90,8 @@ Except of course for certain use cases, but thanks to the flexibility of network
 
 Add the necessary network policies to the default project template. A sane default is already provided by Red Hat in its [documentation](https://docs.openshift.com/container-platform/latest/networking/network_policy/multitenant-network-policy.html). For your convenience, we also provide them as a file at <https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/networkpolicies.yaml>.
 
-
-### Solution {{% param sectionnumber %}}.3: Network policies
+ 
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 Your file should now look like this:
 
@@ -182,6 +184,8 @@ Also note the additional namespace definition (`openshift-config`) at the top of
 This is to make sure the template is going to be created in the correct namespace where OpenShift will be looking for it.
 {{% /alert %}}
 
+{{% /details %}}
+
 
 ## Task {{% param sectionnumber %}}.4: Limit range
 
@@ -195,12 +199,13 @@ A good starting point could look as follows:
 
 Add the LimitRange resource to your default project template.
 
-
-### Solution {{% param sectionnumber %}}.4: Limit range
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 Your file should now look like this:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/template_project-request-extended.yaml" >}}{{< /highlight >}}
+
+{{% /details %}}
 
 
 ## Task {{% param sectionnumber %}}.5: Configure the template
@@ -215,8 +220,7 @@ You might want to have another look at the different documentation pages so you 
 
 When you think everything is set up, create a new project and check that the NetworkPolicy and LimitRange resources were created automatically.
 
-
-### Solution {{% param sectionnumber %}}.5: Configure the template
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 Create the template on the cluster by either using your own template:
 
@@ -242,6 +246,8 @@ And finally, we need to configure the Project custom resource:
 oc patch project.config.openshift.io cluster --type=merge --patch '{"spec": {"projectRequestTemplate": {"name": "project-request-extended"}}}'
 ```
 
+{{% /details %}}
+
 
 ## Task {{% param sectionnumber %}}.6: Console URL
 
@@ -251,8 +257,7 @@ It's among a number of other route hostnames that are created by OpenShift this 
 Because the console URL is the one we probably will use the most, we are going to simplify it.
 Find the appropriate instructions in OpenShift's documentation and adapt the route name.
 
-
-### Solution {{% param sectionnumber %}}.6: Console URL
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 The [proper way](https://docs.openshift.com/container-platform/latest/web_console/customizing-the-web-console.html#customizing-the-console-route_customizing-web-console) is to edit the ingress config resource:
 
@@ -274,3 +279,5 @@ spec:
       hostname: console.apps.+username+-{{% param baseDomain %}}
   domain: apps.+username+-{{% param baseDomain %}}
 ```
+
+{{% /details %}}
