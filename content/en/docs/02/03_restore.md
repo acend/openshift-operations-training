@@ -9,8 +9,7 @@ sectionnumber: 2.3
 In the backup lab you created a scheduled backup of all resources in namespace `uptime-app-prod`. Now we are going to test the restore procedure.
 
 {{% alert title="Warning" color="secondary" %}}
-Make sure you read through the whole procedure, understood it and maybe even prepared all resources for the restore before deleting the project.
-The longer you need to restore the application, the more your app's availability will suffer.
+To keep your restore time as short as possible, make sure you read through the whole procedure, understood it and maybe even prepared all resources for the restore before deleting the project.
 {{% /alert %}}
 
 Go ahead and delete the project `uptime-app-prod`:
