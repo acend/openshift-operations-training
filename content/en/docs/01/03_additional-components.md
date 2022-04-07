@@ -34,13 +34,19 @@ helm install cert-manager jetstack/cert-manager \
 
 To be able to use Amazon Route 53 for Let's Encrypt's DNS01 challenge, you will need to create a secret containing the required credentials. You can find these on the bastion host at `/home/ec2-user/ocp4-ops/resources/cert-manager`.
 
+Create that secret.
+
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n training-infra-cert-manager apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
 ```
 
-Now you can create the first `ClusterIssuer`:
+{{% /details %}}
+
+Now you can create the `ClusterIssuer` resource which is also supplied as a file inside the same directory.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producion.yaml
@@ -75,7 +81,7 @@ Status:
 
 After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.+username+-ops-training.openshift.ch`. Before you can apply the file you need to change the parameters `commonName` and `dnsNames` to match your cluster name.
 
-You can find the file in the directory cert-manager directory mentioned above.
+You can find the file in the `cert-manager` directory mentioned above.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
@@ -98,7 +104,7 @@ NAME                    READY   SECRET                  AGE
 cert-wildcard-ingress   True    cert-wildcard-ingress   6m2s
 ```
 
-Update the Ingress Controller configuration to use the certificate.
+Update the `IngressController` configuration [according to the documentation](https://docs.openshift.com/container-platform/latest/security/certificates/replacing-default-ingress-certificate.html) in order to use the certificate.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
@@ -128,7 +134,7 @@ oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_api.yaml
 
 {{% /details %}}
 
-Again, check if the certificate is ready, then patch the API server.
+Again, check if the certificate is ready, then [patch the API server to use the certificate](https://docs.openshift.com/container-platform/latest/security/certificates/api-server.html).
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
@@ -149,7 +155,7 @@ $ oc whoami
 Unable to connect to the server: x509: certificate signed by unknown authority
 ```
 
-Open the kubeconfig file with your favourite editor (e.g. `vim $KUBECONFIG`) and remove all `certificate-authority-data` lines under `clusters`.
+Open the kubeconfig file with your favourite editor (e.g. `vim $KUBECONFIG`) and remove the `certificate-authority-data` line under `clusters`.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
@@ -217,4 +223,3 @@ default   Available   10s              156m
 ```
 
 In the next chapter you will learn how to use Velero for scheduled backups of cluster resources.
-
