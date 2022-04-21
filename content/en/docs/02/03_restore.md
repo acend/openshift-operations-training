@@ -12,11 +12,15 @@ In the backup lab you created a scheduled backup of all resources in namespace `
 To keep your restore time as short as possible, make sure you read through the whole procedure, understood it and maybe even prepared all resources for the restore before deleting the project.
 {{% /alert %}}
 
-Go ahead and delete the project `uptime-app-prod`:
+Go ahead and delete the project `uptime-app-prod`.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc delete project uptime-app-prod
 ```
+
+{{% /details %}}
 
 Update your backup storage location to read-only mode (this prevents backup objects from being created or deleted in the backup storage location during the restore process):
 
@@ -38,6 +42,7 @@ oc -n training-infra-velero get backups
 ```
 
 Start the restore by creating the `Restore` object:
+
 ```bash
 oc -n training-infra-velero apply -f <restore-file>
 ```
