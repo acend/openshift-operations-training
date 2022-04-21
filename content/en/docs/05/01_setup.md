@@ -54,7 +54,7 @@ The instance you are going to create has the following content:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/05/resources/gitea_gitea.yaml" >}}{{< /highlight >}}
 
-Create the instance in the `gitea` namespace.
+Create the instance.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
@@ -75,7 +75,7 @@ oc -n gitea get pods -w
 
 {{% /details %}}
 
-As soon as the postgresql as well as the gitea pods are running, get the hostname from the route:
+As soon as the postgresql as well as the gitea pods are running, get the hostname from the route.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
