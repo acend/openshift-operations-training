@@ -13,7 +13,7 @@ So we are going to decrease the number of worker nodes to 2 and also reduce thei
 
 We have to admit that in real life, this would probably be the other way round.
 Instead of reducing the number of nodes and their capacity, we would add more nodes and maybe even make them bigger.
-However, be it reducing or enlarging the cluster, the process is the same and the forecast for this training tells us that we're not going to see much more workload.
+However, be it reducing or enlarging the cluster, the process is the same and the forecast for this training tells us that we are not going to see much more workload.
 
 
 ## Task {{% param sectionnumber %}}.1: Change the number of nodes
@@ -110,17 +110,27 @@ After the change, nothing happens.
 OpenShift only applies this change to new nodes.
 We'll have to delete every machine with the old instance type one by one so they get replaced by new ones.
 
-Delete one of the worker machines and wait until it is up again:
+Delete one of the worker machines.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-machine-api delete machine <machine>
 ```
 
+{{% /details %}}
+
+Now periodically check for the nodes' status until the new node is up again.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
 ```bash
 oc -n openshift-machine-api get machines
 ```
 
-Then, repeat the same step for the other worker machine.
+{{% /details %}}
+
+Repeat the same step for the other worker machine.
 
 {{% alert title="Note" color="primary" %}}
 It might make perfect sense to first scale up the nodes before you begin the renewal process.
