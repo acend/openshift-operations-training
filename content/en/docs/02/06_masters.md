@@ -6,21 +6,22 @@ sectionnumber: 2.6
 
 In this lab we will learn how to replace a failed master node. As long as we do not lose the majority of our masters, we can simply replace those that failed. If we lose the majority (e.g. 2 out of 3), we need to restore the state of `etcd` from a previously created snapshot, which will not be covered in this lab.
 
-
-## Task {{% param sectionnumber %}}.1: Replacing a master node
-
 Since the masters are hosting `etcd`, the key-value store that holds all the cluster's information and state, it is not as straightforward as replacing a worker node backed by a machine set.
 
 
-### Task {{% param sectionnumber %}}.1.1: Replacing the machine
+## Task {{% param sectionnumber %}}.1: Replacing the machine
 
-First, create a copy of the master machine you want to replace:
+First, save the resource definition of the master machine you want to replace.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-machine-api get machine <failed-master-machine> -o yaml > machine_<failed-master-machine>.yaml
 ```
 
-Edit the file to reflect the following changes:
+{{% /details %}}
+
+Now edit the file to reflect the following changes:
 
 * Remove:
   * `metadata.annotations`
@@ -33,21 +34,31 @@ Edit the file to reflect the following changes:
   * all of `status`
 * Change `metadata.name` to a unique name, e.g. if the name was `<clustername>-<id>-master-0` use `<clsutername>-<id>-master00`.
 
-The Machine resource should look similar to this:
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
+The `machine` resource should look similar to this:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/machine_master-02.yaml" >}}{{< /highlight >}}
 
-Delete the master machine you want to replace:
+{{% /details %}}
+
+Delete the master machine you want to replace.
 
 {{% alert title="Warning" color="secondary" %}}
-Make sure you delete the master machine you created the copy from in the previous step.
+Make sure you delete the master machine you just saved the resource definition from in the previous step.
 {{% /alert %}}
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-machine-api delete machine <failed-master-machine>
 ```
 
-Wait for the machine to be deleted:
+{{% /details %}}
+
+Wait for the machine to be deleted by periodically checking the machines' state.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-machine-api get machines -o wide
@@ -68,23 +79,33 @@ user01-ops-training-75gjz-worker-eu-north-1b-zddgj   Running    m5.2xlarge   eu-
 user01-ops-training-75gjz-worker-eu-north-1c-6mqls   Running    m5.2xlarge   eu-north-1   eu-north-1c   3d3h   ip-10-0-195-93.eu-north-1.compute.internal    aws:///eu-north-1c/i-0d7f8ed2c8b9c0932   running
 ```
 
+{{% /details %}}
 
-### Task {{% param sectionnumber %}}.1.2: Deleting the `etcd` member
+
+## Task {{% param sectionnumber %}}.2: Deleting the `etcd` member
 
 Now that the master node has been fully removed, we need to also remove the `etcd` member, since it still has the configuration of the old master node.
 
 Connect to an `etcd` pod that is not running on the master you just removed:
 
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
 ```bash
 oc -n openshift-etcd rsh -c etcdctl <etcd-pod>
 ```
 
-View the member list and take note of the ID and name of the `etcd` member you want to remove:
+{{% /details %}}
+
+View the member list and take note of the ID and name of the `etcd` member you want to remove.
 
 {{% alert title="Note" color="primary" %}}
 To identify the member you need to remove, compare the list with the existing pod names.
 In the example, the list shows a member with the name `ip-10-0-212-27.eu-north-1.compute.internal` which does not correspond with any of the master node names.
 {{% /alert %}}
+
+All relevant information can be found in [OpenShift's documentation](https://docs.openshift.com/container-platform/latest/backup_and_restore/control_plane_backup_and_restore/replacing-unhealthy-etcd-member.html#restore-replace-stopped-etcd-member_replacing-unhealthy-etcd-member).
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 etcdctl member list -w table
@@ -102,40 +123,60 @@ Example output:
 +------------------+---------+---------------------------------------------+---------------------------+---------------------------+------------+
 ```
 
+{{% /details %}}
+
 Remove the old peer entry.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 etcdctl member remove <id>
 ```
 
-Verify the member was removed:
+{{% /details %}}
+
+Verify the member was removed.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 etcdctl member list -w table
 ```
 
-This is it! You can now disconnect from the etcd pod at this point.
+{{% /details %}}
+
+This is it! You can now disconnect from the etcd pod.
 
 
-### Task {{% param sectionnumber %}}.1.3: Recreate the master node
+## Task {{% param sectionnumber %}}.3: Recreate the master node
 
 The cluster is again in a properly running state, of course however with only two instead of three masters and etcd members.
 
-Recreate the master machine using the file definition you created before:
+Recreate the master machine using the file definition you created before.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-machine-api apply -f machine_<failed-master-machine>.yaml
 ```
 
+{{% /details %}}
+
 Verify the machine was created successfully:
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-machine-api get machines -o wide
 ```
 
+{{% /details %}}
+
 The `etcd` operator should automatically scale up a new member and add it to the cluster.
 
-Verify that three `etcd` pods are up and running:
+Verify that three `etcd` pods are up and running.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```etcd
 oc -n openshift-etcd get pods -l etcd
@@ -151,6 +192,7 @@ oc patch etcd cluster \
 ```
 
 {{% /alert %}}
+{{% /details %}}
 
 All that is left to do is clean up the old secrets that are not used anymore.
 
@@ -168,7 +210,9 @@ etcd-serving-ip-10-0-212-27.eu-north-1.compute.internal            kubernetes.io
 etcd-serving-metrics-ip-10-0-212-27.eu-north-1.compute.internal    kubernetes.io/tls                     2      3d4h
 ```
 
-Delete those secrets:
+Delete those secrets.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-etcd delete secrets \
@@ -176,3 +220,5 @@ oc -n openshift-etcd delete secrets \
   etcd-serving-<removed-peer-name> \
   etcd-serving-metrics-<removed-peer-name>
 ```
+
+{{% /details %}}
