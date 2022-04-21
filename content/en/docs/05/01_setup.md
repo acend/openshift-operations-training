@@ -40,7 +40,7 @@ If the Gitea Operator does not appear yet, wait a few more seconds.
 This was just the Operator part.
 We now have to create a Gitea instance.
 
-First, create a new project:
+First, create a new project.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
@@ -65,7 +65,7 @@ oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/mai
 {{% /details %}}
 
 That's it!
-Watch the pods start:
+Watch the pods start.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
