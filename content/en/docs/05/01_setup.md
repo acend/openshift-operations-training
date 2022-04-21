@@ -20,7 +20,9 @@ Add the following catalog source to your cluster:
 oc apply -f https://raw.githubusercontent.com/redhat-gpte-devopsautomation/gitea-operator/master/catalog_source.yaml
 ```
 
-You can now find and install the Gitea Operator from the OperatorHub:
+Now find and install the Gitea Operator from the OperatorHub.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 * In the **Administrator** view of your web console, navigate to **Operators**, then **OperatorHub**
 * Filter for "gitea"
@@ -33,37 +35,55 @@ If the Gitea Operator does not appear yet, wait a few more seconds.
 * Don't change any of the pre-chosen values and again click **Install**
 * Wait for the Operator to finish its installation successfully
 
+{{% /details %}}
+
 This was just the Operator part.
 We now have to create a Gitea instance.
 
 First, create a new project:
 
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
 ```bash
 oc new-project gitea
 ```
+
+{{% /details %}}
 
 The instance you are going to create has the following content:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/05/resources/gitea_gitea.yaml" >}}{{< /highlight >}}
 
-Create the instance with:
+Create the instance in the `gitea` namespace.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/05/resources/gitea_gitea.yaml
 ```
 
+{{% /details %}}
+
 That's it!
 Watch the pods start:
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n gitea get pods -w
 ```
 
+{{% /details %}}
+
 As soon as the postgresql as well as the gitea pods are running, get the hostname from the route:
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n gitea get route gitea -o go-template='https://{{ .spec.host }}{{ "\n" }}'
 ```
+
+{{% /details %}}
 
 Open the URL in your browser and register yourself a user.
 Note the username and password you chose, you will need them later.
@@ -71,11 +91,15 @@ Note the username and password you chose, you will need them later.
 
 ## Task {{% param sectionnumber %}}.2: Argo CD
 
-We are going to install Argo CD in the form of the OpenShift GitOps Operator:
+We are going to install Argo CD in the form of the OpenShift GitOps Operator. Install the GitOps Operator via OperatorHub in OpenShift's web console.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 * Head over to the **OperatorHub** on your cluster, filter for "gitops" and choose **Red Hat OpenShift GitOps**
 * Click **Install**
 * Leave the pre-filled values as-is and again click **Install**
+
+{{% /details %}}
 
 This installs a nearly ready-to-use Argo CD instance.
 You can see that when looking into the `openshift-gitops` namespace:
@@ -88,8 +112,7 @@ What we need to do to make it fully operational is slightly adjust certain param
 * Add tolerations and node selectors to make all pods run on infra nodes
 * Change the route's termination to reencrypt
 
-
-### Solution {{% param sectionnumber %}}.2: Argo CD
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 Apply the following resources.
 
@@ -100,3 +123,4 @@ Apply the following resources.
 * The GitOpsService custom resource to move the Operator itself onto infra nodes as well:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/05/resources/gitopsservice_cluster.yaml" >}}{{< /highlight >}}
+{{% /details %}}
