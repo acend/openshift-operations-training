@@ -35,6 +35,7 @@ If you want to add Secrets with sensitive data, make sure the repository is not 
 {{% /alert %}}
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
 * On the upper right corner, click on the **+** icon and then choose **New Repository**:
 
 ![Repository creation in Gitea](../gitea_createrepo.png)
@@ -84,6 +85,7 @@ If you are unfamiliar with Git, check out [Git's tutorial introduction to Git](h
 {{% /alert %}}
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
 * Create a new directory for your repository files:
 
 ```bash
