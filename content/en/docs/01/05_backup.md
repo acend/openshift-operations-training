@@ -53,13 +53,17 @@ Status:
 
 To be able to restore the cluster in case of a disaster, you will create a scheduled `etcd` backup.
 
-Create a new project to be used for the backup:
+Create a new project named `training-infra-etcd-backup`.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc new-project training-infra-etcd-backup
 ```
 
-Since `etcd` is running on the masters, we need to make sure the cronjob pods creating the `etcd` snapshots are running on a master as well. We can do this by adding the following annotation:
+{{% /details %}}
+
+Since `etcd` is running on the masters, we need to make sure the cronjob pods creating the `etcd` snapshots are running on a master as well. We can do this by annotating the namespace with the corresponding node selector:
 
 ```bash
 oc patch namespace training-infra-etcd-backup -p \
@@ -164,4 +168,3 @@ upload: ../host/home/core/assets/snapshot_2021-04-15_073913.db to s3://user01-op
 upload: ../host/home/core/assets/snapshot_2021-04-15_074105.db to s3://user01-ops-training-backup/etcd-backup/snapshot_2021-04-15_074105.db
 upload: ../host/home/core/assets/snapshot_2021-04-15_074306.db to s3://user01-ops-training-backup/etcd-backup/snapshot_2021-04-15_074306.db
 ```
-
