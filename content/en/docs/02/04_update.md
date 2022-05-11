@@ -56,7 +56,9 @@ Finally, the update is completed:
 
 ### Updating the cluster from the CLI
 
-Before starting the update, ensure that your cluster is available:
+Before starting the update, ensure that your cluster is available by looking at the `clusterversion` resource.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc get clusterversion
@@ -69,7 +71,9 @@ NAME      VERSION   AVAILABLE   PROGRESSING   SINCE   STATUS
 version   4.7.5     True        False         2d23h   Cluster version is 4.7.5
 ```
 
-You can check the available updates by running the upgrade command without any parameters:
+{{% /details %}}
+
+You can check the available updates by running the `oc adm upgrade` command without any parameters:
 
 ```bash
 oc adm upgrade
@@ -133,7 +137,9 @@ Example output:
 ]
 ```
 
-You can also check the progress of the update by tracking the status of the ClusterOperators:
+You can also check the progress of the update by tracking the status of the ClusterOperators.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc get clusteroperators
@@ -180,9 +186,13 @@ storage                                    4.7.5     True        False         F
 In the example output above you can see that the `openshift-apiserver` ClusterOperator is already reporting the new version, but is currently in a degraded state. This is expected behaviour during the update process, so no need to worry.
 {{% /alert %}}
 
+{{% /details %}}
+
 After all cluster operators are rolled out, the master and worker nodes are updated. The machine config operator sequentially cordons the nodes, applies the new configuration and restarts the Kubelet service.
 
-You can check the status of the nodes to see the process:
+Check the status of the nodes to see the process.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc get nodes
@@ -203,20 +213,8 @@ ip-10-0-195-93.eu-north-1.compute.internal    Ready                      worker 
 ip-10-0-212-27.eu-north-1.compute.internal    Ready                      master         3d1h   v1.20.0+bafe72f
 ```
 
+{{% /details %}}
+
 {{% alert title="Note" color="primary" %}}
-By default, only one machine is allowed to be unavailable during the update process. For a larger cluster, this can take a long time for the configuration change to be reflected. We can alter this behaviour by changing the `maxUnavailable` value in the `MachineConfigPool` of the worker nodes.
-
-Edit the `MachineConfigPool` of the worker:
-
-```bash
-oc edit machineconfigpool worker
-```
-
-And set `maxUnavailable` to the desired value:
-
-```yaml
-spec:
-  maxUnavailable: <node_count>
-```
-
+By default, only one machine per pool is allowed to be unavailable during the update process. For a larger cluster, this can take a long time for the configuration change to be reflected. We can alter this behaviour by changing the `maxUnavailable` value in the respective nodes' `MachineConfigPool`.
 {{% /alert %}}
