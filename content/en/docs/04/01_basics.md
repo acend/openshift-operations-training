@@ -289,7 +289,7 @@ Want to know which image uses the most space on your nodes?
 `oc adm top images` is your friend.
 It works very similarly for `ImageStreams` objects.
 
-What gives you a nice overview of resource usage on your nodes (without using Prometheus) is `oc adm top node`, which also works with the `--selector` parameter to list all nodes that match the selected label:
+A command providing you with a nice overview of resource usage on your nodes (without using Prometheus) is `oc adm top node`, which also works with the `--selector` parameter to list all nodes that match the selected label:
 
 ```bash
 oc adm top node --selector node-role.kubernetes.io/worker
