@@ -206,7 +206,7 @@ As we know, OpenShift nodes use CoreOS as operating system, so the output should
 {{% /details %}}
 
 We can now do all the things as if we had connected via ssh.
-Which, of course, is still possible but might be less convenient.
+Which is still possible but might be less convenient.
 
 One of these things you might want to do is have a look at the running containers on that node.
 We do this using `crictl`.
