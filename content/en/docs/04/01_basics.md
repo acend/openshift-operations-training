@@ -192,7 +192,7 @@ chroot /host
 
 {{% /details %}}
 
-If you're not sure if you're on the node, there are different possibilities to find out, one of which is looking at the release file.
+If you're not sure whether you're on the node, there are different possibilities to find out, one of which is looking at the release file.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
