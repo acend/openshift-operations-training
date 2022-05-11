@@ -175,7 +175,7 @@ oc get limitranges --namespace <namespace>
 ```
 
 Now you know why it was crucial to create the namespace using `oc create namespace` at the beginning of this lab.
-This command does what it says, it simply creates a namespace but does not respect the default project template, so the LimitRange object was never created.
+This command only creates the namespace but does not respect the default project template. That is why the LimitRange object was never created.
 
 {{% alert title="Note" color="primary" %}}
 Notice how OpenShift automatically creates a corresponding Project resource when only a namespace is created.
