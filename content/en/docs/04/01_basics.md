@@ -18,7 +18,9 @@ As you already know, OpenShift 4 usually consists of about 30 different operator
 Each operator is responsible that the actual state of the cluster matches the desired, configured state.
 If this is not the case, the operator tells us.
 
-Check the cluster operators' state:
+Check the cluster operators' state.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc get clusteroperators
@@ -66,6 +68,8 @@ service-ca                                 4.7.6     True        False         F
 storage                                    4.7.6     True        False         False      6d23h
 ```
 
+{{% /details %}}
+
 The important part to see here is that all of the operators are available, that they are not progressing and that they are not degraded.
 
 If you make a change to one of the operator's configuration, the operator usually changes its progressing state to true as long as the configuration change has not finished.
@@ -80,15 +84,23 @@ Specifically, we want to add an authentication provider to our cluster:
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/04/resources/oauth_cluster.yaml" >}}{{< /highlight >}}
 
-Apply the authentication provider configuration to the cluster:
+Apply the authentication provider configuration to the cluster.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/04/resources/oauth_cluster.yaml
 ```
 
+{{% /details %}}
+
 It might take a while, but after a moment, the authentication operator will change its "degraded" state to true.
 Obviously something seems to be wrong with our introduced configuration; it'd be quite the coincidence something else happened at the same time.
-But we need to know what exactly, so let's try to find out:
+But we need to know what exactly, so let's try to find out.
+
+To do that, let's have a closer look at the cluster operator responsible for the oauth configuration, the authentication operator. Execute a `describe` on it and look for a hint on what could be wrong.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc describe clusteroperator authentication
@@ -124,11 +136,17 @@ Looking at the topmost "Message" reveals the problem:
 The configuration defines a secret in `clientSecret` which contains the GitHub client secret.
 This secret doesn't exist (on purpose).
 
-Let's revert our change so the authentication operator goes back to a functioning state:
+{{% /details %}}
+
+Now that you've found out what the problem is and how you can get the relevant troubleshooting information, revert the change so the authentication operator goes back to a functioning state.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc patch oauth cluster --type merge -p '{"spec": {"identityProviders": []}}'
 ```
+
+{{% /details %}}
 
 
 ## Task {{% param sectionnumber %}}.3: Node debugging
@@ -137,13 +155,19 @@ OpenShift 4 introduces a new capability to debug cluster nodes.
 Using `oc debug node/<node name>`, a debug pod is started on the specified node and you get a terminal session in that debug pod.
 
 Let's try this out.
-Pick a node of your choosing:
+Pick a node of your choosing.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc get nodes
 ```
 
-Then, using the node's name, start the debug session:
+{{% /details %}}
+
+Then, using the node's name, start the debug session.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc debug node/<node name>
@@ -154,15 +178,23 @@ Note the `/` between the resource type (`node`) and the name.
 The command will error out if you don't write it.
 {{% /alert %}}
 
-After a quick moment, you are presented with a root shell on the desired node.
+{{% /details %}}
+
+After a brief moment you are presented with a root shell on the desired node.
 However, you're not yet really on the node, you're limited to what the container sees of it.
-You need to chroot onto the node first before you'll be able to, e.g., use host binaries:
+You need to chroot onto the node before you'll be able to use host binaries. The message that appeared when you opened the debug shell conveniently provides the chroot command for us.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 chroot /host
 ```
 
-If you're not sure if you're on the node, there are different possibilities to find out, one of which is looking at the release file:
+{{% /details %}}
+
+If you're not sure whether you're on the node, there are different possibilities to find out, one of which is looking at the release file.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 cat /etc/redhat-release
@@ -171,24 +203,35 @@ cat /etc/redhat-release
 If the output says `Red Hat Enterprise Linux release [...]`, you're still contained in the container.
 As we know, OpenShift nodes use CoreOS as operating system, so the output should read `Red Hat Enterprise Linux CoreOS release [...]`.
 
+{{% /details %}}
+
 We can now do all the things as if we had connected via ssh.
-Which, of course, is still possible but might be less convenient.
+Which is still possible but might be less convenient.
 
 One of these things you might want to do is have a look at the running containers on that node.
-We do this using `crictl`:
+We do this using `crictl`.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 crictl ps
 ```
 
 As you probably know from the good old days when you still used Docker on your machines, `ps` lists all running containers.
-You can also list all pods:
+
+{{% /details %}}
+
+`crictl` is also aware of pods, so as a next task, list all pods.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 crictl pods
 ```
 
-To exit the debug pod, either simply type `exit` or press ctrl+d until you're back on your own shell.
+{{% /details %}}
+
+To exit the node debug pod, either simply type `exit` or press ctrl+d until you're back on your own shell.
 
 For more information on `crictl`, check out [this debugging how-to](https://kubernetes.io/docs/tasks/debug-application-cluster/crictl/) or [its documentation](https://github.com/kubernetes-sigs/cri-tools/blob/master/docs/crictl.md).
 
@@ -202,7 +245,9 @@ However, there is one particularly useful `oc adm` subcommand that comes in espe
 By default, the command queries the systemd journal.
 Using `--path`, you can override this behaviour and use it to show logs within the node's `/var/logs` directory.
 
-Let's use this to query all masters' (`--role master`) kubelet (`--unit`) logs:
+Let's use this to query all masters' (`--role master`) kubelet (`--unit`) logs.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc adm node-logs --role master --unit kubelet --tail 10
@@ -211,6 +256,8 @@ oc adm node-logs --role master --unit kubelet --tail 10
 {{% alert title="Note" color="primary" %}}
 As with the `journalctl` command you can use `--tail`, `--since` and `--until` to limit the amount of logs or to focus on a certain period of time.
 {{% /alert %}}
+
+{{% /details %}}
 
 Of course above command can be used for all the other systemd units that are running on a node.
 
@@ -242,7 +289,7 @@ Want to know which image uses the most space on your nodes?
 `oc adm top images` is your friend.
 It works very similarly for `ImageStreams` objects.
 
-What gives you a nice overview of resource usage on your nodes (without using Prometheus) is `oc adm top node`:
+A command providing you with a nice overview of resource usage on your nodes (without using Prometheus) is `oc adm top node`, which also works with the `--selector` parameter to list all nodes that match the selected label:
 
 ```bash
 oc adm top node --selector node-role.kubernetes.io/worker
@@ -267,7 +314,7 @@ CoreOS changes the way we interact with an operating system because it follows t
 * statelessness
 
 This means that it is discouraged to ssh into a node because this might introduce manual, undocumented changes to the operating system that could lead to unexpected behaviour.
-Always apply configuration changes via `MachineConfig` objects.
+Always apply configuration changes via `MachineConfig` objects instead.
 
 However, there are cases where ssh represents the only viable means of analyzing a malfunctioning node.
 Imagine the OpenShift API is down or the node's kubelet is not responding.
@@ -281,6 +328,11 @@ Get a hostname:
 ```bash
 oc get nodes
 ```
+
+{{% alert title="Note" color="primary" %}}
+Note that the ssh command will not work! This is due to this training's specific network segmentation.
+We added the command for reference nonetheless.
+{{% /alert %}}
 
 The only remaining piece left to know about is that you always have to use username `core` when connecting to a CoreOS OpenShift node:
 
