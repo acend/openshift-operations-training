@@ -174,7 +174,7 @@ Let's look at the LimitRange resource we defined earlier in the default project 
 oc get limitranges --namespace <namespace>
 ```
 
-You now know why it was crucial at the beginning of this lab to create the namespace using `oc create namespace`.
+Now you know why it was crucial to create the namespace using `oc create namespace` at the beginning of this lab.
 This command does what it says, it simply creates a namespace but does not respect the default project template, so the LimitRange object was never created.
 
 {{% alert title="Note" color="primary" %}}
