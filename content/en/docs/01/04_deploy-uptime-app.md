@@ -21,11 +21,15 @@ The application you're going to install is a simple Python app. It's going to be
 
 ## Task {{% param sectionnumber %}}.1: Deploy the uptime app
 
-First you need to create a new project named `uptime-app-prod` for the application:
+First you need to create a new project named `uptime-app-prod` for the application.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc new-project uptime-app-prod
 ```
+
+{{% /details %}}
 
 Next, you're going to create the following resources:
 

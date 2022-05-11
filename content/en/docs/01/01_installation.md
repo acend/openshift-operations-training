@@ -9,14 +9,7 @@ In this lab, you are going to install an OpenShift 4 cluster on AWS.
 
 ## Task {{% param sectionnumber %}}.1: Preparing the environment
 
-* Download public key
-* SSH into your bastion host
-* Create working directory
-
-
-## Task {{% param sectionnumber %}}.2: Customizing the installation
-
-See the [OpenShift installation documentation](https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
+Using the information provided by your trainer, ssh into your bastion host and change into the `ocp4-ops` directory.
 
 It is best practice to create a timestamped directory for each cluster installation, for example:
 
@@ -25,8 +18,18 @@ cd /home/ec2-user/ocp4-ops
 mkdir $(date +"%Y-%m-%d")
 ```
 
+
+## Task {{% param sectionnumber %}}.2: Customizing the installation
+
 Create a file called `install-config.yaml` in the previously created directory on the bastion host, add the following content and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username +username+.
-Additonally, add an SSH key (use an existing keypair or create a new one if needed) and the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat container registry.
+
+Additonally, add an SSH key. Either use an existing keypair or create a new one by executing:
+
+```bash
+ssh-keygen -t ed25519
+```
+
+Also add the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat image registry.
 
 {{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/install-config.yaml" >}}{{< /highlight >}}
 
@@ -51,7 +54,8 @@ openshift-install create cluster --dir=$(date +"%Y-%m-%d") --log-level=info
 ```
 
 {{% alert title="Note" color="primary" %}}
-The installation usually takes about 30 minutes to completed.
+The installation usually takes about 30 minutes to complete.
+In the meantime, have a look at the [OpenShift installation documentation](https://docs.openshift.com/container-platform/latest/installing/installing_aws/installing-aws-customizations.html#installation-configuration-parameters_installing-aws-customizations) for a list of available parameters.
 {{% /alert %}}
 
 Example output:
