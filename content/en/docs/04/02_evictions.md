@@ -20,13 +20,15 @@ It is essential that you use this command or else this lab won't work!
 oc create namespace <namespace>
 ```
 
-Now, execute the following command to deploy a test pod into the freshly created namespace:
+Now, deploy a test pod into the freshly created namespace using the provided definition:
 
 ```bash
 oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/04/resources/deployment_stress2much.yaml --namespace <namespace>
 ```
 
-Watch the deployment and wait for a new event after the pod had been successfully running for some time (give it 1 to 2 minutes):
+Watch the deployment and wait for a new event after the pod successfully ran for some time (give it 1 to 2 minutes).
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc get pods --watch --namespace <namespace>
@@ -35,6 +37,8 @@ oc get pods --watch --namespace <namespace>
 {{% alert title="Note" color="primary" %}}
 As always with `--watch`/`-w`, terminate the command using ctrl+c.
 {{% /alert %}}
+
+{{% /details %}}
 
 What you should see is that the pod gets evicted and recreated periodically.
 
@@ -46,10 +50,9 @@ Why does the pod periodically stop running and show the status `Evicted`?
 
 Try to find an answer to these questions.
 
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
-### Solution {{% param sectionnumber %}}.2: Analysis
-
-There are at least two ways to find that out.
+There are at least two ways to find that out:
 Describing an evicted pod shows its events where you'll find the reason:
 
 ```bash
@@ -93,14 +96,20 @@ oc get events --namespace <namespace>
 ...
 ```
 
+{{% /details %}}
+
 
 ## Task {{% param sectionnumber %}}.3: Cleanup
 
-The pod's eviction and recreation would repeat endlessly, so let's scale down the deployment:
+The pod's eviction and recreation would repeat endlessly, so let's scale down the deployment.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc scale deployment/stress2much --replicas 0 --namespace <namespace>
 ```
+
+{{% /details %}}
 
 Notice how many pods were created and evicted in the meantime:
 
@@ -153,7 +162,7 @@ It's easy to see why the pod used too much memory:
 
 Have a good look at the last 3 lines:
 The deployment created at the beginning of this lab deployed a pod using an image containing the stress-testing tool `stress`.
-It also instructed the pod to execute `stress` with parameter `--vm-bytes 8G` which means the process tries to allocate 8G of memory when started.
+It also instructed the pod to execute `stress` with parameter `--vm-bytes 8G` which means the process tries to allocate 8GB of memory when started.
 
 
 ### Limitrange
@@ -165,9 +174,8 @@ Let's look at the LimitRange resource we defined earlier in the default project 
 oc get limitranges --namespace <namespace>
 ```
 
-You now know why it was crucial at the beginning of this lab to create the namespace using `oc create namespace`.
-This command does what it says, it simply creates a namespace but does not respect the default project template, it's not a project after all.
-So the LimitRange object was never created.
+Now you know why it was crucial to create the namespace using `oc create namespace` at the beginning of this lab.
+This command only creates the namespace but does not respect the default project template. That is why the LimitRange object was never created.
 
 {{% alert title="Note" color="primary" %}}
 Notice how OpenShift automatically creates a corresponding Project resource when only a namespace is created.
