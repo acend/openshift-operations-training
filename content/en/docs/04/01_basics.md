@@ -182,7 +182,7 @@ The command will error out if you don't write it.
 
 After a brief moment you are presented with a root shell on the desired node.
 However, you're not yet really on the node, you're limited to what the container sees of it.
-You need to chroot onto the node first before you'll be able to, e.g., use host binaries. The message that appeared when you opened the debug shell conveniently provides the chroot command for us.
+You need to chroot onto the node before you'll be able to use host binaries. The message that appeared when you opened the debug shell conveniently provides the chroot command for us.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
