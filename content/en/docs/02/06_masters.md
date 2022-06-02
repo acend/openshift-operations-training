@@ -38,7 +38,7 @@ Now edit the file to reflect the following changes:
 
 The `machine` resource should look similar to this:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/machine_master-02.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/02/resources/machine_master-02.yaml" >}}{{< /highlight >}}
 
 {{% /details %}}
 

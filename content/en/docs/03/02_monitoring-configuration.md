@@ -10,7 +10,7 @@ Let's take a look at an example of how you can send alerts to a receiver of your
 Configuring a new receiver can either be done using the web console or by directly configuring the appropriate secret.
 Before going into detail on where this configuration lies, let's have a look at an example:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/03/resources/alertmanager-main.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/03/resources/alertmanager-main.yaml" >}}{{< /highlight >}}
 
 The main components that can be configured when applying a custom Alertmanager configuration comprise:
 

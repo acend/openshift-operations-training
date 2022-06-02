@@ -53,7 +53,7 @@ thanos-ruler-user-workload-1          3/3     Running   0          65s
 
 With the user-workload monitoring stack now running, you can add your own custom Prometheus rules. To do so, create a PrometheusRule custom resource with the following content:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/03/resources/custom-prometheus-rule.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/03/resources/custom-prometheus-rule.yaml" >}}{{< /highlight >}}
 
 Either create a file with above content or apply it directly:
 

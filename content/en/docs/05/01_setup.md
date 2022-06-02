@@ -52,7 +52,7 @@ oc new-project gitea
 
 The instance you are going to create has the following content:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/05/resources/gitea_gitea.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/05/resources/gitea_gitea.yaml" >}}{{< /highlight >}}
 
 Create the instance.
 
@@ -118,9 +118,9 @@ Apply the following resources.
 
 * The Argo CD custom resource to change the route termination and add the node placement definition:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/05/resources/argocd_openshift-gitops.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/05/resources/argocd_openshift-gitops.yaml" >}}{{< /highlight >}}
 
 * The GitOpsService custom resource to move the Operator itself onto infra nodes as well:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/05/resources/gitopsservice_cluster.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/05/resources/gitopsservice_cluster.yaml" >}}{{< /highlight >}}
 {{% /details %}}
