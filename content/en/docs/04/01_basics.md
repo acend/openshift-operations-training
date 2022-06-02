@@ -82,7 +82,7 @@ Degraded means that the operator cannot function properly because there is, e.g.
 In order to test this behaviour, we are going to introduce a configuration change.
 Specifically, we want to add an authentication provider to our cluster:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/04/resources/oauth_cluster.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/04/resources/oauth_cluster.yaml" >}}{{< /highlight >}}
 
 Apply the authentication provider configuration to the cluster.
 

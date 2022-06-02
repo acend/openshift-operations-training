@@ -205,7 +205,7 @@ Gather all the relevant information and create an appropriate ConfigMap.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/02/resources/configmap_cluster-monitoring-config.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/02/resources/configmap_cluster-monitoring-config.yaml" >}}{{< /highlight >}}
 
 {{% /details %}}
 

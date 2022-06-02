@@ -17,7 +17,7 @@ You will be using Velero to create user workload backups.
 
 Setup a daily backup of the resources in namespace `uptime-app-prod` with a lifetime of 10 days by creating the following schedule:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml" >}}{{< /highlight >}}
 
 {{% alert title="Note" color="primary" %}}
 This resource file is also available at https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml.
@@ -74,11 +74,11 @@ For the cronjob pod to be able to access the `etcd` files, we need to create a s
 
 * Service account:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/etcd-backup/sa_etcd-backup.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/01/resources/etcd-backup/sa_etcd-backup.yaml" >}}{{< /highlight >}}
 
 * SCC:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/etcd-backup/scc_privileged-etcd-backup.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/01/resources/etcd-backup/scc_privileged-etcd-backup.yaml" >}}{{< /highlight >}}
 
 ```bash
 oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/etcd-backup/sa_etcd-backup.yaml
@@ -93,9 +93,9 @@ oc -n training-infra-etcd-backup apply -f /home/ec2-user/ocp4-ops/resources/etcd
 
 Finally we can create the `ConfigMap` containing the backup script and the `CronJob` resources. Here's what they look like:
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/etcd-backup/cm_backup-script.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/01/resources/etcd-backup/cm_backup-script.yaml" >}}{{< /highlight >}}
 
-{{< highlight yaml >}}{{< readfile file="content/en/docs/01/resources/etcd-backup/cronjob_etcd-backup.yaml" >}}{{< /highlight >}}
+{{< highlight yaml >}}{{< readfile file="/content/en/docs/01/resources/etcd-backup/cronjob_etcd-backup.yaml" >}}{{< /highlight >}}
 
 Create them with:
 
