@@ -18,11 +18,15 @@ Navigate to **Monitoring** -> **Dashboard** on the web console and select **etcd
 
 If you are more comfortable using Grafana you can display those dashboards in the OpenShift-provided Grafana.
 
-Run the following command to get the URL to your Prometheus instance:
+To find out at what URL Grafana is available, look at the route `grafana` inside the `openshift-monitoring` namespace.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-monitoring get route grafana -o go-template='https://{{ .spec.host }}{{ "\n" }}'
 ```
+
+{{% /details %}}
 
 * **User dashboards**
 
@@ -35,11 +39,15 @@ Switch to the **Developer** console and select the **uptime-app-prod** project. 
 
 OpenShift provides an extensive set of alerts, based on the [kubernetes-mixin](https://github.com/kubernetes-monitoring/kubernetes-mixin) project. Check out the configured alerts by navigating to your Prometheus web user interface and take a look at the predefined alerting rules.
 
-Run the following command to get the URL to your Prometheus instance:
+To find out at what URL Prometheus is available, look at the route `prometheus` inside the `openshift-monitoring` namespace.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-monitoring get route prometheus-k8s -o go-template='https://{{ .spec.host }}/alerts{{ "\n" }}'
 ```
+
+{{% /details %}}
 
 Active alerts (state `Pending` or `Firing`) will also be displayed in the administrator web console at **Monitoring** -> **Alerting**.
 
@@ -48,7 +56,7 @@ As you can see, these alerts are as generic as possible to fit most platforms. T
 
 ## Task {{% param sectionnumber %}}.3: Create silences
 
-Sometimes you have to silence an alert because someone is already working on it, or the issue is scheduled to be fixed in a future maintenance window, or it might be false positive.
+Sometimes you have to silence an alert because someone is already working on it, or the issue is scheduled to be fixed in a future maintenance window, or it might be a false positive.
 
 To do so, navigate to **Monitoring** -> **Alerting**. Select the **Silences** tab and hit the **Create Silence** button. A common task is to silence the `UpdateAvailable` alert, as we may have already scheduled the corresponding update.
 
