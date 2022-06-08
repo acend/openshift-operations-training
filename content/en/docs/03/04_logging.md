@@ -48,7 +48,10 @@ oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/mai
 oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/logging/sub_cluster-logging.yaml
 ```
 
-Verify the Elasticsearch Operator installation:
+Verify if the Elasticsearch Operator installation succeeded.
+In order to find that out, check for the resource `clusterserviceversion` (or `csv` for short) in all namespaces.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc get csv --all-namespaces
@@ -71,7 +74,11 @@ openshift-authentication                  elasticsearch-operator.5.1.2-7    Open
 
 There should be an OpenShift Elasticsearch Operator in each namespace. The version number might be different than shown.
 
-Verify the Cluster Logging Operator isntallation:
+{{% /details %}}
+
+Verify the Cluster Logging Operator installation, this time by checking for `clusterserviceversions` inside the `openshift-logging` namespace.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc get csv -n openshift-logging
@@ -86,17 +93,21 @@ cluster-logging.5.1.2-7   Red Hat OpenShift Logging   5.1.2-7   cluster-logging.
 ...
 ```
 
-There should be a Cluster Logging Operator in the openshift-logging Namespace. The Version number might be different than shown.
+There should be a Cluster Logging Operator in the openshift-logging namespace. The version number might be different than shown.
 
-Now you can create an OpenShift Logging instance:
+{{% /details %}}
+
+Now you can create an OpenShift Logging instance.
 
 {{% alert title="Note" color="primary" %}}
-Note the already baked-in tolerations:
+Note the already baked-in tolerations.
 {{% /alert %}}
+
+The logging instance definition looks as follows:
 
 {{< highlight yaml >}}{{< readfile file="/content/en/docs/03/resources/logging/clusterlogging_instance.yaml" >}}{{< /highlight >}}
 
-Again, you can use the provided file:
+Again, you can use the provided file or put above content in a file of your own:
 
 ```bash
 oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/logging/clusterlogging_instance.yaml
@@ -106,9 +117,11 @@ oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/mai
 The provided configuration is a basic setup that should support most use cases. For details on how to configure the logging stack, consult the chapter [About the Cluster Logging custom resource](https://docs.openshift.com/container-platform/latest/logging/config/cluster-logging-configuring-cr.html) in the official documentation.
 {{% /alert %}}
 
-Verify the install by listing the pods in the openshift-logging project.
+Verify the installation by listing the pods in the openshift-logging project.
 
 You should see several pods for OpenShift Logging, Elasticsearch, Fluentd, and Kibana.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc get pods -n openshift-logging
@@ -130,6 +143,8 @@ elasticsearch-cdm-0w2i8ldc-2-7b6989ddb7-c78tg   2/2     Running   0          12d
 elasticsearch-cdm-0w2i8ldc-3-64b5f55f58-9455z   2/2     Running   0          12d
 kibana-687fdb6fb5-64jpw                         2/2     Running   0          12d
 ```
+
+{{% /details %}}
 
 
 ## Task {{% param sectionnumber %}}.2 Enable audit log forwarding
