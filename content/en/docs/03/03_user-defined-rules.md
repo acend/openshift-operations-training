@@ -8,13 +8,19 @@ sectionnumber: 3.3
 
 As mentioned in a lab before, it is not supported to alter the OpenShift-provided monitoring stack. If you want to add additional monitoring targets or add custom Prometheus rules, you need to enable the user-workload monitoring stack.
 
-And this is exactly what we are going to do. First, edit the `cluster-monitoring-config` configmap:
+And this is exactly what we are going to do. First, edit the `cluster-monitoring-config` configmap in the `openshift-monitoring` namespace.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-monitoring edit cm cluster-monitoring-config
 ```
 
-Add the line `enableUserWorkload: true` under `data/config.yaml` (leave the rest as it is):
+{{% /details %}}
+
+Add the line `enableUserWorkload: true` under `data/config.yaml` (leave the rest as it is).
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```yaml
 ...
@@ -29,13 +35,16 @@ data:
 ...
 ```
 
-Saving the configmap change will automatically deploy your own Prometheus instance in a newly created namespace `openshift-user-workload-monitoring`.
+{{% /details %}}
+
+Saving the configmap will automatically deploy your own Prometheus instance in a newly created namespace `openshift-user-workload-monitoring`.
+Verify that all pods are in state `Running`.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-user-workload-monitoring get pods
 ```
-
-Verify that all pods are in state `Running`:
 
 ```bash
 NAME                                  READY   STATUS    RESTARTS   AGE
@@ -45,6 +54,8 @@ prometheus-user-workload-1            5/5     Running   1          65s
 thanos-ruler-user-workload-0          3/3     Running   0          65s
 thanos-ruler-user-workload-1          3/3     Running   0          65s
 ```
+
+{{% /details %}}
 
 **Optional:** You may also want to enable storage and persistence for your user workload monitoring stack, which is done in the same way as you learned in the previous lab.
 
@@ -70,10 +81,15 @@ Let's take a look at the main components that can be configured applying a custo
 * **labels:** Metadata that can be used to dynamically route the alert to a corresponding receiver.
 
 Verify the rule by accessing the Thanos ruler web interface.
+You can find out its URL by looking at the `thanos-ruler` route in the `openshift-user-workload-monitoring`.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-user-workload-monitoring get route thanos-ruler -o go-template='https://{{ .spec.host }}/alerts{{ "\n" }}'
 ```
+
+{{% /details %}}
 
 
 ## Task {{% param sectionnumber %}}.3: Allowing users to add monitoring resources
