@@ -36,22 +36,32 @@ This might take some minutes so don't hesitate to continue the lab and check bac
 Configuring Alertmanager receivers via web console is easier than writing the configuration manually.
 However, the time will come when you want to configure receivers automatically or with more advanced settings not exposed on the web console.
 In order to do so, you adapt the `alertmanager-main` secret in the `openshift-monitoring` namespace.
-Have a look at how Alertmanager is currently configured:
+Have a look at how Alertmanager is currently configured.
+To do that, extract the `alertmanager-main` secret's information in the `openshift-monitoring` namespace.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-monitoring extract secrets/alertmanager-main
 ```
 
+{{% /details %}}
+
 
 ## Task {{% param sectionnumber %}}.2: Persistence and metrics retention
 
-By default, the monitoring stack loses all scraped metrics on restarts because it does not persist its data. Let's make our Prometheus time series database persistent and increase the metrics retention to 2 days so the volume won't fill up.
+By default, the monitoring stack loses all scraped metrics on restarts because it does not persist its data.
+Let's make our Prometheus time series database persistent and increase the metrics retention to 2 days so the volume won't fill up.
 
-To do so, you can edit the `cluster-monitoring-config` configmap in the `openshift-monitoring` namespace:
+To do so, edit the `cluster-monitoring-config` configmap in the `openshift-monitoring` namespace.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-monitoring edit cm cluster-monitoring-config
 ```
+
+{{% /details %}}
 
 Add the following snippet:
 
@@ -69,11 +79,17 @@ Add the following snippet:
     ...
 ```
 
-It is advisable to persist the Alertmanager, too. This allows Alertmanager to retain active alerts on restarts and therefore prevents triggering existing alerts again:
+It is advisable to persist Alertmanager itself, too.
+This allows Alertmanager to retain active alerts on restarts and therefore prevents existing alerts from triggering again.
+Edit the same configmap as before (`cluster-monitoring-config` in `openshift-monitoring`).
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-monitoring edit cm cluster-monitoring-config
 ```
+
+{{% /details %}}
 
 Add the following config:
 
@@ -90,7 +106,10 @@ Add the following config:
       ...
 ```
 
-After adding the above configuration to the ConfigMap, the Cluster Monitoring Operator will create the requested persistent volumes:
+After adding the above configuration to the ConfigMap, the Cluster Monitoring Operator will create the required persistent volume claims automatically.
+Check for these new persistent volume claims.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
 oc -n openshift-monitoring get pvc
@@ -106,3 +125,5 @@ alertmanager-main-db-alertmanager-main-2   Bound    pvc-824824e3-ee0b-49c6-a786-
 prometheus-k8s-db-prometheus-k8s-0         Bound    pvc-19894227-c8ad-4ac3-a793-71a4a409fd23   5Gi        RWO            gp2            6m32s
 prometheus-k8s-db-prometheus-k8s-1         Bound    pvc-11fcf37e-5803-41e7-95ae-f2779010b201   5Gi        RWO            gp2            6m32s
 ```
+
+{{% /details %}}
