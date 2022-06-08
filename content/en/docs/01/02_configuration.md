@@ -31,11 +31,11 @@ You can find relevant information on the OpenShift documentation pages [here](ht
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 Change the masters' configuration to this:
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/01/resources/kubeletconfig_master.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/01/resources/kubeletconfig_master.yaml" code="true" lang="yaml" >}}
 
 And the worker nodes' configuration to this:
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/01/resources/kubeletconfig_worker.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/01/resources/kubeletconfig_worker.yaml" code="true" lang="yaml" >}}
 
 {{% alert title="Note" color="primary" %}}
 Instead of defining specific `systemReserved` values, you could also simply supply a line defining `.spec.autoSizingReserved: true`.
@@ -207,7 +207,7 @@ If not, the [documentation](https://docs.openshift.com/container-platform/latest
 
 A good starting point could look as follows:
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/01/resources/limitrange.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/01/resources/limitrange.yaml" code="true" lang="yaml" >}}
 
 Add the LimitRange resource to your default project template.
 
@@ -215,7 +215,7 @@ Add the LimitRange resource to your default project template.
 
 Your file should now look like this:
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/01/resources/template_project-request-extended.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/01/resources/template_project-request-extended.yaml" code="true" lang="yaml" >}}
 
 {{% /details %}}
 

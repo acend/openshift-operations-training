@@ -15,27 +15,27 @@ To deploy the cluster logging stack from the CLI, we need to create the followin
 
 * OpenShift Elasticsearch Operator Namespace
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/03/resources/logging/ns_openshift-operators-redhat.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/03/resources/logging/ns_openshift-operators-redhat.yaml" code="true" lang="yaml" >}}
 
 * Red Hat OpenShift Logging Namespace
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/03/resources/logging/ns_openshift-logging.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/03/resources/logging/ns_openshift-logging.yaml" code="true" lang="yaml" >}}
 
 * OpenShift Elasticsearch Operator `OperatorGroup`
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/03/resources/logging/og_openshift-operators-redhat.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/03/resources/logging/og_openshift-operators-redhat.yaml" code="true" lang="yaml" >}}
 
 * Red Hat OpenShift Logging `OperatorGroup`
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/03/resources/logging/og_cluster-logging.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/03/resources/logging/og_cluster-logging.yaml" code="true" lang="yaml" >}}
 
 * OpenShift Elasticsearch Operator `Subscription`
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/03/resources/logging/sub_elasticsearch-operator.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/03/resources/logging/sub_elasticsearch-operator.yaml" code="true" lang="yaml" >}}
 
 * Red Hat OpenShift Logging `Subscription`
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/03/resources/logging/sub_cluster-logging.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/03/resources/logging/sub_cluster-logging.yaml" code="true" lang="yaml" >}}
 
 Now either copy and paste above resource definitions and then apply them to your cluster or directly use our provided files:
 
@@ -105,7 +105,7 @@ Note the already baked-in tolerations.
 
 The logging instance definition looks as follows:
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/03/resources/logging/clusterlogging_instance.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/03/resources/logging/clusterlogging_instance.yaml" code="true" lang="yaml" >}}
 
 Again, you can use the provided file or put above content in a file of your own:
 
@@ -160,7 +160,7 @@ Because we do not have an external log store to forward our logs to, we will mak
 
 To forward the audit logs to the internal Elasticsearch instance, we need to define a `ClusterLogForwarder` object:
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/03/resources/logging/clusterlogforwarder_instance.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/03/resources/logging/clusterlogforwarder_instance.yaml" code="true" lang="yaml" >}}
 
 You can also use our provided file:
 
