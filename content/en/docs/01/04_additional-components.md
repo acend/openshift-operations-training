@@ -1,7 +1,7 @@
 ---
-title: "1.3 Additional components"
-weight: 13
-sectionnumber: 1.3
+title: "1.4 Additional components"
+weight: 14
+sectionnumber: 1.4
 ---
 
 In this lab, you will install additional components that are commonly used in production.

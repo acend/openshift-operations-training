@@ -1,7 +1,7 @@
 ---
-title: "1.4 Uptime app"
-weight: 14
-sectionnumber: 1.4
+title: "1.5 Uptime app"
+weight: 15
+sectionnumber: 1.5
 ---
 
 In this lab you're going to deploy an application on your freshly-installed OpenShift cluster.
