@@ -158,7 +158,7 @@ In contrast to an out-of-memory event caused by overstepping the defined memory 
 
 It's easy to see why the pod used too much memory:
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/04/resources/deployment_stress2much.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/04/resources/deployment_stress2much.yaml" code="true" lang="yaml" >}}
 
 Have a good look at the last 3 lines:
 The deployment created at the beginning of this lab deployed a pod using an image containing the stress-testing tool `stress`.
@@ -190,7 +190,7 @@ The last remaining question is, why was it evicted?
 Remember the kubelet arguments you configured after installing the cluster in [lab 1.2](../../01/02_configuration/)?
 We never looked at them in greater detail, so let's do that now:
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/01/resources/kubeletconfig_worker.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/01/resources/kubeletconfig_worker.yaml" code="true" lang="yaml" >}}
 
 There's only three arguments defined, but those three were what saved our worker nodes from completely crashing.
 

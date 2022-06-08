@@ -64,7 +64,7 @@ Edit the file using your favorite editor (still `vim` of course):
 
 When you're finished, your MachineSet resource file should look similar to this:
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/02/resources/machineset_infra.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/02/resources/machineset_infra.yaml" code="true" lang="yaml" >}}
 {{% /details %}}
 
 {{% alert title="Warning" color="secondary" %}}

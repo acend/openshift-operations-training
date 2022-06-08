@@ -31,7 +31,7 @@ ssh-keygen -t ed25519
 
 Also add the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat image registry.
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/01/resources/install-config.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/01/resources/install-config.yaml" code="true" lang="yaml" >}}
 
 {{% alert title="Note" color="primary" %}}
 This file is also available at https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/install-config.yaml.

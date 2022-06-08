@@ -33,7 +33,7 @@ oc patch backupstoragelocation default \
 
 In order to restore a backup, we need to create a `Restore` object. A `Restore` object looks like this:
 
-{{< highlight yaml >}}{{< readfile file="/content/en/docs/02/resources/restore_uptime-app-prod.yaml" >}}{{< /highlight >}}
+{{< readfile file="/content/en/docs/02/resources/restore_uptime-app-prod.yaml" code="true" lang="yaml" >}}
 
 Copy above `Restore` resource into a file on your bastion host. Replace the placeholder `<backup-name>` with the name of the backup you want to restore. To list your available backups:
 
