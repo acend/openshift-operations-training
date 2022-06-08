@@ -123,4 +123,5 @@ Apply the following resources.
 * The GitOpsService custom resource to move the Operator itself onto infra nodes as well:
 
 {{< readfile file="/content/en/docs/05/resources/gitopsservice_cluster.yaml" code="true" lang="yaml" >}}
+
 {{% /details %}}
