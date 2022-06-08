@@ -72,9 +72,9 @@ openshift-authentication                  elasticsearch-operator.5.1.2-7    Open
 ...
 ```
 
-There should be an OpenShift Elasticsearch Operator in each namespace. The version number might be different than shown.
-
 {{% /details %}}
+
+There should be an OpenShift Elasticsearch Operator in each namespace. The version number might be different than shown.
 
 Verify the Cluster Logging Operator installation, this time by checking for `clusterserviceversions` inside the `openshift-logging` namespace.
 
@@ -93,9 +93,9 @@ cluster-logging.5.1.2-7   Red Hat OpenShift Logging   5.1.2-7   cluster-logging.
 ...
 ```
 
-There should be a Cluster Logging Operator in the openshift-logging namespace. The version number might be different than shown.
-
 {{% /details %}}
+
+There should be a Cluster Logging Operator in the openshift-logging namespace. The version number might be different than shown.
 
 Now you can create an OpenShift Logging instance.
 
