@@ -4,7 +4,7 @@ weight: 12
 sectionnumber: 1.2
 ---
 
-Before diving heads-on into configuring the freshly set-up cluster, let's first take a look at certain features of it.
+Before diving headfirst into configuring the freshly set-up cluster, let's first take a look at certain features.
 As we installed the OpenShift cluster on AWS, some components have already been configured for us to use right away, amongst them:
 
 * An AWS cloud provider, making it possible for controllers to, e.g., create and update AWS load balancers and do node lifecycle management
