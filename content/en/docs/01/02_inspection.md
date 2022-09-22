@@ -97,7 +97,7 @@ This means the AWS EBS provisioner will automatically create and delete EBS volu
 
 Each provisioner offers different functionality, exposed as parameters inside the storage class.
 The EBS provisioner allows for the encryption of the data inside the volumes, controlled via the `parameters.encrypted` field, which is already set.
-Also already set is the type.
+Also set is the field `parameters.type`. By exposing this field the provisioner makes it possible for us to create additional storage classes, which would for example allow the use of slower, cheaper disks for workload that does not need high performance storage (e.g. backup).
 But by exposing this field the provisioner makes it possible for us to, e.g., create a second storage class using a slower, cheaper volume type for backups.
 The provisioner supports [even more parameters](https://github.com/kubernetes-sigs/aws-ebs-csi-driver/blob/master/docs/parameters.md).
 
