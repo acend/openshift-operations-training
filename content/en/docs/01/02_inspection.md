@@ -43,7 +43,7 @@ In the early days of OpenShift 3, administrators had to manually create Persiste
 These pointed to an actual volume from a storage provider (such as an NFS server) and could then be claimed by users via PersistentVolumeClaims.
 If the claim could be fulfilled by one of the existing PersistentVolumes, it was bound to it and could then be used inside the container.
 
-Kubernetes and OpenShift matured and not long later were able to provide the means to automatically or, as it is also called, dynamically create PersistentVolume resources.
+Kubernetes and OpenShift matured and not long after were able to provide the means to automatically or, as it is also called, dynamically create PersistentVolume resources.
 This includes provisioning a volume (or similar) on the storage provider itself and is usually triggered by the creation of PersistentVolumeClaims.
 
 In order to visualize the whole workflow, consider the following diagram:
