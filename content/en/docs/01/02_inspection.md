@@ -18,7 +18,7 @@ In order to understand what a cloud provider is or does, it's easiest to look at
 >The AWS cloud provider provides the interface between a Kubernetes cluster and AWS service APIs.
 This project allows a Kubernetes cluster to provision, monitor and remove AWS resources necessary for operation of the cluster.
 
-The cloud provider consists of different components which then make use of the mentioned interface (picture source: [kubernetes.io](https://kubernetes.io/blog/2019/04/17/the-future-of-cloud-providers-in-kubernetes/):
+The cloud provider consists of different components which then make use of the mentioned interface (picture source: [kubernetes.io](https://kubernetes.io/blog/2019/04/17/the-future-of-cloud-providers-in-kubernetes/)):
 
 ![Out-of-tree cloud provider architecture (source: kubernetes.io)](../post-ccm-arch.png)
 
