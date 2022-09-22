@@ -1,7 +1,7 @@
 ---
-title: "1.2 Configuration"
-weight: 12
-sectionnumber: 1.2
+title: "1.3 Configuration"
+weight: 13
+sectionnumber: 1.3
 ---
 
 After the initial installation, we can start configuring the cluster.
