@@ -69,7 +69,7 @@ With the user-workload monitoring stack now running, you can add your own custom
 Either create a file with above content or apply it directly:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/custom-prometheus-rule.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/03/resources/custom-prometheus-rule.yaml
 ```
 
 Let's take a look at the main components that can be configured applying a custom PrometheusRule:

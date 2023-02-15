@@ -34,7 +34,7 @@ Also add the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion 
 {{< readfile file="/content/en/docs/01/resources/install-config.yaml" code="true" lang="yaml" >}}
 
 {{% alert title="Note" color="primary" %}}
-This file is also available at https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/install-config.yaml.
+This file is also available at https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/install-config.yaml.
 {{% /alert %}}
 
 Backup the file `install-config.yaml`, since it will be consumed during the installation process:

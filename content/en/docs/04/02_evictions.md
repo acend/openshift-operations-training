@@ -23,7 +23,7 @@ oc create namespace <namespace>
 Now, deploy a test pod into the freshly created namespace using the provided definition:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/04/resources/deployment_stress2much.yaml --namespace <namespace>
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/04/resources/deployment_stress2much.yaml --namespace <namespace>
 ```
 
 Watch the deployment and wait for a new event after the pod successfully ran for some time (give it 1 to 2 minutes).
