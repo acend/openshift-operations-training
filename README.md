@@ -1,6 +1,6 @@
-# OpenShift 4 Ops Training
+# OpenShift Operations Training
 
-OpenShift 4 Ops Training Description
+OpenShift Operations Training Description
 
 
 ## Content Sections

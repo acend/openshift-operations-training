@@ -1,5 +1,5 @@
 baseurl = "/"
-title = "OpenShift 4 Ops Training"
+title = "OpenShift Operations Training"
 
 enableGitInfo = true
 
@@ -44,7 +44,7 @@ anchor = "smart"
 
 [Languages]
 [Languages.en]
-title = "OpenShift 4 Ops Training"
+title = "OpenShift Operations Training"
 languageName = "English"
 weight = 1
 

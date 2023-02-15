@@ -32,8 +32,8 @@ RUN wkhtmltopdf --enable-internal-links --enable-local-file-access \
 FROM nginxinc/nginx-unprivileged:1.23-alpine
 
 LABEL maintainer acend.ch
-LABEL org.opencontainers.image.title "acend.ch's OpenShift 4 Ops Training"
-LABEL org.opencontainers.image.description "Container with acend.ch's OpenShift 4 Ops Training content"
+LABEL org.opencontainers.image.title "acend.ch's OpenShift Operations Training"
+LABEL org.opencontainers.image.description "Container with acend.ch's OpenShift Operations Training content"
 LABEL org.opencontainers.image.authors acend.ch
 LABEL org.opencontainers.image.source https://github.com/acend/openshift-operations-training/
 LABEL org.opencontainers.image.licenses CC-BY-SA-4.0
