@@ -101,10 +101,10 @@ git remote add origin <your git repository's URL>
 git push -u origin main
 ```
 
-* Taking the [KubeletConfig from task 1.2.1](https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml) as an example, save its definition as a new file inside the Git directory and push it to your Gitea repository:
+* Taking the [KubeletConfig from task 1.2.1](https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml) as an example, save its definition as a new file inside the Git directory and push it to your Gitea repository:
 
 ```bash
-wget https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml
+wget https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml
 git add kubeletconfig_master.yaml
 git commit -m "Add master's kubelet configuration"
 git push

@@ -89,7 +89,7 @@ Apply the authentication provider configuration to the cluster.
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/04/resources/oauth_cluster.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/04/resources/oauth_cluster.yaml
 ```
 
 {{% /details %}}

@@ -20,11 +20,11 @@ Setup a daily backup of the resources in namespace `uptime-app-prod` with a life
 {{< readfile file="/content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml" code="true" lang="yaml" >}}
 
 {{% alert title="Note" color="primary" %}}
-This resource file is also available at https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml.
+This resource file is also available at https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml.
 {{% /alert %}}
 
 ```bash
-oc -n training-infra-velero apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml
+oc -n training-infra-velero apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml
 ```
 
 The schedule will create the first backup immediately. Have a look at the status part of the backup:
@@ -81,8 +81,8 @@ For the cronjob pod to be able to access the `etcd` files, we need to create a s
 {{< readfile file="/content/en/docs/01/resources/etcd-backup/scc_privileged-etcd-backup.yaml" code="true" lang="yaml" >}}
 
 ```bash
-oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/etcd-backup/sa_etcd-backup.yaml
-oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/etcd-backup/scc_privileged-etcd-backup.yaml
+oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/etcd-backup/sa_etcd-backup.yaml
+oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/etcd-backup/scc_privileged-etcd-backup.yaml
 ```
 
 Now we can create the secret containing the AWS credentials and S3 bucket configuration:
@@ -100,8 +100,8 @@ Finally we can create the `ConfigMap` containing the backup script and the `Cron
 Create them with:
 
 ```bash
-oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/etcd-backup/cm_backup-script.yaml
-oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/etcd-backup/cronjob_etcd-backup.yaml
+oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/etcd-backup/cm_backup-script.yaml
+oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/etcd-backup/cronjob_etcd-backup.yaml
 ```
 
 {{% alert title="Note" color="primary" %}}

@@ -40,7 +40,7 @@ Next, you're going to create the following resources:
 To deploy these resources, you can simply execute the following command:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/uptime-app.yaml -n uptime-app-prod
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/uptime-app.yaml -n uptime-app-prod
 ```
 
 What's left is to adapt the hostname:

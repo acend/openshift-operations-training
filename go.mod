@@ -1,4 +1,4 @@
-module github.com/acend/openshift-4-ops-training
+module github.com/acend/openshift-operations-training
 
 go 1.19
 

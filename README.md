@@ -1,6 +1,6 @@
-# OpenShift 4 Ops Training
+# OpenShift Operations Training
 
-OpenShift 4 Ops Training Description
+OpenShift Operations Training Description
 
 
 ## Content Sections
@@ -67,13 +67,13 @@ This is only rendered when `enabledModule` in `config.toml` **does not** contain
 Build the image:
 
 ```bash
-docker build <--build-arg TRAINING_HUGO_ENV=...> -t acend/openshift-4-ops-training .
+docker build <--build-arg TRAINING_HUGO_ENV=...> -t acend/openshift-operations-training .
 ```
 
 Run it locally:
 
 ```bash
-docker run -i -p 8080:8080 acend/openshift-4-ops-training
+docker run -i -p 8080:8080 acend/openshift-operations-training
 ```
 
 

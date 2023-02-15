@@ -59,7 +59,7 @@ Create the instance.
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/05/resources/gitea_gitea.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/05/resources/gitea_gitea.yaml
 ```
 
 {{% /details %}}

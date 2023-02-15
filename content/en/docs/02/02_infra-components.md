@@ -214,7 +214,7 @@ Apply it to the cluster.
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
-oc create -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/02/resources/configmap_cluster-monitoring-config.yaml
+oc create -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/02/resources/configmap_cluster-monitoring-config.yaml
 ```
 
 {{% /details %}}

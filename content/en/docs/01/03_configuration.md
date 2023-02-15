@@ -43,15 +43,15 @@ That way OpenShift calculates recommended values for you.
 {{% /alert %}}
 
 {{% alert title="Note" color="primary" %}}
-These resource files are also available at https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml and https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_worker.yaml, respectively.
+These resource files are also available at https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml and https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/kubeletconfig_worker.yaml, respectively.
 {{% /alert %}}
 
 There are multiple possible ways to apply these configuration resources to the cluster.
 We are going to use one of the quickest methods and apply via URL:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/kubeletconfig_worker.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/kubeletconfig_worker.yaml
 ```
 
 {{% /details %}}
@@ -105,7 +105,7 @@ Add the necessary network policies to the default project template. A sane defau
 Your file should now look like this:
 
 {{% alert title="Note" color="primary" %}}
-For your convenience, we also provide the file at <https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/networkpolicies.yaml>.
+For your convenience, we also provide the file at <https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/networkpolicies.yaml>.
 {{% /alert %}}
 
 ```yaml
@@ -243,7 +243,7 @@ oc apply -f template_project-request-extended.yaml
 Or use our provided solution:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/01/resources/template_project-request-extended.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/template_project-request-extended.yaml
 ```
 
 You then need to label the `default` Namespace in order for our network policies to work (they refer to a namespace labelled `network.openshift.io/policy-group=ingress`):

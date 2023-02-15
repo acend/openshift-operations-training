@@ -40,12 +40,12 @@ To deploy the cluster logging stack from the CLI, we need to create the followin
 Now either copy and paste above resource definitions and then apply them to your cluster or directly use our provided files:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/logging/ns_openshift-operators-redhat.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/logging/ns_openshift-logging.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/logging/og_openshift-operators-redhat.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/logging/og_cluster-logging.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/logging/sub_elasticsearch-operator.yaml
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/logging/sub_cluster-logging.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/03/resources/logging/ns_openshift-operators-redhat.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/03/resources/logging/ns_openshift-logging.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/03/resources/logging/og_openshift-operators-redhat.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/03/resources/logging/og_cluster-logging.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/03/resources/logging/sub_elasticsearch-operator.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/03/resources/logging/sub_cluster-logging.yaml
 ```
 
 Verify if the Elasticsearch Operator installation succeeded.
@@ -110,7 +110,7 @@ The logging instance definition looks as follows:
 Again, you can use the provided file or put above content in a file of your own:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/logging/clusterlogging_instance.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/03/resources/logging/clusterlogging_instance.yaml
 ```
 
 {{% alert title="Note" color="primary" %}}
@@ -165,7 +165,7 @@ To forward the audit logs to the internal Elasticsearch instance, we need to def
 You can also use our provided file:
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/acend/openshift-4-ops-training/main/content/en/docs/03/resources/logging/clusterlogforwarder_instance.yaml
+oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/03/resources/logging/clusterlogforwarder_instance.yaml
 ```
 
 
