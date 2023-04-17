@@ -1,0 +1,13 @@
+apiVersion: cert-manager.io/v1
+kind: Certificate
+metadata:
+  name: cert-api
+  namespace: openshift-config
+spec:
+  commonName: 'api.<username>-ops-training.openshift.ch'
+  dnsNames:
+  - 'api.<username>-ops-training.openshift.ch'
+  issuerRef:
+    kind: ClusterIssuer
+    name: letsencrypt-production
+  secretName: cert-api
