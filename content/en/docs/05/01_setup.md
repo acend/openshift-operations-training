@@ -112,8 +112,6 @@ What we need to do to make it fully operational is slightly adjust certain param
 * Add tolerations and node selectors to make all pods run on infra nodes
 * Change the route's termination to reencrypt
 
-{{% details title="Hints" mode-switcher="normalexpertmode" %}}
-
 Apply the following resources.
 
 * The Argo CD custom resource to change the route termination and add the node placement definition:
@@ -123,5 +121,3 @@ Apply the following resources.
 * The GitOpsService custom resource to move the Operator itself onto infra nodes as well:
 
 {{< readfile file="/content/en/docs/05/resources/gitopsservice_cluster.yaml" code="true" lang="yaml" >}}
-
-{{% /details %}}
