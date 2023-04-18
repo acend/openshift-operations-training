@@ -105,7 +105,7 @@ Add the necessary network policies to the default project template. A sane defau
 Your file should now look like this:
 
 {{% alert title="Note" color="primary" %}}
-For your convenience, we also provide the file at <https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/networkpolicies.yaml>.
+For your convenience, we also provide a file containing all network policies at <https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/networkpolicies.yaml>.
 {{% /alert %}}
 
 ```yaml
@@ -213,7 +213,7 @@ Add the LimitRange resource to your default project template.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
-Your file should now look like this:
+Your project template should now look like this:
 
 {{< readfile file="/content/en/docs/01/resources/template_project-request-extended.yaml" code="true" lang="yaml" >}}
 
@@ -244,12 +244,6 @@ Or use our provided solution:
 
 ```bash
 oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/template_project-request-extended.yaml
-```
-
-You then need to label the `default` Namespace in order for our network policies to work (they refer to a namespace labelled `network.openshift.io/policy-group=ingress`):
-
-```bash
-oc label namespace default 'network.openshift.io/policy-group=ingress'
 ```
 
 And finally, we need to configure the Project custom resource:

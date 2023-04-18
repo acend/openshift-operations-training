@@ -1,0 +1,16 @@
+configuration:
+  provider: aws
+  backupStorageLocation:
+    bucket: <username>-ops-training-backup-velero
+    config:
+      region: us-east-1
+  volumeSnapshotLocation:
+    config:
+      region: us-east-1
+initContainers:
+  - name: velero-plugin-for-aws
+    image: velero/velero-plugin-for-aws
+    imagePullPolicy: IfNotPresent
+    volumeMounts:
+      - mountPath: /target
+        name: plugins

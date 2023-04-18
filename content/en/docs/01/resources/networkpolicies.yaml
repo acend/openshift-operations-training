@@ -7,7 +7,7 @@
     - from:
       - namespaceSelector:
           matchLabels:
-            network.openshift.io/policy-group: ingress
+            policy-group.network.openshift.io/ingress: ""
     podSelector: {}
     policyTypes:
     - Ingress
@@ -33,3 +33,18 @@
     ingress:
     - from:
       - podSelector: {}
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: allow-from-kube-apiserver-operator
+  spec:
+    ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: openshift-kube-apiserver-operator
+        podSelector:
+          matchLabels:
+            app: kube-apiserver-operator
+    policyTypes:
+    - Ingress

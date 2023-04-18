@@ -27,7 +27,13 @@ This resource file is also available at https://raw.githubusercontent.com/acend/
 oc -n training-infra-velero apply -f https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/schedule_daily-backup-uptime-app-prod.yaml
 ```
 
-The schedule will create the first backup immediately. Have a look at the status part of the backup:
+In order to test it, let's trigger a manual backup. We are using the `velero` cli for this which is pre-installed on your bastion host:
+
+```bash
+velero backup create --from-schedule daily-backup-uptime-app-prod -n training-infra-velero
+```
+
+When the backup is completed, have a look at its status part:
 
 ```bash
 oc -n training-infra-velero describe backup | grep -A 9 Status
@@ -37,14 +43,14 @@ The output should look similar to this:
 
 ```
 Status:
-  Completion Timestamp:  2021-04-14T09:31:11Z
-  Expiration:            2021-04-24T09:30:50Z
+  Completion Timestamp:  2023-04-18T10:04:32Z
+  Expiration:            2023-04-28T10:03:59Z
   Format Version:        1.1.0
   Phase:                 Completed
   Progress:
-    Items Backed Up:  31
-    Total Items:      31
-  Start Timestamp:    2021-04-14T09:30:50Z
+    Items Backed Up:  55
+    Total Items:      55
+  Start Timestamp:    2023-04-18T10:03:59Z
   Version:            1
 ```
 
@@ -63,7 +69,7 @@ oc new-project training-infra-etcd-backup
 
 {{% /details %}}
 
-Since `etcd` is running on the masters, we need to make sure the cronjob pods creating the `etcd` snapshots are running on a master as well. We can do this by annotating the namespace with the corresponding node selector:
+Since `etcd` is running on the control plane nodes, we need to make sure the cronjob's pods that are creating the `etcd` snapshots are running on one as well. We can do this by annotating the namespace with the corresponding node selector:
 
 ```bash
 oc patch namespace training-infra-etcd-backup -p \
@@ -88,7 +94,7 @@ oc -n training-infra-etcd-backup apply -f https://raw.githubusercontent.com/acen
 Now we can create the secret containing the AWS credentials and S3 bucket configuration:
 
 ```bash
-oc -n training-infra-etcd-backup apply -f /home/ec2-user/ocp4-ops/resources/etcd-backup/secret_etcd-backup-s3-bucket.yaml
+oc -n training-infra-etcd-backup apply -f ~/ocp4-ops/resources/etcd-backup/secret_etcd-backup-s3-bucket.yaml
 ```
 
 Finally we can create the `ConfigMap` containing the backup script and the `CronJob` resources. Here's what they look like:

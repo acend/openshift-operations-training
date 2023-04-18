@@ -14,22 +14,26 @@ Using the information provided by your trainer, ssh into your bastion host and c
 It is best practice to create a timestamped directory for each cluster installation, for example:
 
 ```bash
-cd /home/ec2-user/ocp4-ops
+cd ~/ocp4-ops
 mkdir $(date +"%Y-%m-%d")
 ```
 
 
 ## Task {{% param sectionnumber %}}.2: Customizing the installation
 
-Create a file called `install-config.yaml` in the previously created directory on the bastion host, add the following content and change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username +username+.
-
-Additonally, add an SSH key. Either use an existing keypair or create a new one by executing:
+First, we need an SSH keypair. The public key will be used to grant us access to the OpenShift machines we are going to create. Either use an existing keypair or create a new one by executing:
 
 ```bash
-ssh-keygen -t ed25519
+ssh-keygen -t ed25519 -N ''
 ```
 
-Also add the `pull-secret` (available at `~/ocp4ops/pull-secret` on the bastion host) for the installer to be able to pull all necessary images from the Red Hat image registry.
+Note the SSH public key.
+
+Also note the pull secret available in `~/ocp4ops/pull-secret` on your bastion host. The pull secret is used by the installer to pull the necessary images from the Red Hat registry.
+
+Now, create a file called `install-config.yaml` in the previously created directory on the bastion host. Add the content from the following box and also add the noted SSH public key and pull secret.
+
+Then, change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username +username+.
 
 {{< readfile file="/content/en/docs/01/resources/install-config.yaml" code="true" lang="yaml" >}}
 
@@ -50,7 +54,7 @@ cp $(date +"%Y-%m-%d")/install-config.yaml backup/install-config.yaml
 Now you are ready to create your own cluster:
 
 ```bash
-openshift-install create cluster --dir=$(date +"%Y-%m-%d") --log-level=info
+openshift-install create cluster --dir=$(date +"%Y-%m-%d")
 ```
 
 {{% alert title="Note" color="primary" %}}

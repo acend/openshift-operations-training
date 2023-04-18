@@ -1,7 +1,6 @@
 apiVersion: template.openshift.io/v1
 kind: Template
 metadata:
-  creationTimestamp: null
   name: project-request-extended
   namespace: openshift-config
 objects:
@@ -12,14 +11,12 @@ objects:
       openshift.io/description: ${PROJECT_DESCRIPTION}
       openshift.io/display-name: ${PROJECT_DISPLAYNAME}
       openshift.io/requester: ${PROJECT_REQUESTING_USER}
-    creationTimestamp: null
     name: ${PROJECT_NAME}
   spec: {}
   status: {}
 - apiVersion: rbac.authorization.k8s.io/v1
   kind: RoleBinding
   metadata:
-    creationTimestamp: null
     name: admin
     namespace: ${PROJECT_NAME}
   roleRef:
@@ -40,7 +37,7 @@ objects:
     - from:
       - namespaceSelector:
           matchLabels:
-            network.openshift.io/policy-group: ingress
+            policy-group.network.openshift.io/ingress: ""
     podSelector: {}
     policyTypes:
     - Ingress
@@ -68,7 +65,22 @@ objects:
     ingress:
     - from:
       - podSelector: {}
-
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: allow-from-kube-apiserver-operator
+    namespace: ${PROJECT_NAME}
+  spec:
+    ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: openshift-kube-apiserver-operator
+        podSelector:
+          matchLabels:
+            app: kube-apiserver-operator
+    policyTypes:
+    - Ingress
 - apiVersion: v1
   kind: LimitRange
   metadata:

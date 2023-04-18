@@ -28,18 +28,17 @@ helm repo add jetstack https://charts.jetstack.io
 helm install cert-manager jetstack/cert-manager \
   --namespace training-infra-cert-manager \
   --create-namespace \
-  --version v1.3.0 \
-  --values /home/ec2-user/ocp4-ops/resources/cert-manager/values.yaml
+  --values https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/cert-manager/values.yaml
 ```
 
-To be able to use Amazon Route 53 for Let's Encrypt's DNS01 challenge, you will need to create a secret containing the required credentials. You can find these on the bastion host at `/home/ec2-user/ocp4-ops/resources/cert-manager`.
+To be able to use Amazon Route 53 for Let's Encrypt's DNS01 challenges, you will need a secret containing the required credentials. You can find it on the bastion host at `~/ocp4-ops/resources/cert-manager`.
 
 Create that secret.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
-oc -n training-infra-cert-manager apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
+oc -n training-infra-cert-manager apply -f ~/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
 ```
 
 {{% /details %}}
@@ -49,7 +48,7 @@ Now you can create the `ClusterIssuer` resource which is also supplied as a file
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
-oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producion.yaml
+oc apply -f ~/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producion.yaml
 ```
 
 {{% /details %}}
@@ -79,14 +78,18 @@ Status:
 
 ## Task {{% param sectionnumber %}}.2 Replace the ingress controller certificate
 
-After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.+username+-ops-training.openshift.ch`. Before you can apply the file you need to change the parameters `commonName` and `dnsNames` to match your cluster name.
+After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.+username+-ops-training.openshift.ch`.
 
-You can find the file in the `cert-manager` directory mentioned above.
+Create a file named `certificate_ingress.yaml` and fill in the following content, replacing the placeholder `<username>` with your actual username +username+.
+
+{{< readfile file="/content/en/docs/01/resources/cert-manager/certificate_ingress.yaml" code="true" lang="yaml" >}}
+
+Now apply the file.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
-oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_wildcard-ingress.yaml
+oc apply -f certificate_ingress.yaml
 ```
 
 {{% /details %}}
@@ -100,8 +103,8 @@ oc -n openshift-ingress get certificate
 You're looking for the column `READY` to be `True`:
 
 ```
-NAME                    READY   SECRET                  AGE
-cert-wildcard-ingress   True    cert-wildcard-ingress   6m2s
+NAME           READY   SECRET         AGE
+cert-ingress   True    cert-ingress   6m2s
 ```
 
 Update the `IngressController` configuration [according to the documentation](https://docs.openshift.com/container-platform/latest/security/certificates/replacing-default-ingress-certificate.html) in order to use the certificate.
@@ -111,13 +114,22 @@ Update the `IngressController` configuration [according to the documentation](ht
 ```bash
 oc patch ingresscontroller.operator default \
    --type=merge -p \
-   '{"spec":{"defaultCertificate": {"name": "cert-wildcard-ingress"}}}' \
+   '{"spec":{"defaultCertificate": {"name": "cert-ingress"}}}' \
    -n openshift-ingress-operator
 ```
 
 {{% /details %}}
 
-After the Ingress Controller has finished rolling out, the console URL should now present a valid certificate.
+After the router pods have all been replaced, the console URL should present a valid certificate.
+Have a look inside the `openshift-console` namespace to see the state of the pods.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
+```bash
+oc -n openshift-console get pods
+```
+
+{{% /details %}}
 
 
 ## Task {{% param sectionnumber %}}.3 Replace the API certificate
@@ -146,7 +158,15 @@ oc patch apiserver cluster \
      "servingCertificate": {"name": "cert-api"}}]}}}'
 ```
 
+oc patch apiserver cluster \
+     --type=merge -p \
+     '{"spec":{"servingCerts": {"namedCertificates":
+     [{"names": ["api.+username+-ops-training.openshift.ch"],
+     "servingCertificate": {"name": "cert-api"}}]}}}'
+
 {{% /details %}}
+
+Wait for the `kube-apiserver` operator to detect the configuration change and apply roll it out.
 
 Since the `kubeconfig` file you have been working with so far contains the CA of the self-signed certificate, the newly created certificate cannot be validated against this CA:
 
@@ -189,7 +209,7 @@ We already created S3 buckets for you to use as backup locations.
 
 You will install Velero with Helm.
 
-In order to install the Helm chart, you must follow these steps:
+In order to install the Helm chart, follow these steps:
 
 * Add the VMware Tanzu Helm repository:
 
@@ -197,16 +217,20 @@ In order to install the Helm chart, you must follow these steps:
 helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
 ```
 
-* Modify the paramter `configuration.backupStorageLocation.bucket` in the file `values.yaml` to reflect your username +username+.
+* Create a `values.yaml` file and fill in the following content:
 
-* Install the Velero Helm chart:
+{{< readfile file="/content/en/docs/01/resources/velero/values.yaml" code="true" lang="yaml" >}}
+
+* Open the `values.yaml` file and modify the paramter `configuration.backupStorageLocation.bucket` to reflect your username +username+
+
+* Install the Velero Helm chart using your edited `values.yaml` file:
 
 ```bash
 helm install velero vmware-tanzu/velero \
   --namespace training-infra-velero \
   --create-namespace \
   --set-file credentials.secretContents.cloud=/home/ec2-user/ocp4-ops/resources/velero/credentials \
-  --values /home/ec2-user/ocp4-ops/resources/velero/values.yaml
+  --values values.yaml
 ```
 
 After the installation has completed, you can verify the backup location:

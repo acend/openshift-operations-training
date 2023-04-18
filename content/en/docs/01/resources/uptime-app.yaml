@@ -51,6 +51,15 @@ spec:
           httpGet:
             path: /
             port: http
+        securityContext:
+          allowPrivilegeEscalation: false
+          capabilities:
+            drop:
+              - ALL
+      securityContext:
+        runAsNonRoot: true
+        seccompProfile:
+          type: RuntimeDefault
 ---
 apiVersion: v1
 kind: Service
