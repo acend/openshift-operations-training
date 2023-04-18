@@ -33,7 +33,7 @@ If the Gitea Operator does not appear yet, wait a few more seconds.
 
 * Choose the Operator and click **Install**
 * Don't change any of the pre-chosen values and again click **Install**
-* Wait for the Operator to finish its installation
+* Wait for the Operator to finish its installation successfully
 
 {{% /details %}}
 
@@ -52,18 +52,7 @@ oc new-project gitea
 
 The instance you are going to create has the following content:
 
-```yaml
-apiVersion: gpte.opentlc.com/v1
-kind: Gitea
-metadata:
-  name: gitea
-  namespace: gitea
-spec:
-  giteaImageTag: latest
-  giteaVolumeSize: 1Gi
-  giteaSsl: true
-  postgresqlVolumeSize: 1Gi
-```
+{{< readfile file="/content/en/docs/05/resources/gitea_gitea.yaml" code="true" lang="yaml" >}}
 
 Create the instance.
 
