@@ -74,7 +74,7 @@ Now fill in the appropriate information:
 ## Task {{% param sectionnumber %}}.4: Resource management
 
 * Choose some of the resources you created in the course of this training, e.g.:
-  * The [`KubeletConfig` resources from task 1.2.1](../../01/02_configuration/#task-121-configure-kubelet-arguments)
+  * The [`KubeletConfig` resources from task 1.3.1](../../01/03_configuration/#task-131-configure-kubelet-arguments)
   * The [`MachineSet` resource from task 2.1.1](../../02/01_infra-nodes/#task-211-create-a-machine-set)
   * The `IngressController` definition
   * The [custom Prometheus rule from task 3.3.2](../../03/03_user-defined-rules/#task-332-add-a-custom-prometheus-rule)
@@ -101,7 +101,7 @@ git remote add origin <your git repository's URL>
 git push -u origin main
 ```
 
-* Taking the [KubeletConfig from task 1.2.1](https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml) as an example, save its definition as a new file inside the Git directory and push it to your Gitea repository:
+* Taking the [KubeletConfig from task 1.3.1](https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml) as an example, save its definition as a new file inside the Git directory and push it to your Gitea repository:
 
 ```bash
 wget https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/kubeletconfig_master.yaml
