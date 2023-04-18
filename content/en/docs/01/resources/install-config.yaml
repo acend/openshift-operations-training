@@ -15,7 +15,7 @@ controlPlane:
       type: m6i.xlarge
   replicas: 3
 metadata:
-  name: <username>-ops-training.openshift.ch
+  name: <username>-ops-training
 networking:
   networkType: OVNKubernetes
 platform:
