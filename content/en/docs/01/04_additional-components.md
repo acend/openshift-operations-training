@@ -161,14 +161,6 @@ oc patch apiserver cluster \
      "servingCertificate": {"name": "cert-api"}}]}}}'
 ```
 
-```bash
-oc patch apiserver cluster \
-     --type=merge -p \
-     '{"spec":{"servingCerts": {"namedCertificates":
-     [{"names": ["api.+username+-ops-training.openshift.ch"],
-     "servingCertificate": {"name": "cert-api"}}]}}}'
-```
-
 {{% /details %}}
 
 Wait for the `kube-apiserver` operator to detect the configuration change and apply roll it out.
