@@ -29,7 +29,7 @@ ssh-keygen -t ed25519 -N ''
 
 Note the SSH public key.
 
-Also note the pull secret available in `~/ocp4ops/pull-secret` on your bastion host. The pull secret is used by the installer to pull the necessary images from the Red Hat registry.
+Also note the pull secret available in `~/ocp4-ops/pull-secret` on your bastion host. The pull secret is used by the installer to pull the necessary images from the Red Hat registry.
 
 Now, create a file called `install-config.yaml` in the previously created directory on the bastion host. Add the content from the following box and also add the noted SSH public key and pull secret.
 
