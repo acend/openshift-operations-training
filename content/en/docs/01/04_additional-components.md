@@ -134,14 +134,17 @@ oc -n openshift-console get pods
 
 ## Task {{% param sectionnumber %}}.3 Replace the API certificate
 
-The default API server certificate is issued by an internal OpenShift Container Platform cluster CA. Clients outside of the cluster will not be able to verify the API server’s certificate by default. This certificate can be replaced by one that is issued by a CA that clients trust. Before you can apply the file you need to change the parameters `commonName` and `dnsNames` to match your cluster name.
+The default API server certificate is issued by an internal OpenShift Container Platform cluster CA. Clients outside of the cluster will not be able to verify the API server’s certificate by default. This certificate can be replaced by one that is issued by a CA that clients trust.
 
-You can find the file in the directory cert-manager directory mentioned above.
+Create a file named `certificate_api.yaml` and fill in the following content.  
+Adjust the paramaters `commonName` and `dnsNames` to match your cluster name.
+
+{{< readfile file="/content/en/docs/01/resources/cert-manager/certificate_api.yaml" code="true" lang="yaml" >}}
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
-oc apply -f /home/ec2-user/ocp4-ops/resources/cert-manager/certificate_api.yaml
+oc apply -f certificate_api.yaml
 ```
 
 {{% /details %}}
@@ -157,12 +160,6 @@ oc patch apiserver cluster \
      [{"names": ["api.+username+-ops-training.openshift.ch"],
      "servingCertificate": {"name": "cert-api"}}]}}}'
 ```
-
-oc patch apiserver cluster \
-     --type=merge -p \
-     '{"spec":{"servingCerts": {"namedCertificates":
-     [{"names": ["api.+username+-ops-training.openshift.ch"],
-     "servingCertificate": {"name": "cert-api"}}]}}}'
 
 {{% /details %}}
 

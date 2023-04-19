@@ -45,4 +45,4 @@ oc apply -f https://raw.githubusercontent.com/acend/openshift-operations-trainin
 
 The deployed application should now be available at <https://uptime-app-uptime-app-prod.apps.+username+-ops-training.openshift.ch>.
 
-With 2 replicas and the [Pod anti-affinity](https://docs.openshift.com/container-platform/latest/nodes/scheduling/nodes-scheduler-pod-affinity.html#nodes-scheduler-pod-affinity-example-antiaffinity_nodes-scheduler-pod-affinity), which will make sure all 3 Pods are never deployed on the same underlying node, we have a good setup for the training to continue.
+With 2 replicas and the [Pod anti-affinity](https://docs.openshift.com/container-platform/latest/nodes/scheduling/nodes-scheduler-pod-affinity.html#nodes-scheduler-pod-affinity-example-antiaffinity_nodes-scheduler-pod-affinity), which will make sure all 2 Pods are never deployed on the same underlying node, we have a good setup for the training to continue.
