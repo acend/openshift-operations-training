@@ -80,9 +80,6 @@ Let's take a look at the main components that can be configured applying a custo
 * **for:** Duration of the fulfilled condition until the alarm is triggered. If not set, alerts are triggered at their first occurrence.
 * **labels:** Metadata that can be used to dynamically route the alert to a corresponding receiver.
 
-Note: Starting with OpenShift 4.11, none of the monitoring components (Thanos, Prometheus...) are exposed anymore.
-This means that, despite routes still existing in the cluster, no corresponding Web UI is accessible.
-
 ## Task {{% param sectionnumber %}}.3: Allowing users to add monitoring resources
 
 By default, only cluster administrators have access to the user-workload monitoring stack and are able to create Prometheus custom resources like PrometheusRules. You can grant platform users access to the stack by giving them one of the cluster roles below:

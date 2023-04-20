@@ -16,10 +16,6 @@ Navigate to **Observe** -> **Dashboards** on the web console and select **etcd**
 
 ![cluster dashboard](../cluster-dashboard.png)
 
-Note: Previously, OpenShift bundled Grafana together with its cluster installations.
-However, starting with version 4.11, RedHat has removed Grafana altogether.
-That said, it can still be installed using a [RedHat maintained operator](https://www.ibm.com/docs/ro/erqa?topic=monitoring-installing-grafana-operator).
-
 * **User dashboards**
 
 Switch to the **Developer** console and select the **uptime-app-prod** project. Then navigate to the **Monitoring** tab. Select the **uptime-app** in the **Workload** drop-down list. This will display a wide selection of different metrics relevant to your app like CPU usage, memory usage and networking performance.
