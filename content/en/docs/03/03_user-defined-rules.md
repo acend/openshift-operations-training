@@ -80,18 +80,6 @@ Let's take a look at the main components that can be configured applying a custo
 * **for:** Duration of the fulfilled condition until the alarm is triggered. If not set, alerts are triggered at their first occurrence.
 * **labels:** Metadata that can be used to dynamically route the alert to a corresponding receiver.
 
-Verify the rule by accessing the Thanos ruler web interface.
-You can find out its URL by looking at the `thanos-ruler` route in the `openshift-user-workload-monitoring`.
-
-{{% details title="Hints" mode-switcher="normalexpertmode" %}}
-
-```bash
-oc -n openshift-user-workload-monitoring get route thanos-ruler -o go-template='https://{{ .spec.host }}/alerts{{ "\n" }}'
-```
-
-{{% /details %}}
-
-
 ## Task {{% param sectionnumber %}}.3: Allowing users to add monitoring resources
 
 By default, only cluster administrators have access to the user-workload monitoring stack and are able to create Prometheus custom resources like PrometheusRules. You can grant platform users access to the stack by giving them one of the cluster roles below:
