@@ -80,17 +80,8 @@ Let's take a look at the main components that can be configured applying a custo
 * **for:** Duration of the fulfilled condition until the alarm is triggered. If not set, alerts are triggered at their first occurrence.
 * **labels:** Metadata that can be used to dynamically route the alert to a corresponding receiver.
 
-Verify the rule by accessing the Thanos ruler web interface.
-You can find out its URL by looking at the `thanos-ruler` route in the `openshift-user-workload-monitoring`.
-
-{{% details title="Hints" mode-switcher="normalexpertmode" %}}
-
-```bash
-oc -n openshift-user-workload-monitoring get route thanos-ruler -o go-template='https://{{ .spec.host }}/alerts{{ "\n" }}'
-```
-
-{{% /details %}}
-
+Note: Starting with OpenShift 4.11, none of the monitoring components (Thanos, Prometheus...) are exposed anymore.
+This means that, despite routes still existing in the cluster, no corresponding Web UI is accessible.
 
 ## Task {{% param sectionnumber %}}.3: Allowing users to add monitoring resources
 

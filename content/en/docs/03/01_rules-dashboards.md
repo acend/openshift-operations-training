@@ -12,21 +12,13 @@ OpenShift provides a set of default dashboards for cluster adminstrators and Ope
 
 To get a sense of where these dashboards can be found, let's take a look at the performance of the etcd cluster.
 
-Navigate to **Monitoring** -> **Dashboard** on the web console and select **etcd** in the dashboard drop-down list.
+Navigate to **Observe** -> **Dashboards** on the web console and select **etcd** in the dashboard drop-down list.
 
 ![cluster dashboard](../cluster-dashboard.png)
 
-If you are more comfortable using Grafana you can display those dashboards in the OpenShift-provided Grafana.
-
-To find out at what URL Grafana is available, look at the route `grafana` inside the `openshift-monitoring` namespace.
-
-{{% details title="Hints" mode-switcher="normalexpertmode" %}}
-
-```bash
-oc -n openshift-monitoring get route grafana -o go-template='https://{{ .spec.host }}{{ "\n" }}'
-```
-
-{{% /details %}}
+Note: Previously, OpenShift bundled Grafana together with its cluster installations.
+However, starting with version 4.11, RedHat has removed Grafana altogether.
+That said, it can still be installed using a [RedHat maintained operator](https://www.ibm.com/docs/ro/erqa?topic=monitoring-installing-grafana-operator).
 
 * **User dashboards**
 
