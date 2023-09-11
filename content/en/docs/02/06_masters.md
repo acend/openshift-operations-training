@@ -56,6 +56,7 @@ oc -n openshift-machine-api delete machine <failed-master-machine>
 
 {{% /details %}}
 
+This will queue the machine for deletion. You can verify this by checking the machines' state.
 Wait for the machine to be deleted by periodically checking the machines' state.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
@@ -73,13 +74,25 @@ user01-ops-training-75gjz-infra-eu-north-1a-h88ln    Running    m5.2xlarge   eu-
 user01-ops-training-75gjz-infra-eu-north-1a-smgzs    Running    m5.2xlarge   eu-north-1   eu-north-1a   46h    ip-10-0-154-185.eu-north-1.compute.internal   aws:///eu-north-1a/i-0750413e1557c439f   running
 user01-ops-training-75gjz-master-0                   Running    m5.xlarge    eu-north-1   eu-north-1a   3d3h   ip-10-0-155-28.eu-north-1.compute.internal    aws:///eu-north-1a/i-0736635506a9eb2cc   running
 user01-ops-training-75gjz-master-1                   Running    m5.xlarge    eu-north-1   eu-north-1b   3d3h   ip-10-0-184-171.eu-north-1.compute.internal   aws:///eu-north-1b/i-067f7bac5768ab117   running
-user01-ops-training-75gjz-master-2                   Deleting   m5.xlarge    eu-north-1   eu-north-1c   3d3h   ip-10-0-212-27.eu-north-1.compute.internal    aws:///eu-north-1c/i-02210ddbae879539e   shutting-down
+user01-ops-training-75gjz-master-2                   Deleting   m5.xlarge    eu-north-1   eu-north-1c   3d3h   ip-10-0-212-27.eu-north-1.compute.internal    aws:///eu-north-1c/i-02210ddbae879539e   running
 user01-ops-training-75gjz-worker-eu-north-1a-vv59v   Running    m5.2xlarge   eu-north-1   eu-north-1a   3d3h   ip-10-0-139-81.eu-north-1.compute.internal    aws:///eu-north-1a/i-0d243001e9ba4cb9b   running
 user01-ops-training-75gjz-worker-eu-north-1b-zddgj   Running    m5.2xlarge   eu-north-1   eu-north-1b   3d3h   ip-10-0-173-170.eu-north-1.compute.internal   aws:///eu-north-1b/i-028cec3fbf26c0f13   running
 user01-ops-training-75gjz-worker-eu-north-1c-6mqls   Running    m5.2xlarge   eu-north-1   eu-north-1c   3d3h   ip-10-0-195-93.eu-north-1.compute.internal    aws:///eu-north-1c/i-0d7f8ed2c8b9c0932   running
 ```
 
 {{% /details %}}
+
+This machine will not be deleted right away: You can see in the resource definition that its lifecycle contains a pre-drain-hook, executed before draining the machine. This step must run before the draining of the machine, before the deletion itself:
+
+```
+spec:
+  lifecycleHooks:
+    preDrain:
+    - name: EtcdQuorumOperator
+      owner: clusteroperator/etcd
+```
+
+This hook ensures that the collection of etcd nodes (the "quorum") remains in a healthy state. This is no longer granted if we remove one node out of the three expected ones. If we manually decrease the number of required nodes in the healthy state, then the third node can be deleted.
 
 
 ## Task {{% param sectionnumber %}}.2: Deleting the `etcd` member
@@ -146,6 +159,31 @@ etcdctl member list -w table
 {{% /details %}}
 
 This is it! You can now disconnect from the etcd pod.
+
+The machine we marked for deletion can now finally proceed. We can check the machines' state again.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
+```bash
+oc -n openshift-machine-api get machines -o wide
+```
+
+Example output:
+
+```
+NAME                                                 PHASE      TYPE         REGION       ZONE          AGE    NODE                                          PROVIDERID                               STATE
+user01-ops-training-75gjz-infra-eu-north-1a-9mzd9    Running    m5.2xlarge   eu-north-1   eu-north-1a   46h    ip-10-0-130-69.eu-north-1.compute.internal    aws:///eu-north-1a/i-0a7b134c9b0d07d4d   running
+user01-ops-training-75gjz-infra-eu-north-1a-h88ln    Running    m5.2xlarge   eu-north-1   eu-north-1a   46h    ip-10-0-154-3.eu-north-1.compute.internal     aws:///eu-north-1a/i-0b98e80b4cd46d367   running
+user01-ops-training-75gjz-infra-eu-north-1a-smgzs    Running    m5.2xlarge   eu-north-1   eu-north-1a   46h    ip-10-0-154-185.eu-north-1.compute.internal   aws:///eu-north-1a/i-0750413e1557c439f   running
+user01-ops-training-75gjz-master-0                   Running    m5.xlarge    eu-north-1   eu-north-1a   3d3h   ip-10-0-155-28.eu-north-1.compute.internal    aws:///eu-north-1a/i-0736635506a9eb2cc   running
+user01-ops-training-75gjz-master-1                   Running    m5.xlarge    eu-north-1   eu-north-1b   3d3h   ip-10-0-184-171.eu-north-1.compute.internal   aws:///eu-north-1b/i-067f7bac5768ab117   running
+user01-ops-training-75gjz-master-2                   Deleting   m5.xlarge    eu-north-1   eu-north-1c   3d3h   ip-10-0-212-27.eu-north-1.compute.internal    aws:///eu-north-1c/i-02210ddbae879539e   shutting-down
+user01-ops-training-75gjz-worker-eu-north-1a-vv59v   Running    m5.2xlarge   eu-north-1   eu-north-1a   3d3h   ip-10-0-139-81.eu-north-1.compute.internal    aws:///eu-north-1a/i-0d243001e9ba4cb9b   running
+user01-ops-training-75gjz-worker-eu-north-1b-zddgj   Running    m5.2xlarge   eu-north-1   eu-north-1b   3d3h   ip-10-0-173-170.eu-north-1.compute.internal   aws:///eu-north-1b/i-028cec3fbf26c0f13   running
+user01-ops-training-75gjz-worker-eu-north-1c-6mqls   Running    m5.2xlarge   eu-north-1   eu-north-1c   3d3h   ip-10-0-195-93.eu-north-1.compute.internal    aws:///eu-north-1c/i-0d7f8ed2c8b9c0932   running
+```
+
+{{% /details %}}
 
 
 ## Task {{% param sectionnumber %}}.3: Recreate the master node
