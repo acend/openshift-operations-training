@@ -72,7 +72,7 @@ Add the following snippet:
       retention: 2d
       volumeClaimTemplate:
        spec:
-         storageClassName: gp2
+         storageClassName: gp2-csi
          resources:
            requests:
              storage: 5Gi
@@ -99,7 +99,7 @@ Add the following config:
       ...
       volumeClaimTemplate:
        spec:
-         storageClassName: gp2
+         storageClassName: gp2-csi
          resources:
            requests:
              storage: 1Gi
