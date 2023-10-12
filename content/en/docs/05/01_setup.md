@@ -14,26 +14,18 @@ It allows us to easily host a Git repository which we can use as our single sour
 
 Unfortunately, the default Operator catalog sources don't contain a Gitea operator, but let's change that.
 
-Add the following catalog source to your cluster:
+Create the Gitea Operator by applying the YAML files from the Github repository
 
 ```bash
-oc apply -f https://raw.githubusercontent.com/redhat-gpte-devopsautomation/gitea-operator/master/catalog_source.yaml
+oc apply -k https://github.com/rhpds/gitea-operator/OLMDeploy
 ```
 
-Now find and install the Gitea Operator from the OperatorHub.
+Now check the status of the Gitea Operator in the web console.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
-* In the **Administrator** view of your web console, navigate to **Operators**, then **OperatorHub**
-* Filter for "gitea"
-
-{{% alert title="Note" color="primary" %}}
-If the Gitea Operator does not appear yet, wait a few more seconds.
-{{% /alert %}}
-
-* Choose the Operator and click **Install**
-* Don't change any of the pre-chosen values and again click **Install**
-* Wait for the Operator to finish its installation successfully
+* In the **Administrator** view of your web console, navigate to **Operators**, then **Installed Operators**
+* Filter for "Gitea Operator" and wait for the Operator to finish its installation successfully
 
 {{% /details %}}
 
