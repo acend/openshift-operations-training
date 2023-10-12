@@ -14,7 +14,7 @@ It allows us to easily host a Git repository which we can use as our single sour
 
 Unfortunately, the default Operator catalog sources don't contain a Gitea operator, but let's change that.
 
-Create the Gitea Operator by applying the YAML files from the Github repository
+Create the Gitea Operator by applying the YAML files from the Github repository:
 
 ```bash
 oc apply -k https://github.com/rhpds/gitea-operator/OLMDeploy
