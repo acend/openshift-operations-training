@@ -65,12 +65,12 @@ The storage provisioner in turn creates the requested volume.
 
 ## Task {{% param sectionnumber %}}.1: Storage class inspection
 
-Have a closer look at the `gp2-csi` storage class.
+Have a closer look at the `gp3-csi` storage class.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
-oc get storageclass gp2-csi -o yaml
+oc get storageclass gp3-csi -o yaml
 ```
 
 ```yaml
@@ -78,13 +78,15 @@ allowVolumeExpansion: true
 apiVersion: storage.k8s.io/v1
 kind: StorageClass
 metadata:
-  creationTimestamp: "2022-03-30T09:38:48Z"
-  name: gp2-csi
-  resourceVersion: "160191771"
-  uid: 99fdd6d5-287d-46b3-a87a-3aa825f6663b
+  annotations:
+    storageclass.kubernetes.io/is-default-class: "true"
+  creationTimestamp: "2024-02-17T14:49:54Z"
+  name: gp3-csi
+  resourceVersion: "5427"
+  uid: 1b4aa25d-3599-4b0a-9627-44a8ac7555a1
 parameters:
   encrypted: "true"
-  type: gp2
+  type: gp3
 provisioner: ebs.csi.aws.com
 reclaimPolicy: Delete
 volumeBindingMode: WaitForFirstConsumer
@@ -93,7 +95,7 @@ volumeBindingMode: WaitForFirstConsumer
 {{% /details %}}
 
 As you can see, the `provisioner` field is set to `ebs.csi.aws.com`.
-This means the AWS EBS provisioner will automatically create and delete EBS volumes when a user creates a PersistentVolumeClaim referencing the `gp2-csi` storage class.
+This means the AWS EBS provisioner will automatically create and delete EBS volumes when a user creates a PersistentVolumeClaim referencing the `gp3-csi` storage class.
 
 Each provisioner offers different functionality, exposed as parameters inside the storage class.
 The EBS provisioner allows for the encryption of the data inside the volumes, controlled via the `parameters.encrypted` field, which is already set.

@@ -24,14 +24,20 @@ mkdir $(date +"%Y-%m-%d")
 First, we need an SSH keypair. The public key will be used to grant us access to the OpenShift machines we are going to create. Either use an existing keypair or create a new one by executing:
 
 ```bash
-ssh-keygen -t ed25519 -N ''
+ssh-keygen -t ed25519 -N '' -f ~/.ssh/id_ed25519
 ```
 
 Note the SSH public key.
 
 Also note the pull secret available in `~/ocp4-ops/pull-secret` on your bastion host. The pull secret is used by the installer to pull the necessary images from the Red Hat registry.
 
-Now, create a file called `install-config.yaml` in the previously created directory on the bastion host. Add the content from the following box and also add the noted SSH public key and pull secret.
+Change into the previously created directory:
+
+```bash
+cd $(date +"%Y-%m-%d")
+```
+
+Now, create a file called `install-config.yaml`. Add the content from the following box and also add the noted SSH public key and pull secret.
 
 Then, change the values of `metadata.name` and `platform.aws.userTags.user` to reflect your username +username+.
 
@@ -45,7 +51,7 @@ Backup the file `install-config.yaml`, since it will be consumed during the inst
 
 ```bash
 mkdir backup
-cp $(date +"%Y-%m-%d")/install-config.yaml backup/install-config.yaml
+cp install-config.yaml backup/install-config.yaml
 ```
 
 
@@ -54,7 +60,7 @@ cp $(date +"%Y-%m-%d")/install-config.yaml backup/install-config.yaml
 Now you are ready to create your own cluster:
 
 ```bash
-openshift-install create cluster --dir=$(date +"%Y-%m-%d")
+openshift-install create cluster --log-level debug
 ```
 
 {{% alert title="Note" color="primary" %}}

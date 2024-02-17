@@ -2,11 +2,11 @@ apiVersion: velero.io/v1
 kind: Schedule
 metadata:
   name: daily-backup-uptime-app-prod
-  namespace: training-infra-velero
+  namespace: openshift-adp
 spec:
   schedule: '@every 24h'
   template:
     hooks: {}
     includedNamespaces:
-    - uptime-app-prod
-    ttl: 240h0m0s
+      - uptime-app-prod
+    ttl: 120h0m0s

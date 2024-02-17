@@ -11,44 +11,135 @@ In this lab, you will install additional components that are commonly used in pr
 
 cert-manager massively simplifies certificate management for Kubernetes. It provides easy to use tools to issue, manage and automatically renew certificates and supports the ACME protocol. This allows us to easily and automatically get certificates signed by Let's Encrypt for our cluster.
 
-You will install cert-manager with Helm.
+Install cert-manager as an Operator using the OperatorHub:
 
-
-In order to install the Helm chart, you must follow these steps:
-
-* Add the Jetstack Helm repository:
-
-```bash
-helm repo add jetstack https://charts.jetstack.io
-```
-
-* Install the cert-manager Helm chart:
-
-```bash
-helm install cert-manager jetstack/cert-manager \
-  --namespace training-infra-cert-manager \
-  --create-namespace \
-  --values https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/cert-manager/values.yaml
-```
-
-To be able to use Amazon Route 53 for Let's Encrypt's DNS01 challenges, you will need a secret containing the required credentials. You can find it on the bastion host at `~/ocp4-ops/resources/cert-manager`.
-
-Create that secret.
+* In the **Administrator** view, navigate to **Operators** -> **OperatorHub**
+* Enter **cert-manager** into the filter box
+* Select the **cert-manager Operator for Red Hat OpenShift** and click **Install**
+* Leave everything as it is, except that you set the **Update approval** to **Manual**
+* Click **Install**
+* As soon as it appears, approve the install plan presented to you by clicking **Approve**
+* Check for the existence of the `cert-manager-operator` pod
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
-oc -n training-infra-cert-manager apply -f ~/ocp4-ops/resources/cert-manager/secret_route53-credentials.yaml
+oc --namespace cert-manager-operator get pods
 ```
 
 {{% /details %}}
 
-Now you can create the `ClusterIssuer` resource which is also supplied as a file inside the same directory.
+* Also, the Operator should already have created at least the webhook and cainjector pods in the `cert-manager` namespace
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
-oc apply -f ~/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producion.yaml
+oc --namespace cert-manager get pods
+```
+
+{{% /details %}}
+
+The Operator will also automatically create a `CertManager` custom resource named `cluster`.
+In order to use DNS01 challenges on OpenShift clusters installed on AWS, we need to [add some configuration to cert-manager's configuration](https://docs.openshift.com/container-platform/latest/security/cert_manager_operator/cert-manager-operator-issuer-acme.html#cert-manager-acme-dns01-explicit-aws_cert-manager-operator-issuer-acme):
+
+```yaml
+apiVersion: operator.openshift.io/v1alpha1
+kind: CertManager
+metadata:
+  name: cluster
+  ...
+spec:
+  ...
+  controllerConfig:
+    overrideArgs:
+      - '--dns01-recursive-nameservers-only'
+      - '--dns01-recursive-nameservers=1.1.1.1:53'
+```
+
+This effectivley adds these two parameters to the cert-manager deployment. They are needed because of AWS' different DNS zones for private and public resolution. This way cert-manager knows that, in order to check for the DNS01 challenge, it needs to call a public DNS server.
+
+The last piece of configuration missing are the credentials. On supported infrastructure providers, you can simply get these credentials via the Cloud Credential Operator. [As AWS is supported, we're going to use this mechanic](https://docs.openshift.com/container-platform/latest/security/cert_manager_operator/cert-manager-authentication-non-sts.html):
+
+* Create a CredentialsRequest resource YAML file named `credentialsrequest_cert-manager.yaml` with:
+
+```yaml
+apiVersion: cloudcredential.openshift.io/v1
+kind: CredentialsRequest
+metadata:
+  name: cert-manager
+  namespace: openshift-cloud-credential-operator
+spec:
+  providerSpec:
+    apiVersion: cloudcredential.openshift.io/v1
+    kind: AWSProviderSpec
+    statementEntries:
+    - action:
+      - "route53:GetChange"
+      effect: Allow
+      resource: "arn:aws:route53:::change/*"
+    - action:
+      - "route53:ChangeResourceRecordSets"
+      - "route53:ListResourceRecordSets"
+      effect: Allow
+      resource: "arn:aws:route53:::hostedzone/*"
+    - action:
+      - "route53:ListHostedZonesByName"
+      effect: Allow
+      resource: "*"
+  secretRef:
+    name: aws-creds
+    namespace: cert-manager
+  serviceAccountNames:
+  - cert-manager
+```
+
+* Create it:
+
+```bash
+oc create -f credentialsrequest_cert-manager.yaml
+```
+
+* Update the subscription object for cert-manager Operator for Red Hat OpenShift by running the following command:
+
+```bash
+oc --namespace cert-manager-operator patch subscription openshift-cert-manager-operator --type=merge -p '{"spec":{"config":{"env":[{"name":"CLOUD_CREDENTIALS_SECRET_NAME","value":"aws-creds"}]}}}'
+```
+
+* Verify that the cert-manager controller pod shows a volume and a mountPath entry each for the secret called `aws-creds`
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
+```bash
+oc --namespace cert-manager get pod --selector app.kubernetes.io/component=controller -o yaml
+```
+
+* You are looking for the following entries:
+
+```yaml
+...
+spec:
+  containers:
+  - args:
+    ...
+    - mountPath: /.aws
+      name: cloud-credentials
+  ...
+  volumes:
+  ...
+  - name: cloud-credentials
+    secret:
+      ...
+      secretName: aws-creds
+```
+
+{{% /details %}}
+
+Now you can create the `ClusterIssuer` resource which is supplied as a file inside the directory `~/ocp4-ops/resources/cert-manager/`.
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
+
+```bash
+oc create -f ~/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producion.yaml
 ```
 
 {{% /details %}}
@@ -56,23 +147,14 @@ oc apply -f ~/ocp4-ops/resources/cert-manager/clusterissuer_letsencrypt-producio
 Verify that the `ClusterIssuer` is ready to issue certificates:
 
 ```bash
-oc describe clusterissuer letsencrypt-production
+oc get clusterissuer letsencrypt-production
 ```
 
-Which should give you an output similar to this:
+Look for column `READY` to be true:
 
 ```
-Status:
-  Acme:
-    Last Registered Email:  hello@openshift.ch
-    Uri:                    https://acme-v02.api.letsencrypt.org/acme/acct/119084055
-  Conditions:
-    Last Transition Time:  2021-04-13T09:44:14Z
-    Message:               The ACME account was registered with the ACME server
-    Observed Generation:   1
-    Reason:                ACMEAccountRegistered
-    Status:                True
-    Type:                  Ready
+NAME                     READY   AGE
+letsencrypt-production   True    37s
 ```
 
 
@@ -80,7 +162,7 @@ Status:
 
 After your `ClusterIssuer` is ready, you can request a wildcard certificate to be used on the Ingress Controller for the default subdomain `apps.+username+-ops-training.openshift.ch`.
 
-Create a file named `certificate_ingress.yaml` and fill in the following content, replacing the placeholder `<username>` with your actual username +username+.
+Create a file named `certificate_ingress.yaml` and fill in the following content, replacing the placeholder `<username>` with your actual username `+username+`.
 
 {{< readfile file="/content/en/docs/01/resources/cert-manager/certificate_ingress.yaml" code="true" lang="yaml" >}}
 
@@ -195,52 +277,44 @@ system:admin
 ```
 
 
-## Task {{% param sectionnumber %}}.4 Install Velero
+## Task {{% param sectionnumber %}}.4 Install OADP
 
-[Velero](https://velero.io/) is a tool to back up and restore Kubernetes resources.
-We will use Velero in this training only for data protection of user workload.
+[OpenShift API for Data Protection](https://docs.openshift.com/container-platform/latest/backup_and_restore/application_backup_and_restore/oadp-intro.html), or short OADP, is a tool to back up and restore Kubernetes resources.
 
 {{% alert title="Note" color="primary" %}}
-We already created S3 buckets for you to use as backup locations.
+S3 buckets were already created for you to use as backup locations.
 {{% /alert %}}
 
-You will install Velero with Helm.
+OADP is provided as an Operator, you will therefore install it using the OperatorHub:
 
-In order to install the Helm chart, follow these steps:
+* Navigate to **Operators** -> **OperatorHub**
+* Search for **OADP**
+* Select the **OADP Operator** provided by the Red Hat catalog (indicated by the **Red Hat** tag in the upper right of the box)
+* Click **Install**
+* Leave everything as it is, except that you set the **Update approval** to **Manual**
+* Click **Install**
+* As soon as it appears, approve the install plan presented to you by clicking **Approve**
 
-* Add the VMware Tanzu Helm repository:
+What's left is to configure OADP:
 
-```bash
-helm repo add vmware-tanzu https://vmware-tanzu.github.io/helm-charts
-```
-
-* Create a `values.yaml` file and fill in the following content:
-
-{{< readfile file="/content/en/docs/01/resources/velero/values.yaml" code="true" lang="yaml" >}}
-
-* Open the `values.yaml` file and modify the paramter `configuration.backupStorageLocation.bucket` to reflect your username +username+
-
-* Install the Velero Helm chart using your edited `values.yaml` file:
+* Create a secret containing the access credentials for OADP to access the S3 bucket:
 
 ```bash
-helm install velero vmware-tanzu/velero \
-  --namespace training-infra-velero \
-  --create-namespace \
-  --set-file credentials.secretContents.cloud=/home/ec2-user/ocp4-ops/resources/velero/credentials \
-  --values values.yaml
+oc --namespace openshift-adp create secret generic cloud-credentials --from-file cloud=~/ocp4-ops/resources/velero/credentials
 ```
 
-After the installation has completed, you can verify the backup location:
+* Create a `DataProtectionApplication` manifest as follows, named `dataprotectionapplication_ops-training-aws.yaml`, replacing the placeholder `<username>` with your actual username `+username+`:
+
+{{< readfile file="/content/en/docs/01/resources/dataprotectionapplication_ops-training-aws.yaml" code="true" lang="yaml" >}}
+
+* Lastly, apply the manifest
+
+{{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
 ```bash
-oc -n training-infra-velero get backupstoragelocations
+oc create -f dataprotectionapplication_ops-training-aws.yaml
 ```
 
-The status of `PHASE` should be `Available`:
+{{% /details %}}
 
-```
-NAME      PHASE       LAST VALIDATED   AGE
-default   Available   10s              156m
-```
-
-In the next chapter you will learn how to use Velero for scheduled backups of cluster resources.
+In one of the next chapters, you will learn how to use OADP for scheduled backups of cluster resources.

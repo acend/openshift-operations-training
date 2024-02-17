@@ -5,7 +5,6 @@ metadata:
   name: uptime-app
 spec:
   replicas: 2
-  revisionHistoryLimit: 3
   selector:
     matchLabels:
       app: uptime-app

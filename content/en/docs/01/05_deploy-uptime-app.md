@@ -16,7 +16,7 @@ At any time you can view the availability of your cluster console and the uptime
 
 ## Uptime app
 
-The application you're going to install is a simple Python app. It's going to be scaled to 3 replicas in order to achieve high availability.
+The application you're going to install is a simple Python app. It's going to be scaled to 2 replicas in order to achieve high availability.
 
 
 ## Task {{% param sectionnumber %}}.1: Deploy the uptime app
