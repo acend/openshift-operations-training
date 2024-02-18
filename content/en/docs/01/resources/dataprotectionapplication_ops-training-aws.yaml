@@ -1,0 +1,29 @@
+apiVersion: oadp.openshift.io/v1alpha1
+kind: DataProtectionApplication
+metadata:
+  name: ops-training-aws
+  namespace: openshift-adp
+spec:
+  configuration:
+    velero:
+      defaultPlugins:
+        - openshift
+        - aws
+      resourceTimeout: 10m
+    nodeAgent:
+      enable: false
+      uploaderType: kopia
+  backupImages: false
+  backupLocations:
+    - name: default
+      velero:
+        provider: aws
+        default: true
+        objectStorage:
+          bucket: <username>-ops-training-backup-velero
+        config:
+          region: us-east-1
+          profile: "default"
+        credential:
+          key: cloud
+          name: cloud-credentials
