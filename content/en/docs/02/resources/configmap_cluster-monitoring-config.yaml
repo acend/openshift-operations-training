@@ -9,47 +9,71 @@ data:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
-      - key: "node-role.kubernetes.io/infra"
+      - key: node-role.kubernetes.io/infra
         effect: NoSchedule
+      - key: node-role.kubernetes.io/infra
+        effect: NoExecute
     prometheusK8s:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
       - key: node-role.kubernetes.io/infra
         effect: NoSchedule
-    grafana:
+      - key: node-role.kubernetes.io/infra
+        effect: NoExecute
+    prometheusOperator:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
-      - key: "node-role.kubernetes.io/infra"
+      - key: node-role.kubernetes.io/infra
         effect: NoSchedule
+      - key: node-role.kubernetes.io/infra
+        effect: NoExecute
     k8sPrometheusAdapter:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
-      - key: "node-role.kubernetes.io/infra"
+      - key: node-role.kubernetes.io/infra
         effect: NoSchedule
+      - key: node-role.kubernetes.io/infra
+        effect: NoExecute
     kubeStateMetrics:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
-      - key: "node-role.kubernetes.io/infra"
+      - key: node-role.kubernetes.io/infra
         effect: NoSchedule
+      - key: node-role.kubernetes.io/infra
+        effect: NoExecute
     telemeterClient:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
-      - key: "node-role.kubernetes.io/infra"
+      - key: node-role.kubernetes.io/infra
         effect: NoSchedule
+      - key: node-role.kubernetes.io/infra
+        effect: NoExecute
     openshiftStateMetrics:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
-      - key: "node-role.kubernetes.io/infra"
+      - key: node-role.kubernetes.io/infra
         effect: NoSchedule
+      - key: node-role.kubernetes.io/infra
+        effect: NoExecute
     thanosQuerier:
       nodeSelector:
         node-role.kubernetes.io/infra: ""
       tolerations:
-      - key: "node-role.kubernetes.io/infra"
+      - key: node-role.kubernetes.io/infra
         effect: NoSchedule
+      - key: node-role.kubernetes.io/infra
+        effect: NoExecute
+    monitoringPlugin:
+      nodeSelector:
+        node-role.kubernetes.io/infra: ""
+      tolerations:
+      - key: node-role.kubernetes.io/infra
+        effect: NoSchedule
+      - key: node-role.kubernetes.io/infra
+        effect: NoExecute
