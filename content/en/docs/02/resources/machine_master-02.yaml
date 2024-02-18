@@ -10,7 +10,7 @@ metadata:
     machine.openshift.io/instance-type: m5.xlarge
     machine.openshift.io/region: eu-north-1
     machine.openshift.io/zone: eu-north-1c
-  name: user01-ops-training-75gjz-master-02
+  name: user01-ops-training-75gjz-master-2
   namespace: openshift-machine-api
 spec:
   metadata: {}

@@ -9,10 +9,10 @@ sectionnumber: 2.3
 In the backup lab you created a scheduled backup of all resources in namespace `uptime-app-prod`. Now we are going to test the restore procedure.
 
 {{% alert title="Warning" color="secondary" %}}
-To keep your restore time as short as possible, make sure you read through the whole procedure, understood it and maybe even prepared all resources for the restore before deleting the project.
+To keep your restore time as short as possible, make sure you read through the whole procedure, understand it and maybe even prepare all resources for the restore before deleting the project!
 {{% /alert %}}
 
-Go ahead and delete the project `uptime-app-prod`.
+Make sure you read above warning, then go ahead and delete the project `uptime-app-prod`.
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 
@@ -26,7 +26,7 @@ Update your backup storage location to read-only mode (this prevents backup obje
 
 ```bash
 oc patch backupstoragelocation default \
-   --namespace training-infra-velero \
+   --namespace openshift-adp \
    --type merge \
    --patch '{"spec":{"accessMode":"ReadOnly"}}'
 ```
@@ -38,13 +38,13 @@ In order to restore a backup, we need to create a `Restore` object. A `Restore` 
 Copy above `Restore` resource into a file on your bastion host. Replace the placeholder `<backup-name>` with the name of the backup you want to restore. To list your available backups:
 
 ```bash
-oc -n training-infra-velero get backups
+oc -n openshift-adp get backups
 ```
 
 Start the restore by creating the `Restore` object:
 
 ```bash
-oc -n training-infra-velero apply -f <restore-file>
+oc apply -f <restore-file>
 ```
 
 After the restore has completed, your uptime app should be up and running again:
@@ -65,7 +65,7 @@ When ready, revert your backup storage location to read-write mode:
 
 ```bash
 oc patch backupstoragelocation default \
-   --namespace training-infra-velero \
+   --namespace openshift-adp \
    --type merge \
    --patch '{"spec":{"accessMode":"ReadWrite"}}'
 ```

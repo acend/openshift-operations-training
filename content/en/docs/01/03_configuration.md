@@ -88,6 +88,7 @@ metadata:
   creationTimestamp: null
   name: project-request-extended
 objects:
+  [...]
 ```
 
 {{% /details %}}
@@ -151,7 +152,7 @@ objects:
     - from:
       - namespaceSelector:
           matchLabels:
-            network.openshift.io/policy-group: ingress
+            policy-group.network.openshift.io/ingress: ""
     podSelector: {}
     policyTypes:
     - Ingress
@@ -179,6 +180,21 @@ objects:
     ingress:
     - from:
       - podSelector: {}
+- apiVersion: networking.k8s.io/v1
+  kind: NetworkPolicy
+  metadata:
+    name: allow-from-kube-apiserver-operator
+  spec:
+    ingress:
+    - from:
+      - namespaceSelector:
+          matchLabels:
+            kubernetes.io/metadata.name: openshift-kube-apiserver-operator
+        podSelector:
+          matchLabels:
+            app: kube-apiserver-operator
+    policyTypes:
+    - Ingress
 parameters:
 - name: PROJECT_NAME
 - name: PROJECT_DISPLAYNAME
@@ -283,6 +299,7 @@ spec:
       namespace: openshift-console
       hostname: console.apps.+username+-{{% param baseDomain %}}
   domain: apps.+username+-{{% param baseDomain %}}
+  [...]
 ```
 
 {{% /details %}}

@@ -2,16 +2,15 @@ apiVersion: velero.io/v1
 kind: Restore
 metadata:
   name: restore-uptime-app-prod
-  namespace: training-infra-velero
+  namespace: openshift-adp
 spec:
   backupName: "<backup-name>"
   excludedResources:
-  - nodes
-  - events
-  - events.events.k8s.io
-  - backups.velero.io
-  - restores.velero.io
-  - resticrepositories.velero.io
-  hooks: {}
+    - nodes
+    - events
+    - events.events.k8s.io
+    - backups.velero.io
+    - restores.velero.io
+    - resticrepositories.velero.io
   includedNamespaces:
-  - '*'
+    - '*'
