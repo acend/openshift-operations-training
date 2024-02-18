@@ -25,19 +25,9 @@ Switch to the **Developer** console and select the **uptime-app-prod** project. 
 
 ## Task {{% param sectionnumber %}}.2: Provided alerting rules
 
-OpenShift provides an extensive set of alerts, based on the [kubernetes-mixin](https://github.com/kubernetes-monitoring/kubernetes-mixin) project. Check out the configured alerts by navigating to your Prometheus web user interface and take a look at the predefined alerting rules.
+OpenShift provides an extensive set of alerts, based on the [kubernetes-mixin](https://github.com/kubernetes-monitoring/kubernetes-mixin) project. Check out the configured alerts by navigating to **Observe** -> **Alerting** -> **Alerting rules** and take a look at some of the predefined alerting rules.
 
-To find out at what URL Prometheus is available, look at the route `prometheus` inside the `openshift-monitoring` namespace.
-
-{{% details title="Hints" mode-switcher="normalexpertmode" %}}
-
-```bash
-oc -n openshift-monitoring get route prometheus-k8s -o go-template='https://{{ .spec.host }}/alerts{{ "\n" }}'
-```
-
-{{% /details %}}
-
-Active alerts (state `Pending` or `Firing`) will also be displayed in the administrator web console at **Monitoring** -> **Alerting**.
+Active alerts (state `Pending` or `Firing`) are displayed in **Observe** -> **Alerting** -> **Alerts**.
 
 As you can see, these alerts are as generic as possible to fit most platforms. They cannot be altered and adding more rules in `openshift-monitoring` is not supported. In a later lab, you will learn how to add rules by enabling monitoring for user-defined projects.
 
@@ -46,7 +36,7 @@ As you can see, these alerts are as generic as possible to fit most platforms. T
 
 Sometimes you have to silence an alert because someone is already working on it, or the issue is scheduled to be fixed in a future maintenance window, or it might be a false positive.
 
-To do so, navigate to **Monitoring** -> **Alerting**. Select the **Silences** tab and hit the **Create Silence** button. A common task is to silence the `UpdateAvailable` alert, as we may have already scheduled the corresponding update.
+To do so, navigate to **Observe** -> **Alerting** -> **Silences** and hit the **Create Silence** button. A common task is to silence the `UpdateAvailable` alert, as we may have already scheduled the corresponding update.
 
 Silence the alert for 1 week.
 ![silece](../create-silence.png)
