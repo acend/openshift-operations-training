@@ -26,7 +26,7 @@ Configure a `KubeletConfig` resource each for master and worker nodes defining t
 * Set the reserved kubelet resources to 250m cpu and 1Gi memory
 * Set the reserved system resources to 250m cpu and 1Gi memory
 
-You can find relevant information on the OpenShift documentation pages [here](https://docs.openshift.com/container-platform/latest/scalability_and_performance/recommended-host-practices.html#create-a-kubeletconfig-crd-to-edit-kubelet-parameters_recommended-host-practices) and [here](https://docs.openshift.com/container-platform/4.10/nodes/nodes/nodes-nodes-managing.html).
+You can find relevant information on the OpenShift documentation pages [here](https://docs.openshift.com/container-platform/latest/nodes/nodes/nodes-nodes-garbage-collection.html) and [here](https://docs.openshift.com/container-platform/4.10/nodes/nodes/nodes-nodes-managing.html).
 
 {{% details title="Hints" mode-switcher="normalexpertmode" %}}
 Change the masters' configuration to this:
