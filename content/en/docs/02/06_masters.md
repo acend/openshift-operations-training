@@ -13,7 +13,7 @@ During this lab, we will learn how to replace a failed control plane node. As lo
 Since the control plane nodes are hosting `etcd`, the key-value store that holds all the cluster's information and state, it is not as straightforward as replacing a worker node backed by a machine set.
 
 {{% alert title="Note" color="info" %}}
-Above statement is not completely correct anymore. [OpenShift 2.12 introduced the control plane machine sets for specific infrastructure providers](https://docs.openshift.com/container-platform/latest/machine_management/control_plane_machine_management/cpmso-getting-started.html#cpmso-platform-matrix_cpmso-getting-started). Because the control plane machine set on AWS is supported and active by default, we are going to delete it in the first step of this lab.\
+Above statement is not completely correct anymore. [OpenShift 4.12 introduced the control plane machine sets for specific infrastructure providers](https://docs.openshift.com/container-platform/latest/machine_management/control_plane_machine_management/cpmso-getting-started.html#cpmso-platform-matrix_cpmso-getting-started). Because the control plane machine set on AWS is supported and active by default, we are going to delete it in the first step of this lab.\
 This enables you to do this lab and experience the replacement of a control plane node anyway, in case you need to do it on infrastructure that is not supported by or has no active control plane machine set.
 {{% /alert %}}
 

@@ -18,7 +18,7 @@ Navigate to **Observe** -> **Dashboards** on the web console and select **etcd**
 
 * **User dashboards**
 
-Switch to the **Developer** console and select the **uptime-app-prod** project. Then navigate to the **Monitoring** tab. Select the **uptime-app** in the **Workload** drop-down list. This will display a wide selection of different metrics relevant to your app like CPU usage, memory usage and networking performance.
+Switch to the **Developer** console and select the **uptime-app-prod** project. Then navigate to the **Observing** tab. Select the **uptime-app** in the **Workload** drop-down list. This will display a wide selection of different metrics relevant to your app like CPU usage, memory usage and networking performance.
 
 ![cluster dashboard](../user-dashboard.png)
 
