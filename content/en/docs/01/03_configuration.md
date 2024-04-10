@@ -109,6 +109,17 @@ Your file should now look like this:
 For your convenience, we also provide a file containing all network policies at <https://raw.githubusercontent.com/acend/openshift-operations-training/main/content/en/docs/01/resources/networkpolicies.yaml>.
 {{% /alert %}}
 
+{{% alert title="Note" color="primary" %}}
+Pay extra attention to the additional `metadata.namespace` fields added to the NetworkPolicy resources.
+If you don't add them, the network policies might end up being created in another namespace.
+{{% /alert %}}
+
+{{% alert title="Note" color="primary" %}}
+Also note the additional namespace definition (`openshift-config`) at the top of the resource definition.
+This is to make sure the template is going to be created in the correct namespace where OpenShift will be looking for it.
+{{% /alert %}}
+{{% /details %}}
+
 ```yaml
 apiVersion: template.openshift.io/v1
 kind: Template
@@ -184,6 +195,7 @@ objects:
   kind: NetworkPolicy
   metadata:
     name: allow-from-kube-apiserver-operator
+    namespace: ${PROJECT_NAME}
   spec:
     ingress:
     - from:
@@ -202,17 +214,6 @@ parameters:
 - name: PROJECT_ADMIN_USER
 - name: PROJECT_REQUESTING_USER
 ```
-
-{{% alert title="Note" color="primary" %}}
-Pay extra attention to the additional `metadata.namespace` fields added to the NetworkPolicy resources.
-If you don't add them, the network policies might end up being created in another namespace.
-{{% /alert %}}
-
-{{% alert title="Note" color="primary" %}}
-Also note the additional namespace definition (`openshift-config`) at the top of the resource definition.
-This is to make sure the template is going to be created in the correct namespace where OpenShift will be looking for it.
-{{% /alert %}}
-{{% /details %}}
 
 
 ## Task {{% param sectionnumber %}}.4: Limit range
